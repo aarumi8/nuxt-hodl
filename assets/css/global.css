@@ -5,6 +5,12 @@ body {
     margin: 3.9vh 4vw 3.9vh 4vw;
 }
 
+@media (max-width: 767px) {
+    body {
+        margin: 0;
+    }
+}
+
 @font-face {
     font-family: 'Gilroy';
     src: url('/fonts/Gilroy/Gilroy-Black.ttf') format('truetype');
