@@ -19,54 +19,49 @@
   </div>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  setup() {
-    const searchQuery = ref("");
-    const searchResults = ref(null);
-    const searching = ref(false);
+<script setup lang="ts">
+const searchQuery = ref("");
+const searchResults = ref(null);
+const searching = ref(false);
 
-    onMounted(() => {
-      // if user clicks outside of the search results, close the dropdown
-      window.addEventListener("click", (e: MouseEvent) => {
-        if ((e.target as HTMLElement).closest(".search-bar")) return;
-        searchResults.value = null;
-      });
-    });
+onMounted(() => {
+  const onClickOutside = (e: MouseEvent) => {
+    if (!(e.target as HTMLElement).closest(".search-bar")) {
+      searchResults.value = null;
+    }
+  };
+  window.addEventListener("click", onClickOutside);
 
-
-    // if results view is open, make search bar border radius to 0px
-    watch(searchResults, () => {
-      const searchBar = document.querySelector(".search-bar") as HTMLElement;
-      if (searchResults.value) {
-        searchBar?.style.setProperty("border-radius", "15px 15px 0 0");
-      } else {
-        searchBar?.style.setProperty("border-radius", "15px");
-      }
-    });
-
-    // add lodash debounce in future
-    const handleSearch = () => {
-      if (!searchQuery.value) {
-        searchResults.value = null;
-        return;
-      }
-      searching.value = true;
-      // Simulate an API call to search for the token
-      const results = "kek"; // Implement this function based on your API
-      searchResults.value = results;
-      searching.value = false;
-    }; // Adjust debounce timing as needed
-
-    return {
-      searchQuery,
-      searchResults,
-      searching,
-      handleSearch,
-    };
-  },
+  // Cleanup event listener on component unmount
+  onUnmounted(() => {
+    window.removeEventListener("click", onClickOutside);
+  });
 });
+
+// Watch for changes in searchResults to adjust the search bar border radius
+watch(searchResults, () => {
+  const searchBar = document.querySelector(".search-bar") as HTMLElement;
+  if (searchResults.value) {
+    searchBar?.style.setProperty("border-radius", "15px 15px 0 0");
+  } else {
+    searchBar?.style.setProperty("border-radius", "15px");
+  }
+});
+
+// Handle search logic, potentially adding lodash debounce in the future
+const handleSearch = () => {
+  if (!searchQuery.value) {
+    searchResults.value = null;
+    return;
+  }
+  searching.value = true;
+  // Simulate an API call to search for the token
+  const results = "Simulated search result"; // Replace with actual search logic
+  searchResults.value = results;
+  searching.value = false;
+};
 </script>
+
 
 <style scoped>
 .search-bar {
@@ -128,7 +123,7 @@ input:focus {
   color: #007bff; /* Adjust color as needed */
 }
 @media (max-width: 767px) {
-      .search-bar {
+  .search-bar {
     background: rgb(48, 48, 48);
     position: absolute;
     top: 120%;

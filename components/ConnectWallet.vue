@@ -1,17 +1,9 @@
 <template>
-          <button class="connect-wallet">Connect Wallet</button>
-      <button class="connect-wallet-mobile">Connect</button>
+  <button class="connect-wallet">Connect Wallet</button>
+  <button class="connect-wallet-mobile">Connect</button>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  setup() {
-
-    return {
-
-    };
-  },
-});
+<script setup lang="ts">
 </script>
 
 <style scoped>
@@ -56,7 +48,7 @@ export default defineComponent({
 }
 
 @media (max-width: 767px) {
-      .connect-wallet-mobile {
+  .connect-wallet-mobile {
     margin-right: 4vw;
     margin-top: 4vw;
     margin-bottom: 4vw;

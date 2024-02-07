@@ -1,13 +1,8 @@
 <template>
-    <nuxt-link to="/" class="logo">HODL</nuxt-link>
+  <nuxt-link to="/" class="logo">HODL</nuxt-link>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-    setup() {
-        
-    },
-})
+<script setup lang="ts">
 </script>
 
 

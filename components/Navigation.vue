@@ -24,21 +24,14 @@
   </div>
 </template>
 
-<script lang="ts">
-export default defineComponent({
-  setup() {
-    const route = useRoute();
+<script setup lang="ts">
+const route = useRoute();
 
-    function isRouteActive(path: string): boolean {
-      return route.path === path;
-    }
-
-    return {
-      isRouteActive,
-    };
-  },
-});
+function isRouteActive(path: string): boolean {
+  return route.path === path;
+}
 </script>
+
 
 <style scoped>
 .header-text-desktop {
@@ -68,13 +61,13 @@ export default defineComponent({
   width: 90%;
   padding: 1vh 2.08vw;
   border-radius: 5px;
-   left: 50%; /* Set left to 50% of the viewport width */
+  left: 50%; /* Set left to 50% of the viewport width */
   transform: translateX(-50%);
 }
 
 .header-text-mobile {
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.0);
+  background: rgba(255, 255, 255, 0);
   color: #fff;
   font-family: "Gilroy";
   font-size: 1rem;
@@ -91,10 +84,10 @@ export default defineComponent({
 }
 
 @media (max-width: 767px) {
-      .header-text-desktop {
+  .header-text-desktop {
     display: none;
   }
-    .mobile-links-menu {
+  .mobile-links-menu {
     display: flex;
   }
 }
