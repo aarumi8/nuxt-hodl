@@ -68,7 +68,7 @@ const handleSearch = () => {
   display: flex;
   position: relative;
   width: 100%;
-  padding: 1.85vh 1.08vw;
+  padding: 2vh 1.08vw;
   align-items: center;
   gap: 10px;
   border-radius: 15px;
