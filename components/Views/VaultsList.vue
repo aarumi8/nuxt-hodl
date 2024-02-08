@@ -14,10 +14,44 @@
       </thead>
       <tbody>
         <template v-for="(vault, index) in vaults" :key="vault.id">
-          <tr class='item' @click="toggleDetail(vault.id)">
+          <tr class="item" @click="toggleDetail(vault.id)">
             <td>
               {{ index + 1 }}
-              <div v-if="expandedVaultId === vault.id" class="mobile-detail">
+            </td>
+            <td>
+              <div style="display: flex; align-items: center">
+                <img :src="vault.image" class="vault-image" />
+                <div>
+                  {{ vault.name }}
+                  <span class="ticker">{{ vault.ticker }}</span>
+                </div>
+              </div>
+            </td>
+            <td class="desktop">{{ vault.price }}</td>
+            <td class="desktop">{{ vault.floorPrice }}</td>
+            <td class="desktop">{{ vault.mcap }}</td>
+            <td class="fmcap">
+              <div class="fmcap-wrapper">
+                {{ vault.fmcap }}
+                <span
+                  v-if="expandedVaultId === vault.id"
+                  class="expandVaultMobile"
+                ></span>
+                <span
+                  v-else
+                  class="expandVaultMobile"
+                  style="transform: rotate(-180deg)"
+                ></span>
+              </div>
+            </td>
+            <td class="desktop" style="text-align: right">
+              {{ vault.backedPercent }}
+            </td>
+          </tr>
+
+          <tr v-if="expandedVaultId === vault.id">
+            <td style="border-top: 0px; padding-top: 0px !important">
+              <div class="mobile-detail">
                 <div class="cell" style="opacity: 0">P</div>
                 <div class="cell" style="opacity: 0">F</div>
                 <div class="cell" style="opacity: 0">M</div>
@@ -25,32 +59,33 @@
                 <div class="cell" style="opacity: 0">B</div>
               </div>
             </td>
-            <td>
-              <div style="display:flex; align-items:center;">
-                <img :src="vault.image"  class="vault-image" />
-                <div>
-                  {{ vault.name }} 
-                  <span class="ticker">{{ vault.ticker }}</span>
+
+            <td style="border-top: 0px; padding-top: 0px !important">
+              <div class="mobile-detail">
+                <div class="cell" style="color: rgb(140, 140, 140)">Price</div>
+                <div class="cell" style="color: rgb(140, 140, 140)">
+                  Floor Price
+                </div>
+                <div class="cell" style="color: rgb(140, 140, 140)">
+                  Market Cap
+                </div>
+                <div class="cell" style="color: rgb(140, 140, 140)">
+                  Floor Market Cap
+                </div>
+                <div class="cell" style="color: rgb(140, 140, 140)">
+                  Backed %
                 </div>
               </div>
-              <div v-if="expandedVaultId === vault.id" class="mobile-detail">
-                <div class="cell" style='color: rgb(140, 140, 140)'>Price</div>
-                <div class="cell" style='color: rgb(140, 140, 140)'>Floor Price</div>
-                <div class="cell" style='color: rgb(140, 140, 140)'>Market Cap</div>
-                <div class="cell" style='color: rgb(140, 140, 140)'>Floor Market Cap</div>
-                <div class="cell" style='color: rgb(140, 140, 140)'>Backed %</div>
-              </div>
             </td>
-            <td class="desktop">{{ vault.price }}</td>
-            <td class="desktop">{{ vault.floorPrice }}</td>
-            <td class="desktop">{{ vault.mcap }}</td>
-            <td class="fmcap">
-              <div style="display:flex; align-items:center; justify-content: end;">
-                {{ vault.fmcap }}
-                <span v-if="expandedVaultId === vault.id" class="expandVaultMobile"></span>
-                <span v-else class="expandVaultMobile" style="transform: rotate(-180deg)"></span>
-              </div>
-              <div v-if="expandedVaultId === vault.id" class="mobile-detail">
+
+            <td
+              style="
+                border-top: 0px;
+                text-align: right;
+                padding-top: 0px !important;
+              "
+            >
+              <div class="mobile-detail">
                 <div class="cell">{{ vault.price }}</div>
                 <div class="cell">{{ vault.floorPrice }}</div>
                 <div class="cell">{{ vault.mcap }}</div>
@@ -58,10 +93,8 @@
                 <div class="cell">{{ vault.backedPercent }}</div>
               </div>
             </td>
-            <td class="desktop" style="text-align: right">
-              {{ vault.backedPercent }}
-            </td>
           </tr>
+
           <tr v-if="expandedVaultId === vault.id" class="mobile-detail-btn">
             <td style="border-top: 0px; padding: 0px 0px 15px 0px" colspan="3">
               <CustomButtonsLearnMoreButton
@@ -78,19 +111,39 @@
 </template>
 
 
-<script setup lang="js">
+<script setup lang="ts">
 const expandedVaultId = ref(null);
 // Sample data structure for vaults, replace or fetch from your backend/api
 const vaults = [
-  { id: 1, name: 'Router Protocol', ticker: '$ROUTE', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png', price: '$100', floorPrice: '$90', mcap: '$1M', fmcap: '$900K', backedPercent: '90%' },
-  { id: 2, name: 'Vault A', ticker: '$UNI', price: '$100', floorPrice: '$90', mcap: '$1M', fmcap: '$900K', backedPercent: '90%' },
+  {
+    id: 1,
+    name: "Router Protocol",
+    ticker: "$ROUTE",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
+    price: "$100",
+    floorPrice: "$90",
+    mcap: "$1M",
+    fmcap: "$900K",
+    backedPercent: "90%",
+  },
+  {
+    id: 2,
+    name: "Vault A",
+    ticker: "$UNI",
+    price: "$100",
+    floorPrice: "$90",
+    mcap: "$1M",
+    fmcap: "$900K",
+    backedPercent: "90%",
+  },
   // Add more vault items as needed
 ];
 
-function toggleDetail(id) {
+function toggleDetail(id: Number) {
+  if (window.innerWidth > 868) return; // Only allow expansion on mobile (max-width: 868px
   expandedVaultId.value = expandedVaultId.value === id ? null : id;
 }
-
 </script>
 
 <style scoped>
@@ -164,15 +217,22 @@ tr:last-of-type td {
 .expandVaultMobile {
   display: none;
 }
-@media (max-width: 1300px) {
-td, th {
-  padding: 30px 15px;
+.fmcap-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
+@media (max-width: 1300px) {
+  td,
+  th {
+    padding: 30px 15px;
+  }
 }
 @media (max-width: 1100px) {
-td, th {
-  padding: 30px 10px;
-}
+  td,
+  th {
+    padding: 30px 10px;
+  }
 }
 
 @media (max-width: 868px) {
@@ -190,6 +250,9 @@ td, th {
   .fmcap {
     text-align: right;
   }
+  .fmcap-wrapper {
+    justify-content: flex-end;
+  }
   td,
   th {
     padding: 20px 10px;
@@ -205,7 +268,8 @@ td, th {
 }
 
 @media (max-width: 500px) {
-  td, th {
+  td,
+  th {
     padding: 20px 20px;
   }
 }
