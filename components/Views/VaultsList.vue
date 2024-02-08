@@ -97,11 +97,13 @@
 
           <tr v-if="expandedVaultId === vault.id" class="mobile-detail-btn">
             <td style="border-top: 0px; padding: 0px 0px 15px 0px" colspan="3">
+              <nuxt-link style="text-decoration: none" :to="`/vault/${vault.address}`">
               <CustomButtonsLearnMoreButton
                 buttonColor="rgb(48, 48, 48)"
                 buttonText="Learn more"
                 textColor="#fff"
               />
+              </nuxt-link>
             </td>
           </tr>
         </template>
@@ -116,7 +118,7 @@ const expandedVaultId = ref(null);
 // Sample data structure for vaults, replace or fetch from your backend/api
 const vaults = [
   {
-    id: 1,
+    id: 0,
     name: "Router Protocol",
     ticker: "$ROUTE",
     image:
@@ -126,9 +128,10 @@ const vaults = [
     mcap: "$1M",
     fmcap: "$900K",
     backedPercent: "90%",
+    address: "0x1234",
   },
   {
-    id: 2,
+    id: 1,
     name: "Vault A",
     ticker: "$UNI",
     price: "$100",
@@ -136,13 +139,20 @@ const vaults = [
     mcap: "$1M",
     fmcap: "$900K",
     backedPercent: "90%",
+    address: "0x12345",
   },
   // Add more vault items as needed
 ];
 
-function toggleDetail(id: Number) {
-  if (window.innerWidth > 868) return; // Only allow expansion on mobile (max-width: 868px
-  expandedVaultId.value = expandedVaultId.value === id ? null : id;
+async function toggleDetail(id: Number) {
+  const vault = vaults.find(v => v.id === id);
+  if (!vault) return; // Exit if no vault found
+
+  if (window.innerWidth > 868) {
+    await navigateTo(`/vault/${vault.address}`);
+  } else {
+    expandedVaultId.value = expandedVaultId.value === id ? null : id;
+  }
 }
 </script>
 
