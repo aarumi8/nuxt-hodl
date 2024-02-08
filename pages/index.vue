@@ -32,7 +32,7 @@ const vaults = [
     price: "$100",
     floorPrice: "$90",
     mcap: "$1M",
-    fmcap: "$9020K",
+    fmcap: "$900K",
     backedPercent: "90%",
     address: "0x1234",
   },

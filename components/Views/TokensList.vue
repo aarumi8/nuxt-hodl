@@ -1,12 +1,11 @@
 <template>
-  <div class="vaults-list">
+  <div class="vaults-list tokens-list">
     <table>
       <thead>
         <tr>
           <template v-for="(column, index) in columns" :key="index">
             <th v-if="index < 2">{{ column }}</th>
-            <th v-else-if="index === columns.length - 1" class="desktop" style="text-align: right">{{ column }}</th>
-            <th v-else-if="index === columns.length - 2" class="fmcap">{{ column }}</th>
+            <th v-else-if="index === columns.length - 1" class="fmcap" >{{ column }}</th>
             <th v-else class="desktop">{{ column }}</th>
           </template>
         </tr>
@@ -29,15 +28,11 @@
             </td>
 
             <td class="desktop">{{ vault.price }}</td>
-            <td class="desktop">{{ vault.floorPrice }}</td>
-            
-            <td v-if="vault.mcap" class="desktop">{{ vault.mcap  }}</td>
-            <td v-if="vault.amount" class="desktop">{{ vault.amount  }}</td>
+            <td class="desktop">{{ vault.amount }}</td>
 
             <td class="fmcap">
               <div class="fmcap-wrapper">
-                <span v-if="vault.fmcap">{{ vault.fmcap }}</span>
-                <span v-if="vault.value">{{ vault.value }}</span>
+                <span>{{ vault.total }}</span>
                 <span
                   v-if="expandedVaultId === vault.id"
                   class="expandVaultMobile"
@@ -49,11 +44,6 @@
                 ></span>
               </div>
             </td>
-
-            <td class="desktop" style="text-align: right">
-              <span v-if="vault.backedPercent">{{ vault.backedPercent }}</span>
-              <span v-if="vault.exValue">{{ vault.exValue }}</span>
-            </td>
           </tr>
 
           <tr v-if="expandedVaultId === vault.id">
@@ -62,8 +52,6 @@
                 <div class="cell" style="opacity: 0">P</div>
                 <div class="cell" style="opacity: 0">F</div>
                 <div class="cell" style="opacity: 0">M</div>
-                <div class="cell" style="opacity: 0">F</div>
-                <div class="cell" style="opacity: 0">B</div>
               </div>
             </td>
 
@@ -75,12 +63,6 @@
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
                   {{columns[4]}}
-                </div>
-                <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{columns[5]}}
-                </div>
-                <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{columns[6]}}
                 </div>
               </div>
             </td>
@@ -94,15 +76,8 @@
             >
               <div class="mobile-detail">
                 <div class="cell">{{ vault.price }}</div>
-                <div class="cell">{{ vault.floorPrice }}</div>
-
-                <div v-if="vault.mcap" class="cell">{{ vault.mcap }}</div>
-                <div v-if="vault.fmcap" class="cell">{{ vault.fmcap }}</div>
-                <div v-if="vault.backedPercent" class="cell">{{ vault.backedPercent }}</div>
-
-                <div v-if="vault.amount" class="cell">{{ vault.amount }}</div>
-                <div v-if="vault.value" class="cell">{{ vault.value }}</div>
-                <div v-if="vault.exValue" class="cell">{{ vault.exValue }}</div>
+                <div class="cell">{{ vault.amount }}</div>
+                <div class="cell">{{ vault.total }}</div>
               </div>
             </td>
           </tr>
@@ -111,7 +86,8 @@
             <td style="border-top: 0px; padding: 0px 0px 15px 0px" colspan="3">
               <nuxt-link
                 style="text-decoration: none"
-                :to="`/vault/${vault.address}`"
+                target="_blank"
+                :to="`https://etherscan.com/${vault.address}`"
               >
                 <CustomButtonsLearnMoreButton
                   buttonColor="rgb(48, 48, 48)"
@@ -159,7 +135,7 @@ async function toggleDetail(id: Number) {
   if (!vault) return; // Exit if no vault found
 
   if (window.innerWidth > 868) {
-    await navigateTo(`/vault/${vault.address}`);
+    await navigateTo(`https://etherscan.com/${vault.address}`, { external: true, open: {target: "_blank"} });
   } else {
     expandedVaultId.value = expandedVaultId.value === id ? null : id;
   }
@@ -167,4 +143,26 @@ async function toggleDetail(id: Number) {
 </script>
 
 <style scoped>
+.tokens-list {
+    background-color: rgb(37, 37, 37);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    border: 1px solid rgb(71, 71, 71);
+}
+
+tr:first-of-type th {
+  border-top: 0px solid rgb(71, 71, 71); /* Adds bottom border to the last row */
+}
+
+@media (max-width: 868px) {
+    .tokens-list {
+        border: 0px;
+        background-color: rgba(0,0,0,0);
+    }
+    tr:first-of-type th {
+  border-top: 1px solid rgb(71, 71, 71); /* Adds bottom border to the last row */
+}
+}
 </style>
