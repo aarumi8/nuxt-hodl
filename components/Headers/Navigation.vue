@@ -53,6 +53,7 @@ function isRouteActive(path: string): boolean {
 }
 
 .mobile-links-menu {
+  z-index: 22;
   bottom: 5%;
   display: none;
   flex-direction: row;

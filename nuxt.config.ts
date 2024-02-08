@@ -4,4 +4,12 @@ export default defineNuxtConfig({
   css: [
     '~/assets/css/global.css' // Path to your global stylesheet
   ],
+  imports: {
+    presets: [
+      {
+        from: 'chart.js',
+        imports: ['Chart', 'registerables']
+      }
+    ]
+  }
 })
