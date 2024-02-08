@@ -7,6 +7,7 @@
 <script setup lang="ts">
 const props = defineProps({
   color: String,
+  textColor: String,
   onClick: Function,
 });
 const emit = defineEmits(['click']);
@@ -23,6 +24,7 @@ const buttonStyles = computed(() => ({
   fontFamily: "Gilroy",
   fontSize: '1.25rem',
   fontWeight: '500',
+  color: props.textColor || '#000', // Default to black if no color is provided
 }));
 </script>
 
