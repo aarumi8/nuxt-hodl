@@ -59,7 +59,7 @@ function isRouteActive(path: string): boolean {
   position: fixed;
   background-color: rgb(75, 75, 75);
   width: 90%;
-  padding: 1vh 2.08vw;
+  padding: 10px 10px;
   border-radius: 5px;
   left: 50%; /* Set left to 50% of the viewport width */
   transform: translateX(-50%);
@@ -72,7 +72,7 @@ function isRouteActive(path: string): boolean {
   font-family: "Gilroy";
   font-size: 1rem;
   font-weight: 500;
-  padding: 2vh 2.08vw;
+  padding: 15px 10px;
   white-space: nowrap;
   width: 100%;
   text-align: center;

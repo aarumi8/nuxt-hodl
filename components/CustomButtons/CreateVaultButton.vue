@@ -1,7 +1,7 @@
 <template>
-  <Button :color="buttonColor" @click="handleClick">
+  <BaseButton :color="buttonColor" @click="handleClick">
     {{ buttonText }}
-  </Button>
+  </BaseButton>
 </template>
 
 <script setup lang="ts">

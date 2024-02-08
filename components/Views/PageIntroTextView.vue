@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
-      <HeadingText :text="headingText" />
-      <SubText :sub-text="subText" :sub-text-active="subTextActive" />
+      <BaseHeadingText :text="headingText" />
+      <BaseSubText :sub-text="subText" :sub-text-active="subTextActive" />
     </div>
 </template>
 

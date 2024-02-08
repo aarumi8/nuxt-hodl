@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="page-intro">
-      <PageIntroTextView
+      <ViewsPageIntroTextView
         :heading-text="'Web3 Tokens by the amount of the reserves in their vault'"
         :sub-text="'The total value of all vaults on Hodl Industries is'"
         :sub-text-active="'$200M'"
       />
 
       <div class="button-wrapper">
-        <CreateVaultButton buttonColor="#FFF" buttonText="Create new Vault" />
+        <CustomButtonsCreateVaultButton buttonColor="#FFF" buttonText="Create new Vault" />
       </div>
     </div>
     <div class="margin-wrapper-40-24">
-      <VaultsList />
+      <ViewsVaultsList />
     </div>
     
   </div>

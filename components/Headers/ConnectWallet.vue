@@ -10,7 +10,7 @@
 .connect-wallet {
   display: flex;
   white-space: nowrap;
-  padding: 1.85vh 2.08vw;
+  padding: 15px 30px;
   justify-content: center;
   align-items: center;
   border-radius: 15px;
@@ -30,7 +30,7 @@
 .connect-wallet-mobile {
   display: none;
   white-space: nowrap;
-  padding: 1vh 4vw;
+  padding: 10px 20px;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -49,9 +49,9 @@
 
 @media (max-width: 767px) {
   .connect-wallet-mobile {
-    margin-right: 4vw;
-    margin-top: 4vw;
-    margin-bottom: 4vw;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex; /* Show connect wallet button on mobile */
   }
 

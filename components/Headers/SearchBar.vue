@@ -68,7 +68,7 @@ const handleSearch = () => {
   display: flex;
   position: relative;
   width: 100%;
-  padding: 2vh 1.08vw;
+  padding: 15px 30px;
   align-items: center;
   gap: 10px;
   border-radius: 15px;
@@ -100,18 +100,21 @@ input:focus {
   flex-direction: column;
   position: absolute;
   width: 100%;
-  left: 0;
+  left: -1px;
   top: 103%;
   background: rgb(48, 48, 48);
   border-radius: 0 0 15px 15px;
   overflow: hidden;
   z-index: 10;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .loading,
 .result,
 .not-found {
-  padding: 1.85vh 1.08vw;
+  padding: 15px 30px;
   color: #fff;
   font-family: "Gilroy", sans-serif;
   font-size: 1rem;
@@ -126,10 +129,10 @@ input:focus {
   .search-bar {
     background: rgb(48, 48, 48);
     position: absolute;
+    left: 50%; /* Set left to 50% of the viewport width */
+    transform: translateX(-50%);
     top: 120%;
-    width: 90vw;
-    margin-right: 4vw;
-    margin-left: 4vw;
+    width: 80vw;
   }
 }
 </style>

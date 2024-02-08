@@ -16,9 +16,9 @@
 }
 @media (max-width: 767px) {
   .logo {
-    margin-left: 4vw;
-    margin-top: 4vw;
-    margin-bottom: 4vw;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 </style>

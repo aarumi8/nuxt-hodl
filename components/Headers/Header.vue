@@ -1,8 +1,8 @@
 <template>
   <header class="header">
-    <LogoLink />
-    <Navigation />
-    <SearchBar v-if="showMobileSearchBar" />
+    <HeadersLogoLink />
+    <HeadersNavigation />
+    <HeadersSearchBar v-if="showMobileSearchBar" />
 
     <div class="searchAndButton">
       <!-- Mobile Search Icon -->
@@ -12,7 +12,7 @@
         @click="toggleMobileSearch"
       ></span>
 
-      <ConnectWallet />
+      <HeadersConnectWallet />
     </div>
   </header>
 </template>
@@ -53,7 +53,7 @@ onUnmounted(() => {
   position: relative;
   justify-content: space-between;
   align-items: center;
-  gap: 2vw;
+  gap: 40px;
   width: 100%;
 }
 
@@ -72,7 +72,7 @@ onUnmounted(() => {
 .searchAndButton {
   display: flex;
   align-items: center;
-  gap: 3vw;
+  gap: 20px;
 }
 
 @media (max-width: 767px) {
