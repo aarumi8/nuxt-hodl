@@ -3,17 +3,17 @@
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th class="desktop">Price</th>
-          <th class="desktop">Floor Price</th>
-          <th class="desktop">Market Cap</th>
-          <th class="fmcap">Floor Market Cap</th>
-          <th class="desktop" style="text-align: right">Backed %</th>
+          <template v-for="(column, index) in columns" :key="index">
+            <th v-if="index < 2">{{ column }}</th>
+            <th v-else-if="index === columns.length - 1" class="desktop" style="text-align: right">{{ column }}</th>
+            <th v-else-if="index === columns.length - 2" class="fmcap">{{ column }}</th>
+            <th v-else class="desktop">{{ column }}</th>
+          </template>
         </tr>
       </thead>
       <tbody>
         <template v-for="(vault, index) in vaults" :key="vault.id">
+
           <tr class="item" @click="toggleDetail(vault.id)">
             <td>
               {{ index + 1 }}
@@ -27,12 +27,17 @@
                 </div>
               </div>
             </td>
+
             <td class="desktop">{{ vault.price }}</td>
             <td class="desktop">{{ vault.floorPrice }}</td>
-            <td class="desktop">{{ vault.mcap }}</td>
+            
+            <td v-if="vault.mcap" class="desktop">{{ vault.mcap  }}</td>
+            <td v-if="vault.amount" class="desktop">{{ vault.amount  }}</td>
+
             <td class="fmcap">
               <div class="fmcap-wrapper">
-                {{ vault.fmcap }}
+                <span v-if="vault.fmcap">{{ vault.fmcap }}</span>
+                <span v-if="vault.value">{{ vault.value }}</span>
                 <span
                   v-if="expandedVaultId === vault.id"
                   class="expandVaultMobile"
@@ -44,8 +49,10 @@
                 ></span>
               </div>
             </td>
+
             <td class="desktop" style="text-align: right">
-              {{ vault.backedPercent }}
+              <span v-if="vault.backedPercent">{{ vault.backedPercent }}</span>
+              <span v-if="vault.exValue">{{ vault.exValue }}</span>
             </td>
           </tr>
 
@@ -62,18 +69,18 @@
 
             <td style="border-top: 0px; padding-top: 0px !important">
               <div class="mobile-detail">
-                <div class="cell" style="color: rgb(140, 140, 140)">Price</div>
+                <div class="cell" style="color: rgb(140, 140, 140)">{{columns[2]}}</div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  Floor Price
+                  {{columns[3]}}
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  Market Cap
+                  {{columns[4]}}
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  Floor Market Cap
+                  {{columns[5]}}
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  Backed %
+                  {{columns[6]}}
                 </div>
               </div>
             </td>
@@ -88,21 +95,29 @@
               <div class="mobile-detail">
                 <div class="cell">{{ vault.price }}</div>
                 <div class="cell">{{ vault.floorPrice }}</div>
-                <div class="cell">{{ vault.mcap }}</div>
-                <div class="cell">{{ vault.fmcap }}</div>
-                <div class="cell">{{ vault.backedPercent }}</div>
+
+                <div v-if="vault.mcap" class="cell">{{ vault.mcap }}</div>
+                <div v-if="vault.fmcap" class="cell">{{ vault.fmcap }}</div>
+                <div v-if="vault.backedPercent" class="cell">{{ vault.backedPercent }}</div>
+
+                <div v-if="vault.amount" class="cell">{{ vault.amount }}</div>
+                <div v-if="vault.value" class="cell">{{ vault.value }}</div>
+                <div v-if="vault.exValue" class="cell">{{ vault.exValue }}</div>
               </div>
             </td>
           </tr>
 
           <tr v-if="expandedVaultId === vault.id" class="mobile-detail-btn">
             <td style="border-top: 0px; padding: 0px 0px 15px 0px" colspan="3">
-              <nuxt-link style="text-decoration: none" :to="`/vault/${vault.address}`">
-              <CustomButtonsLearnMoreButton
-                buttonColor="rgb(48, 48, 48)"
-                buttonText="Learn more"
-                textColor="#fff"
-              />
+              <nuxt-link
+                style="text-decoration: none"
+                :to="`/vault/${vault.address}`"
+              >
+                <CustomButtonsLearnMoreButton
+                  buttonColor="rgb(48, 48, 48)"
+                  buttonText="Learn more"
+                  textColor="#fff"
+                />
               </nuxt-link>
             </td>
           </tr>
@@ -114,38 +129,33 @@
 
 
 <script setup lang="ts">
+// Define an interface for vault objects
+interface Vault {
+  id: number;
+  address: string;
+  image: string;
+  name: string;
+  ticker: string;
+  price: string;
+  floorPrice: string;
+  mcap: string;
+  fmcap: string;
+  backedPercent: string;
+  amount: string,
+  value: string,
+  exValue: string
+}
+
+const props = defineProps({
+  columns: Array,
+  vaults: [Object],
+});
 const expandedVaultId = ref(null);
 // Sample data structure for vaults, replace or fetch from your backend/api
-const vaults = [
-  {
-    id: 0,
-    name: "Router Protocol",
-    ticker: "$ROUTE",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    price: "$100",
-    floorPrice: "$90",
-    mcap: "$1M",
-    fmcap: "$900K",
-    backedPercent: "90%",
-    address: "0x1234",
-  },
-  {
-    id: 1,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    floorPrice: "$90",
-    mcap: "$1M",
-    fmcap: "$900K",
-    backedPercent: "90%",
-    address: "0x12345",
-  },
-  // Add more vault items as needed
-];
+
 
 async function toggleDetail(id: Number) {
-  const vault = vaults.find(v => v.id === id);
+  const vault = props.vaults.find((v: Vault) => v.id === id);
   if (!vault) return; // Exit if no vault found
 
   if (window.innerWidth > 868) {
