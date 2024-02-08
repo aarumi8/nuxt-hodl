@@ -26,20 +26,30 @@
               </div>
             </td>
             <td>
-              {{ vault.name }}
+              <div style="display:flex; align-items:center;">
+                <img :src="vault.image"  class="vault-image" />
+                <div>
+                  {{ vault.name }} 
+                  <span class="ticker">{{ vault.ticker }}</span>
+                </div>
+              </div>
               <div v-if="expandedVaultId === vault.id" class="mobile-detail">
-                <div class="cell">Price</div>
-                <div class="cell">Floor Price</div>
-                <div class="cell">Market Cap</div>
-                <div class="cell">Floor Market Cap</div>
-                <div class="cell">Backed %</div>
+                <div class="cell" style='color: rgb(140, 140, 140)'>Price</div>
+                <div class="cell" style='color: rgb(140, 140, 140)'>Floor Price</div>
+                <div class="cell" style='color: rgb(140, 140, 140)'>Market Cap</div>
+                <div class="cell" style='color: rgb(140, 140, 140)'>Floor Market Cap</div>
+                <div class="cell" style='color: rgb(140, 140, 140)'>Backed %</div>
               </div>
             </td>
             <td class="desktop">{{ vault.price }}</td>
             <td class="desktop">{{ vault.floorPrice }}</td>
             <td class="desktop">{{ vault.mcap }}</td>
             <td class="fmcap">
-              {{ vault.fmcap }}
+              <div style="display:flex; align-items:center; justify-content: end;">
+                {{ vault.fmcap }}
+                <span v-if="expandedVaultId === vault.id" class="expandVaultMobile"></span>
+                <span v-else class="expandVaultMobile" style="transform: rotate(-180deg)"></span>
+              </div>
               <div v-if="expandedVaultId === vault.id" class="mobile-detail">
                 <div class="cell">{{ vault.price }}</div>
                 <div class="cell">{{ vault.floorPrice }}</div>
@@ -72,8 +82,8 @@
 const expandedVaultId = ref(null);
 // Sample data structure for vaults, replace or fetch from your backend/api
 const vaults = [
-  { id: 1, name: 'Vault A', price: '$100', floorPrice: '$90', mcap: '$1M', fmcap: '$900K', backedPercent: '90%' },
-  { id: 2, name: 'Vault A', price: '$100', floorPrice: '$90', mcap: '$1M', fmcap: '$900K', backedPercent: '90%' },
+  { id: 1, name: 'Router Protocol', ticker: '$ROUTE', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png', price: '$100', floorPrice: '$90', mcap: '$1M', fmcap: '$900K', backedPercent: '90%' },
+  { id: 2, name: 'Vault A', ticker: '$UNI', price: '$100', floorPrice: '$90', mcap: '$1M', fmcap: '$900K', backedPercent: '90%' },
   // Add more vault items as needed
 ];
 
@@ -137,6 +147,34 @@ td {
 tr:last-of-type td {
   border-bottom: 1px solid rgb(71, 71, 71); /* Adds bottom border to the last row */
 }
+.ticker {
+  color: rgb(140, 140, 140);
+  font-family: Gilroy;
+  font-style: normal;
+  font-weight: 500;
+}
+.vault-image {
+  width: 24px;
+  height: 24px;
+  object-fit: cover; /* Ensure the image covers the area, adjust as needed */
+  margin-right: 10px; /* Space between image and name */
+  border-radius: 50%; /* Makes the image circular */
+  background-color: #fff;
+}
+.expandVaultMobile {
+  display: none;
+}
+@media (max-width: 1300px) {
+td, th {
+  padding: 30px 15px;
+}
+}
+@media (max-width: 1100px) {
+td, th {
+  padding: 30px 10px;
+}
+}
+
 @media (max-width: 868px) {
   .desktop {
     display: none;
@@ -156,6 +194,19 @@ tr:last-of-type td {
   th {
     padding: 20px 10px;
     font-size: 1rem;
+  }
+  .expandVaultMobile {
+    display: flex;
+    width: 10px;
+    height: 5px;
+    margin-left: 5px;
+    background-image: url("~/assets/expandMobileList.svg");
+  }
+}
+
+@media (max-width: 500px) {
+  td, th {
+    padding: 20px 20px;
   }
 }
 </style>
