@@ -13,7 +13,7 @@
 }
 @media (max-width: 767px) {
   .layout {
-    margin: 3.9vh 4vw 3.9vh 4vw;
+    margin: 3.9vh 4vw 30% 4vw;
   }
 }
 
