@@ -5,15 +5,22 @@
         <tr>
           <template v-for="(column, index) in columns" :key="index">
             <th v-if="index < 2">{{ column }}</th>
-            <th v-else-if="index === columns.length - 1" class="desktop" style="text-align: right">{{ column }}</th>
-            <th v-else-if="index === columns.length - 2" class="fmcap">{{ column }}</th>
+            <th
+              v-else-if="index === columns.length - 1"
+              class="desktop"
+              style="text-align: right"
+            >
+              {{ column }}
+            </th>
+            <th v-else-if="index === columns.length - 2" class="fmcap">
+              {{ column }}
+            </th>
             <th v-else class="desktop">{{ column }}</th>
           </template>
         </tr>
       </thead>
       <tbody>
         <template v-for="(vault, index) in vaults" :key="vault.id">
-
           <tr class="item" @click="toggleDetail(vault.id)">
             <td>
               {{ index + 1 }}
@@ -30,9 +37,9 @@
 
             <td class="desktop">{{ vault.price }}</td>
             <td class="desktop">{{ vault.floorPrice }}</td>
-            
-            <td v-if="vault.mcap" class="desktop">{{ vault.mcap  }}</td>
-            <td v-if="vault.amount" class="desktop">{{ vault.amount  }}</td>
+
+            <td v-if="vault.mcap" class="desktop">{{ vault.mcap }}</td>
+            <td v-if="vault.amount" class="desktop">{{ vault.amount }}</td>
 
             <td class="fmcap">
               <div class="fmcap-wrapper">
@@ -69,18 +76,20 @@
 
             <td style="border-top: 0px; padding-top: 0px !important">
               <div class="mobile-detail">
-                <div class="cell" style="color: rgb(140, 140, 140)">{{columns[2]}}</div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{columns[3]}}
+                  {{ columns[2] }}
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{columns[4]}}
+                  {{ columns[3] }}
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{columns[5]}}
+                  {{ columns[4] }}
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{columns[6]}}
+                  {{ columns[5] }}
+                </div>
+                <div class="cell" style="color: rgb(140, 140, 140)">
+                  {{ columns[6] }}
                 </div>
               </div>
             </td>
@@ -98,7 +107,9 @@
 
                 <div v-if="vault.mcap" class="cell">{{ vault.mcap }}</div>
                 <div v-if="vault.fmcap" class="cell">{{ vault.fmcap }}</div>
-                <div v-if="vault.backedPercent" class="cell">{{ vault.backedPercent }}</div>
+                <div v-if="vault.backedPercent" class="cell">
+                  {{ vault.backedPercent }}
+                </div>
 
                 <div v-if="vault.amount" class="cell">{{ vault.amount }}</div>
                 <div v-if="vault.value" class="cell">{{ vault.value }}</div>
@@ -141,9 +152,9 @@ interface Vault {
   mcap: string;
   fmcap: string;
   backedPercent: string;
-  amount: string,
-  value: string,
-  exValue: string
+  amount: string;
+  value: string;
+  exValue: string;
 }
 
 const props = defineProps({
@@ -152,7 +163,6 @@ const props = defineProps({
 });
 const expandedVaultId = ref(null);
 // Sample data structure for vaults, replace or fetch from your backend/api
-
 
 async function toggleDetail(id: Number) {
   const vault = props.vaults.find((v: Vault) => v.id === id);

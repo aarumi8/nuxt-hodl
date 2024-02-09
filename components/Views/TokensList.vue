@@ -5,14 +5,15 @@
         <tr>
           <template v-for="(column, index) in columns" :key="index">
             <th v-if="index < 2">{{ column }}</th>
-            <th v-else-if="index === columns.length - 1" class="fmcap" >{{ column }}</th>
+            <th v-else-if="index === columns.length - 1" class="fmcap">
+              {{ column }}
+            </th>
             <th v-else class="desktop">{{ column }}</th>
           </template>
         </tr>
       </thead>
       <tbody>
         <template v-for="(vault, index) in vaults" :key="vault.id">
-
           <tr class="item" @click="toggleDetail(vault.id)">
             <td>
               {{ index + 1 }}
@@ -57,12 +58,14 @@
 
             <td style="border-top: 0px; padding-top: 0px !important">
               <div class="mobile-detail">
-                <div class="cell" style="color: rgb(140, 140, 140)">{{columns[2]}}</div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{columns[3]}}
+                  {{ columns[2] }}
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{columns[4]}}
+                  {{ columns[3] }}
+                </div>
+                <div class="cell" style="color: rgb(140, 140, 140)">
+                  {{ columns[4] }}
                 </div>
               </div>
             </td>
@@ -117,9 +120,9 @@ interface Vault {
   mcap: string;
   fmcap: string;
   backedPercent: string;
-  amount: string,
-  value: string,
-  exValue: string
+  amount: string;
+  value: string;
+  exValue: string;
 }
 
 const props = defineProps({
@@ -129,13 +132,15 @@ const props = defineProps({
 const expandedVaultId = ref(null);
 // Sample data structure for vaults, replace or fetch from your backend/api
 
-
 async function toggleDetail(id: Number) {
   const vault = props.vaults.find((v: Vault) => v.id === id);
   if (!vault) return; // Exit if no vault found
 
   if (window.innerWidth > 868) {
-    await navigateTo(`https://etherscan.com/${vault.address}`, { external: true, open: {target: "_blank"} });
+    await navigateTo(`https://etherscan.com/${vault.address}`, {
+      external: true,
+      open: { target: "_blank" },
+    });
   } else {
     expandedVaultId.value = expandedVaultId.value === id ? null : id;
   }
@@ -144,12 +149,14 @@ async function toggleDetail(id: Number) {
 
 <style scoped>
 .tokens-list {
-    background-color: rgb(37, 37, 37);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    border: 1px solid rgb(71, 71, 71);
+  background-color: rgb(37, 37, 37);
+  width: 100%;
+  overflow: auto;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  border: 1px solid rgb(71, 71, 71);
 }
 
 tr:first-of-type th {
@@ -157,12 +164,13 @@ tr:first-of-type th {
 }
 
 @media (max-width: 868px) {
-    .tokens-list {
-        border: 0px;
-        background-color: rgba(0,0,0,0);
-    }
-    tr:first-of-type th {
-  border-top: 1px solid rgb(71, 71, 71); /* Adds bottom border to the last row */
-}
+  .tokens-list {
+    border: 0px;
+    overflow: visible;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  tr:first-of-type th {
+    border-top: 1px solid rgb(71, 71, 71); /* Adds bottom border to the last row */
+  }
 }
 </style>
