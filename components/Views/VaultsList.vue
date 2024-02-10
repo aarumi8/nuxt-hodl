@@ -128,6 +128,7 @@
                   buttonColor="rgb(48, 48, 48)"
                   buttonText="Learn more"
                   textColor="#fff"
+                  border="1px solid rgb(104,104,104)"
                 />
               </nuxt-link>
             </td>

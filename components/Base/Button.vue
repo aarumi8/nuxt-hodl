@@ -8,6 +8,7 @@
 const props = defineProps({
   color: String,
   textColor: String,
+  border: String,
   onClick: Function,
 });
 const emit = defineEmits(['click']);
@@ -25,6 +26,7 @@ const buttonStyles = computed(() => ({
   fontSize: '1.25rem',
   fontWeight: '500',
   color: props.textColor || '#000', // Default to black if no color is provided
+  border: props.border || 'border: 0px'
 }));
 </script>
 

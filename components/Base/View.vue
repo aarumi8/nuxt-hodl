@@ -11,7 +11,6 @@
 .wrapper-view {
     display: flex;
     flex-direction: column;
-    gap: 30px;
     padding: 20px;
     background-color: rgb(32,32,32);
     border-radius: 15px;

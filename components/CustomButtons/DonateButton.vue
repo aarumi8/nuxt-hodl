@@ -1,5 +1,5 @@
 <template>
-  <BaseButton :color="buttonColor" :textColor="textColor" :border="border" @click="handleClick">
+  <BaseButton :color="buttonColor" @click="handleClick">
     {{ buttonText }}
   </BaseButton>
 </template>
@@ -8,14 +8,12 @@
 const props = defineProps({
   buttonColor: String,
   buttonText: String,
-  textColor: String,
-  border: String
 });
 
 const emit = defineEmits(['click']);
 
 function handleClick() {
-  console.log('learn more btn')
+  console.log('create vault btn')
   // Additional logic for the ConnectButton click event
 }
 </script>

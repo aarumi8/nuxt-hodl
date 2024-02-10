@@ -1,5 +1,5 @@
 <template>
-  <BaseView>
+  <BaseView style="width: 100%">
     <ViewsTokenInfoUp :vault="props.vault" />
     <ViewsTokenInfoDown :vault="props.vault" />
   </BaseView>
@@ -10,6 +10,3 @@ const props = defineProps({
   vault: Object,
 });
 </script>
-
-<style scoped>
-</style>

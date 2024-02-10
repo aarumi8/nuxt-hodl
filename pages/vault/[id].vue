@@ -1,20 +1,29 @@
 <template>
   <div>
-    <div class="tokens-info-desktop">
-      <ViewsTokenInfo :vault="vault" />
-    </div>
+    <div class="vault-info"> 
 
-    <div class="tokens-info-mobile">
-      <ViewsTokenInfoUp :vault="vault" />
-    </div>
+      <div class="tokens-info-desktop">
+        <ViewsTokenInfo :vault="vault" />
+      </div>
 
-    <div class="tokens-info-mobile">
-      <ViewsTokenInfoDown :vault="vault" />
+      <div class="tokens-info-mobile">
+        <ViewsTokenInfoUp :vault="vault" />
+      </div>
+
+      <div class="tokens-info-mobile">
+        <ViewsTokenInfoDown :vault="vault" />
+      </div>
+
+      <div class="wrapper-vault-interact">
+        <ViewsVaultInteract :vault="vault" />
+      </div>
+
     </div>
 
     <div class="margin-wrapper-60"></div>
 
     <BaseHeadingText text="Vault Reserves Structure" />
+
     <div class="margin-wrapper-30-15"></div>
     <div class="wrapper">
       <ViewsTokensList
@@ -161,18 +170,27 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.vault-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+}
 .tokens-info-desktop {
   display: flex;
+  width: 25%;
 }
 .tokens-info-mobile {
   display: none;
+}
+.wrapper-vault-interact {
+  display:flex; width: 25%
 }
 .margin-wrapper-30-15 {
   margin-top: 30px;
 }
 .wrapper {
   display: flex;
-
   gap: 20px;
 }
 .wrapper-chart {
@@ -203,6 +221,9 @@ onUnmounted(() => {
   }
 }
 @media (max-width: 868px) {
+  .vault-info {
+    flex-direction: column;
+  }
   .tokens-info-desktop {
     display: none;
   }
@@ -218,5 +239,8 @@ onUnmounted(() => {
   .tokens-info-mobile {
     display: flex;
   }
+  .wrapper-vault-interact {
+  display:flex; width: 100%
+}
 }
 </style>

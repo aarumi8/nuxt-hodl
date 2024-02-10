@@ -38,6 +38,7 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-bottom: 30px;
 }
 .wrapper-pricing {
   display: flex;
@@ -60,7 +61,7 @@ const props = defineProps({
 .sub-price {
   color: #fff;
   font-family: Gilroy;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -68,6 +69,7 @@ const props = defineProps({
 @media (max-width: 868px) {
   .wrapper-token-info-up {
     width: 100%;
+    margin-bottom: 0px;
   }
 }
 </style>
