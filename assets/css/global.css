@@ -80,6 +80,14 @@ td {
 tr:last-of-type td {
   border-bottom: 1px solid rgb(71, 71, 71); /* Adds bottom border to the last row */
 }
+.label-text {
+  color: #FFF;
+  font-family: Gilroy;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
 @media (max-width: 1300px) {
   td,
   th {

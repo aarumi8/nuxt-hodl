@@ -1,5 +1,19 @@
 <template>
   <div>
+    <div class="tokens-info-desktop">
+      <ViewsTokenInfo :vault="vault" />
+    </div>
+
+    <div class="tokens-info-mobile">
+      <ViewsTokenInfoUp :vault="vault" />
+    </div>
+
+    <div class="tokens-info-mobile">
+      <ViewsTokenInfoDown :vault="vault" />
+    </div>
+
+    <div class="margin-wrapper-60"></div>
+
     <BaseHeadingText text="Vault Reserves Structure" />
     <div class="margin-wrapper-30-15"></div>
     <div class="wrapper">
@@ -26,6 +40,23 @@ interface Token {
   percentage: number;
   color: string;
 }
+
+const vault = {
+  id: 0,
+  name: "Router Protocol",
+  ticker: "$ROUTE",
+  image:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
+  price: "$100",
+  amount: "23",
+  total: "2323wadwa",
+  address: "0x1234",
+  floorPrice: "$23",
+  backedPercent: "14%",
+  mcap: "$555,555,555",
+  fmcap: "$555,555",
+  value: "$555",
+};
 
 const vaults = [
   {
@@ -98,8 +129,8 @@ const vaults = [
 const tokensAllocation = [
   { name: "Token A", percentage: 25, color: "#FFf" },
   { name: "Token B", percentage: 30, color: "#fff" },
-  { name: "Token C", percentage: 15, color: "#fff" },
-  { name: "Token D", percentage: 30, color: "#fff" },
+  { name: "Token C", percentage: 10, color: "#fff" },
+  { name: "Token D", percentage: 35, color: "#fff" },
 ];
 const tableComponent = ref(null);
 const contentComponent = ref(null);
@@ -130,12 +161,18 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.tokens-info-desktop {
+  display: flex;
+}
+.tokens-info-mobile {
+  display: none;
+}
 .margin-wrapper-30-15 {
   margin-top: 30px;
 }
 .wrapper {
   display: flex;
-  width: 100%;
+
   gap: 20px;
 }
 .wrapper-chart {
@@ -154,6 +191,9 @@ onUnmounted(() => {
   display: flex;
   width: 25%;
 }
+.margin-wrapper-60 {
+  margin-bottom: 60px;
+}
 @media (max-width: 960px) {
   .button-wrapper {
     width: 100%;
@@ -163,6 +203,9 @@ onUnmounted(() => {
   }
 }
 @media (max-width: 868px) {
+  .tokens-info-desktop {
+    display: none;
+  }
   .wrapper {
     flex-direction: column-reverse;
   }
@@ -171,6 +214,9 @@ onUnmounted(() => {
   }
   .margin-wrapper-30-15 {
     margin-top: 15px;
+  }
+  .tokens-info-mobile {
+    display: flex;
   }
 }
 </style>

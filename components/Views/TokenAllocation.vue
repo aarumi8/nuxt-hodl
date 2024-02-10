@@ -163,7 +163,7 @@ function drawChart() {
   color: #fff;
   font-size: 1.25rem;
   font-family: Gilroy;
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
   line-height: normal;
 }
