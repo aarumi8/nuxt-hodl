@@ -10,6 +10,8 @@
         <ViewsTokenInfoUp :vault="vault" />
       </div>
 
+      <ViewsVaultChart class="wrapper-vault-chart" :key="componentKey" />
+
       <div class="tokens-info-mobile">
         <ViewsTokenInfoDown :vault="vault" />
       </div>
@@ -38,6 +40,7 @@
           :key="componentKey"
         />
       </div>
+
     </div>
   </div>
 </template>
@@ -212,6 +215,9 @@ onUnmounted(() => {
 .margin-wrapper-60 {
   margin-bottom: 60px;
 }
+.wrapper-vault-chart {
+  width: 50%;
+}
 @media (max-width: 960px) {
   .button-wrapper {
     width: 100%;
@@ -241,6 +247,10 @@ onUnmounted(() => {
   }
   .wrapper-vault-interact {
   display:flex; width: 100%
+}
+.wrapper-vault-chart {
+  width: 100%;
+  height: 30vh;
 }
 }
 </style>

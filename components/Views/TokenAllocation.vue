@@ -109,38 +109,6 @@ function createCanvas() {
     },
   });
 }
-
-function drawChart() {
-  if (!canvas.value) return;
-  const ctx = canvas.value.getContext("2d");
-  if (!ctx) return;
-
-  canvas.value.height = canvas.value.width;
-  const centerX = canvas.value.width / 2;
-  const centerY = canvas.value.height / 2;
-  const outerRadius = (canvas.value.height / 100) * 50;
-  const innerRadius = (canvas.value.height / 100) * 30;
-  let startAngle = 0;
-
-  tokens.value.forEach((token: Token) => {
-    const angle = (token.percentage / 100) * 2 * Math.PI;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, outerRadius, startAngle, startAngle + angle);
-    ctx.lineTo(centerX, centerY);
-    ctx.fillStyle = token.color;
-    ctx.fill();
-    startAngle += angle;
-  });
-
-  // Making the inner circle transparent
-  ctx.globalCompositeOperation = "destination-out";
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, innerRadius, 0, 2 * Math.PI);
-  ctx.fill();
-
-  // Reset globalCompositeOperation to default value
-  ctx.globalCompositeOperation = "source-over";
-}
 </script>
 
 
