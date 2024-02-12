@@ -250,7 +250,7 @@ onUnmounted(() => {
 }
 .wrapper-vault-chart {
   width: 100%;
-  height: 30vh;
+  height: 40vh;
 }
 }
 </style>
