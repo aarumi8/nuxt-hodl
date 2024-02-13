@@ -18,6 +18,7 @@
           buttonColor="#fff"
           buttonText="Donate to Vault"
           textColor="#000"
+          @click="showDonateModal = true"
         />
         <div class="vault-grey-text" style="color: #fff !important; font-weight: 500 !important;">By depositing into Vault, you increase the Floor Price and Floor Market Cap of the token</div>
       </div>
@@ -31,6 +32,8 @@
         />
         <div class="vault-grey-text" style="color: #fff !important; font-weight: 500 !important;">By burning to withdraw, you burn {{vault.ticker}} token, and get a portion of the {{vault.ticker}} vault in exchange</div>
       </div>
+
+      <ModalsDonateVaultModal v-model="showDonateModal" />
     </div>
   </BaseView>
 </template>
@@ -39,6 +42,8 @@
 const props = defineProps({
   vault: Object,
 });
+
+const showDonateModal = ref(false);
 </script>
 
 <style scoped>
