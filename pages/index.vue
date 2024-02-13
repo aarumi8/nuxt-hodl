@@ -8,8 +8,11 @@
       />
 
       <div class="button-wrapper">
-        <CustomButtonsCreateVaultButton buttonColor="#FFF" buttonText="Create new Vault" />
+        <CustomButtonsCreateVaultButton buttonColor="#FFF" buttonText="Create new Vault" @click="showModal = true" />
       </div>
+
+      <ModalsCreateVaultModal v-model="showModal" />
+
     </div>
     <div class="margin-wrapper-40-24">
       <ViewsVaultsList
@@ -22,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+const showModal = ref(false);
 const vaults = [
   {
     id: 0,
