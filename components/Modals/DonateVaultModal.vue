@@ -10,6 +10,7 @@
             </div>
 
             <div class="modal-item-col">
+            <div class="modal-item-col">
                 <BaseSelectView />
             </div>
 
@@ -22,6 +23,7 @@
                     <div class="modal-sub-header-text">$4.56</div>
                 </div>
             </BaseView>
+            </div>
 
 
             <BaseButton @click="nextStep">Approve Transaction</BaseButton>
@@ -34,9 +36,11 @@
                     <div class="modal-header-text">Review</div>
                 </div>
 
+
+            <div class="modal-item-col">
             <BaseView>
-                <div class="modal-items-cols">  
-                    <div class="modal-sub-text">You Deposit</div>
+                <div class="modal-items-col">  
+                    <div class="modal-sub-text" style="margin-bottom: 10px">You Deposit</div>
                     <div class="modal-item-row" style="align-items:center">
                         <div class="modal-item-col" style="gap: 5px">
                             <div class="modal-header-text">159 $TOKEN</div>
@@ -58,6 +62,7 @@
                     <div class="modal-sub-header-text">$4.56</div>
                 </div>
             </BaseView>
+            </div>
 
 
                 <BaseButton @click="closeModal">Proceed</BaseButton>

@@ -7,6 +7,15 @@
   </div>
 </template>
 
+<script setup lang="ts">
+useHead({
+  title: 'HODL',
+  meta : [
+    { name: 'HODL', content: 'APP of HODL'}
+  ]
+})
+</script>
+
 <style scoped>
 .layout {
   margin-top: 40px;

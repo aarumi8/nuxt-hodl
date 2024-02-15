@@ -1,5 +1,5 @@
 <template>
-  <BaseButton :color="buttonColor" :textColor="textColor" :border="border" @click="handleClick">
+  <BaseButton :color="buttonColor" :textColor="textColor" :border="border" @click="$emit('click')">
     {{ buttonText }}
   </BaseButton>
 </template>

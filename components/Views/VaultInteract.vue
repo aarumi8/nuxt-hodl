@@ -29,11 +29,13 @@
           buttonText="Burn to Withdraw"
           textColor="#fff"
           border="1px solid rgb(104,104,104)"
+          @click="showWithdrawModal = true"
         />
         <div class="vault-grey-text" style="color: #fff !important; font-weight: 500 !important;">By burning to withdraw, you burn {{vault.ticker}} token, and get a portion of the {{vault.ticker}} vault in exchange</div>
       </div>
 
       <ModalsDonateVaultModal v-model="showDonateModal" />
+      <ModalsWithdrawVaultModal v-model="showWithdrawModal" />
     </div>
   </BaseView>
 </template>
@@ -44,6 +46,7 @@ const props = defineProps({
 });
 
 const showDonateModal = ref(false);
+const showWithdrawModal = ref(false)
 </script>
 
 <style scoped>
