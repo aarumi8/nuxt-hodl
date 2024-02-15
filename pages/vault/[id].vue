@@ -147,6 +147,8 @@ const tokensAllocation = [
 const tableComponent = ref(null);
 const contentComponent = ref(null);
 
+let lastWindowWidth = window.innerWidth; // Store the initial width
+
 async function adjustHeight() {
   await nextTick();
   if (window.innerWidth > 868) {
@@ -158,8 +160,12 @@ async function adjustHeight() {
 }
 const componentKey = ref(0);
 const onResize = () => {
-  adjustHeight();
-  componentKey.value++;
+  // Only proceed if the width has actually changed
+  if (window.innerWidth !== lastWindowWidth) {
+    adjustHeight();
+    componentKey.value++;
+    lastWindowWidth = window.innerWidth; // Update the last known width
+  }
 };
 
 onMounted(async () => {
