@@ -101,6 +101,9 @@ function createCanvas() {
     options: {
       responsive: true,
       maintainAspectRatio: true,
+            animation : {
+        duration: 0
+      },
       plugins: {
         legend: {
           display: false,

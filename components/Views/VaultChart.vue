@@ -139,6 +139,9 @@ function createCanvas() {
     maintainAspectRatio: false,
 
     options: {
+      animation : {
+        duration: 0
+      },
       layout: {
         autoPadding: false,
       },
@@ -247,5 +250,11 @@ function createCanvas() {
     display: flex;
     height: unset;
   }
+}
+
+@media (max-width: 768px) {
+  .menu-btn-item {
+    font-size: 12px
+}
 }
 </style>
