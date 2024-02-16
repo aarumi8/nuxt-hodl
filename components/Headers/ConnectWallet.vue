@@ -1,9 +1,13 @@
 <template>
-  <button class="connect-wallet">Connect Wallet</button>
-  <button class="connect-wallet-mobile">Connect</button>
+  <button v-if="!account.connected" class="connect-wallet" @click="connect()">Connect Wallet</button>
+  <button v-else class="connect-wallet" @click="disconnect()">{{account.shortAddress}}</button>
+
+  <button v-if="!account.connected" class="connect-wallet-mobile" @click="connect()">Connect</button>
+  <button v-else class="connect-wallet-mobile" @click="disconnect()">{{account.shortAddress}}</button>
 </template>
 
 <script setup lang="ts">
+import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
 </script>
  
 <style scoped>

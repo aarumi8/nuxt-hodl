@@ -12,5 +12,15 @@ export default defineNuxtConfig({
         imports: ['Chart', 'registerables']
       },
     ]
+  },
+  plugins: [
+    '~/plugins/web3-auth.ts'
+  ],
+  runtimeConfig: {
+    wcProjectId: process.env.WC_PROJECT_ID,
+    public: {
+      baseURL: process.env.BASE_URL,
+      wcProjectId: process.env.WC_PROJECT_ID
+    }
   }
 })
