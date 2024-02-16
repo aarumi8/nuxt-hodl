@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 </script>
-
+ 
 <style scoped>
 .connect-wallet {
   display: flex;
