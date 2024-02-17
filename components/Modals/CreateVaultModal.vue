@@ -98,6 +98,8 @@
 </template>
 
 <script setup lang="ts">
+import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
+
 const props = defineProps({
   modelValue: Boolean,
 });
@@ -109,6 +111,11 @@ const modalStep = ref(1);
 const tokenVaultAddress = ref('$TOKEN Vault Address');
 
 function nextStep() {
+  if(!account.connected) {
+    alert('Connect a wallet to continue')
+    closeModal()
+    return
+  }
   modalStep.value++;
 }
 
@@ -134,6 +141,7 @@ function closeModal() {
   emit("update:modelValue", false);
   modalStep.value = 1;
 }
+
 </script>
 
 <style scoped>

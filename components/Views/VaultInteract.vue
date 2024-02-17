@@ -18,7 +18,7 @@
           buttonColor="#fff"
           buttonText="Donate to Vault"
           textColor="#000"
-          @click="showDonateModal = true"
+          @click="handleShowDonateModal"
         />
         <div class="vault-grey-text" style="color: #fff !important; font-weight: 500 !important;">By depositing into Vault, you increase the Floor Price and Floor Market Cap of the token</div>
       </div>
@@ -29,7 +29,7 @@
           buttonText="Burn to Withdraw"
           textColor="#fff"
           border="1px solid rgb(104,104,104)"
-          @click="showWithdrawModal = true"
+          @click="handleShowWithdrawModal"
         />
         <div class="vault-grey-text" style="color: #fff !important; font-weight: 500 !important;">By burning to withdraw, you burn {{vault.ticker}} token, and get a portion of the {{vault.ticker}} vault in exchange</div>
       </div>
@@ -41,12 +41,32 @@
 </template>
 
 <script setup lang="ts">
+import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
+
 const props = defineProps({
   vault: Object,
 });
 
 const showDonateModal = ref(false);
 const showWithdrawModal = ref(false)
+
+// Function to handle modal showing logic
+function handleShowDonateModal() {
+  if (account.connected) {
+    showDonateModal.value = true;
+  } else {
+    alert('Please connect your wallet');
+  }
+}
+
+// Function to handle modal showing logic
+function handleShowWithdrawModal() {
+  if (account.connected) {
+    showWithdrawModal.value = true;
+  } else {
+    alert('Please connect your wallet');
+  }
+}
 </script>
 
 <style scoped>

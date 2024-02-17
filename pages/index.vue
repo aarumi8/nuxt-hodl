@@ -8,7 +8,7 @@
       />
 
       <div class="button-wrapper">
-        <CustomButtonsCreateVaultButton buttonColor="#FFF" buttonText="Create new Vault" @click="showModal = true" />
+        <CustomButtonsCreateVaultButton buttonColor="#FFF" buttonText="Create new Vault" @click="handleShowModal" />
       </div>
 
       <ModalsCreateVaultModal v-model="showModal" />
@@ -25,6 +25,8 @@
 </template>
 
 <script setup lang="ts">
+import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
+
 const showModal = ref(false);
 const vaults = [
   {
@@ -53,6 +55,16 @@ const vaults = [
   },
   // Add more vault items as needed
 ];
+const { data, error, pending } = useFetch('https://api.hodl.industries/factory/vaults?skip=0&limit=1')
+console.log(data)
+// Function to handle modal showing logic
+function handleShowModal() {
+  if (account.connected) {
+    showModal.value = true;
+  } else {
+    alert('Please connect your wallet to create a new vault.');
+  }
+}
 </script>
 
 <style scoped>
