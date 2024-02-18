@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
+const config = useRuntimeConfig()
 
 const showModal = ref(false);
 const vaults = [
@@ -55,8 +56,9 @@ const vaults = [
   },
   // Add more vault items as needed
 ];
-const { data, error, pending } = useFetch('https://api.hodl.industries/factory/vaults?skip=0&limit=1')
+const { data, error, pending } = useFetch(config.public.baseURL + '/factory/vaults?skip=0&limit=1')
 console.log(data)
+console.log(1)
 // Function to handle modal showing logic
 function handleShowModal() {
   if (account.connected) {

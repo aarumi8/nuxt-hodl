@@ -1,24 +1,31 @@
 <template>
-  <div>
+  <div v-if="account.connected">
     <div class="page-intro">
       <ViewsPageIntroTextView
         :heading-text="'Your wallet portfolio'"
         :sub-text="'The total extractable value of your portfolio is'"
         :sub-text-active="'$20,045'"
       />
-
     </div>
+
     <div class="margin-wrapper-40-24">
       <ViewsVaultsList
         :columns="['#', 'Name', 'Price', 'Floor Price', 'Amount', 'Value', 'Extractable Vaule']"
         :vaults="vaults"
        />
     </div>
-    
+  </div>
+
+  <div v-else class="wallet-not-connected">
+    <BaseView>
+      <BaseHeadingText text="Please, connect wallet to view your portfolio" />
+    </BaseView>
   </div>
 </template>
 
 <script setup lang="ts">
+import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
+
 const vaults = [
   {
     id: 0,
@@ -60,6 +67,16 @@ const vaults = [
 .button-wrapper {
   display: flex;
   width: 25%;
+}
+.wallet-not-connected {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
+  justify-content: center;
+  text-align: center;
 }
 @media (max-width: 960px) {
   .button-wrapper {

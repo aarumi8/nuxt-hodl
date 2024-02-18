@@ -6,7 +6,7 @@ export default defineNuxtPlugin(nuxtApp => {
 
     const web3Auth = createWeb3Auth({
         projectId: config.public.wcProjectId,
-        chains: [Chains.mainnet],
+        chains: [Chains.sepolia, Chains.mainnet],
     });
 
     nuxtApp.vueApp.use(web3Auth);

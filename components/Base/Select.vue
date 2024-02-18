@@ -24,17 +24,27 @@
 interface Option {
   value: string;
   label: string;
+  address: string;
   imgSrc?: string;
 }
 
-const options = ref<Option[]>([
-  { value: "option1", label: "Option 1", imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" },
-  { value: "option2", label: "Option 2" },
-  // Add more options here
-]);
+const props = defineProps<{
+  options: Option[];
+  modelValue?: Option;
+}>();
+
+const emit = defineEmits(["update:modelValue"]);
+
+// const options = ref<Option[]>([
+//   { value: "option1", label: "Option 1", imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" },
+//   { value: "option2", label: "Option 2" },
+//   // Add more options here
+// ]);
+
+const options = props.options
 
 const placeholder = "Select a Token";
-const selectedOption = ref<Option>({ value: "", label: "" });
+var selectedOption = props.modelValue;
 const isOpen = ref(false);
 
 function toggleDropdown() {
@@ -42,7 +52,8 @@ function toggleDropdown() {
 }
 
 function selectOption(option: Option) {
-  selectedOption.value = option;
+  selectedOption = option;
+  emit('update:modelValue', selectedOption)
   isOpen.value = false;
 }
 </script>

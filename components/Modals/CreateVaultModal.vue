@@ -42,7 +42,7 @@
 
                 <div class="modal-item-col">
                     <div class="modal-sub-text">Select a token to back</div>
-                    <BaseSelect />
+                    <BaseSelect v-model="selectedToken" :options=tokens />
                 </div>
 
                 <div class="modal-item-col">
@@ -61,7 +61,7 @@
                 <BaseView>
                 <div class="modal-item-row">
                     <div class="modal-sub-text">Estimated Gas Fee</div>
-                    <div class="modal-sub-header-text">$4.56</div>
+                    <div class="modal-sub-header-text">{{ gasPrice }}</div>
                 </div>
                 </BaseView>
 
@@ -98,7 +98,12 @@
 </template>
 
 <script setup lang="ts">
-import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
+import { account, accountDetails, connect, disconnect, fetchGasPrice } from '@kolirt/vue-web3-auth'
+const { gasPrice, fetchContractGas } = useGasPrice();
+
+const config = useRuntimeConfig()
+var tokens = []
+const selectedToken = ref({ value: "", label: "", address: "" });
 
 const props = defineProps({
   modelValue: Boolean,
@@ -116,8 +121,22 @@ function nextStep() {
     closeModal()
     return
   }
+
+  if(modalStep.value === 2 && !selectedToken.value.address) {
+    alert('Please, choose a token')
+    return
+  }
   modalStep.value++;
 }
+
+watch(
+  () => account.connected,
+  (newStatus: Boolean) => {
+    if(newStatus) {
+      fetchData()
+    }
+  }
+);
 
 watch(
   () => props.modelValue,
@@ -142,6 +161,31 @@ function closeModal() {
   modalStep.value = 1;
 }
 
+async function fetchTokens() {
+    const { data, error, pending } = await useFetch(config.public.baseURL + '/user?address=' + account.address)
+    for(var i = 0; i < data.value.balances.length; i++) {
+      tokens.push({
+        'value': data.value.balances[i].token.name,
+        'label': data.value.balances[i].token.name,
+        'address': data.value.balances[i].token.tokenAddress
+      })
+    }
+}
+
+function fetchData() {
+  try {
+    fetchTokens()
+    fetchContractGas()
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+onMounted(() => {
+  if(account.connected) {
+    fetchData()
+  }
+})
 </script>
 
 <style scoped>
