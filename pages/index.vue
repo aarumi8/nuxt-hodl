@@ -57,8 +57,7 @@ const vaults = [
   // Add more vault items as needed
 ];
 const { data, error, pending } = useFetch(config.public.baseURL + '/factory/vaults?skip=0&limit=1')
-console.log(data)
-console.log(1)
+
 // Function to handle modal showing logic
 function handleShowModal() {
   if (account.connected) {

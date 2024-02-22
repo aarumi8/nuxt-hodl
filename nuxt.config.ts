@@ -20,7 +20,8 @@ export default defineNuxtConfig({
     wcProjectId: process.env.WC_PROJECT_ID,
     public: {
       baseURL: process.env.BASE_URL,
-      wcProjectId: process.env.WC_PROJECT_ID
+      wcProjectId: process.env.WC_PROJECT_ID,
+      factoryAddress: process.env.FACTORY_ADDRESS
     }
   }
 })
