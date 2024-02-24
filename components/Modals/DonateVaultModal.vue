@@ -11,7 +11,7 @@
 
             <div class="modal-item-col">
             <div class="modal-item-col">
-                <BaseSelectView />
+                <BaseSelectView v-model="selectedToken" :options="tokens" />
             </div>
 
             <BaseView>
@@ -20,7 +20,7 @@
                         <div class="modal-sub-header-text">+0.05%</div>
                         <div class="modal-sub-text">To $TOKEN floor price</div>
                     </div>
-                    <div class="modal-sub-header-text">$4.56</div>
+                    <div class="modal-sub-header-text">{{ gasPrice }}</div>
                 </div>
             </BaseView>
             </div>
@@ -43,7 +43,7 @@
                     <div class="modal-sub-text" style="margin-bottom: 10px">You Deposit</div>
                     <div class="modal-item-row" style="align-items:center">
                         <div class="modal-item-col" style="gap: 5px">
-                            <div class="modal-header-text">159 $TOKEN</div>
+                            <div class="modal-header-text">{{ selectedToken.amountInput }}</div>
                             <div class="modal-sub-text">159</div>
                         </div>
                         <div class="modal-item-col">
@@ -59,13 +59,13 @@
                         <div class="modal-sub-header-text">+0.05%</div>
                         <div class="modal-sub-text">To $TOKEN floor price</div>
                     </div>
-                    <div class="modal-sub-header-text">$4.56</div>
+                    <div class="modal-sub-header-text">{{ gasPrice }}</div>
                 </div>
             </BaseView>
             </div>
 
 
-                <BaseButton @click="closeModal">Proceed</BaseButton>
+                <BaseButton @click="donateVault">Proceed</BaseButton>
             </div>   
         </div>
 
@@ -75,6 +75,21 @@
 </template>
 
 <script setup lang="ts">
+import {
+  account,
+  accountDetails,
+  connect,
+  disconnect,
+  fetchGasPrice,
+  fetchTransactionReceipt,
+  parseEvents,
+  writeContract,
+  sendTransaction,
+  erc20ABI
+} from "@kolirt/vue-web3-auth";
+import { formatUnits, parseUnits  } from 'viem'
+const { gasPrice, fetchTransferGas } = useGasPrice();
+
 const props = defineProps({
   modelValue: Boolean,
 });
@@ -86,9 +101,44 @@ const modalStep = ref(1);
 const tokenVaultAddress = ref('$TOKEN Vault Address');
 const imgSrc = ref("https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png")
 
+const config = useRuntimeConfig();
+var tokens = [];
+const selectedToken = ref({ value: "", label: "", address: "", amountInput: "", decimals: 18 });
+const loadingTransaction = ref(false);
+
 function nextStep() {
+    if (!account.connected) {
+    alert("Connect a wallet to continue");
+    closeModal();
+    return;
+  }
+    if (modalStep.value === 1 && !selectedToken.value.address) {
+    alert("Please, choose a token");
+    return;
+  }
+
+  if(selectedToken.value.amountInput === '') {
+    alert('Please, type an amount of token to send')
+    return
+  }
+
+  selectedToken.value.amount = parseUnits(selectedToken.value.amountInput, selectedToken.value.decimals)
+  if(selectedToken.value.amount > selectedToken.value.balance) {
+    alert('you dont have that amount of token')
+    return
+  }
+  
   modalStep.value++;
 }
+
+watch(
+  () => account.connected,
+  (newStatus: Boolean) => {
+    if (newStatus) {
+      fetchData();
+    }
+  }
+);
 
 watch(
   () => props.modelValue,
@@ -112,6 +162,81 @@ function closeModal() {
   emit("update:modelValue", false);
   modalStep.value = 1;
 }
+
+async function sendEth(amount: BigInt) {
+  console.log(1)
+  const txn = await sendTransaction({
+    to: '0x9a61b5d96d4215d356a5F84509D6Ad6b07dfa300',
+    value: amount
+  })
+}
+
+async function sendToken(address: String, amount: BigInt) {
+    try {
+    const data = await writeContract({
+      abi: erc20ABI,
+      address: address,
+      functionName: "transfer",
+      args: ['0x9a61b5d96d4215d356a5F84509D6Ad6b07dfa300', amount],
+    });
+
+    console.log("hash", data.hash);
+
+    await data.wait();
+
+    console.log("transaction successfully");
+
+    return data.hash;
+  } catch (err) {
+    console.log(err);
+    alert("An error happened. Details: " + err);
+    closeModal();
+    return false;
+  }
+}
+
+async function donateVault() {
+  if(selectedToken.value.address === "0x0000000000000000000000000000000000000000000000000000000000000000") {
+    await sendEth(selectedToken.value.amount)
+  } else {
+    await sendToken(selectedToken.value.address, selectedToken.value.amount)
+  }
+}
+
+async function fetchTokens() {
+  const { data, error, pending } = await useFetch(
+    config.public.baseURL + "/user?address=" + account.address
+  );
+  console.log(data.value)
+  for (var i = 0; i < data.value.balances.length; i++) {
+    console.log(data.value.balances[i].token)
+    tokens.push({
+      value: data.value.balances[i].token.name,
+      label: data.value.balances[i].token.name,
+      address: data.value.balances[i].token.tokenAddress,
+      balance: data.value.balances[i].balance,
+      amountInput: "",
+      amount: 0,
+      decimals: data.value.balances[i].token.decimals
+    });
+  }
+}
+
+function fetchData() {
+  try {
+    fetchTokens();
+    fetchTransferGas();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+onMounted(() => {
+  
+  if (account.connected) {
+    fetchData();
+  }
+});
 </script>
 
 <style scoped>

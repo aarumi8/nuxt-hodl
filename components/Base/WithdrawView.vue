@@ -117,6 +117,8 @@ const handleFocus = (event: FocusEvent) => {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+    overflow-y: auto;
+  max-height: 300px;
 }
 
 .select-item {

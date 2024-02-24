@@ -15,5 +15,14 @@ export function useGasPrice() {
     }
   };
 
-  return { gasPrice, fetchContractGas };
+  const fetchTransferGas = async () => {
+    try {
+      gasPrice.value = await fetchGasPrice();
+      gasPrice.value = (parseFloat(gasPrice.value.formatted.gasPrice) * 0.04 / 10000).toFixed(3) + " ETH";
+    } catch (error) {
+      console.error('Failed to fetch gas price:', error);
+    }
+  };
+
+  return { gasPrice, fetchContractGas, fetchTransferGas };
 }

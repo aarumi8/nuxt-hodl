@@ -19,7 +19,7 @@
 
     <div class="select-selected-view" v-if="selectedOption.value">
         <div class="display: flex; flex-direction: column:">
-            <input type="text" v-model="editableText" @focus="handleFocus" placeholder="Enter a value" class="modal-input" />
+            <input type="text" v-model="selectedOption.amountInput" @focus="handleFocus" placeholder="Enter a value" class="modal-input" />
             <div class="modal-sub-text">$159</div>
         </div>
     </div>
@@ -32,7 +32,7 @@
         class="select-item"
       >
         <div>{{ option.label }}</div>
-        <div style="opacity: 0.5">{{ option.balance }}</div>
+        <div style="opacity: 0.5">{{ option.fakeBalance }}</div>
       </div>
     </div>
   </div>
@@ -42,26 +42,34 @@
 interface Option {
   value: string;
   label: string;
+  address: string;
+  balance: string;
   imgSrc?: string;
+  amountInput: string;
+  decimals: Number;
 }
 
-const options = ref<Option[]>([
-  { value: "option1", label: "Option 1", balance: 100, imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" },
-  { value: "option2", label: "Option 2", balance: 200 },
-  // Add more options here
-]);
+const props = defineProps<{
+  options: Option[];
+  modelValue?: Option;
+}>();
+
+const emit = defineEmits(["update:modelValue"]);
+
+const options = props.options
 
 const placeholder = "Select a Token";
-const selectedOption = ref<Option>({ value: "", label: "" });
+var selectedOption = props.modelValue;
 const isOpen = ref(false);
-const editableText = ref('');
+// const editableText = ref('');
 
 function toggleDropdown() {
   isOpen.value = !isOpen.value;
 }
 
 function selectOption(option: Option) {
-  selectedOption.value = option;
+  selectedOption = option;
+  emit('update:modelValue', selectedOption)
   isOpen.value = false;
 }
 
@@ -133,6 +141,8 @@ const handleFocus = (event: FocusEvent) => {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+    overflow-y: auto;
+  max-height: 300px;
 }
 
 .select-item {
