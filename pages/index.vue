@@ -29,33 +29,7 @@ import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-a
 const config = useRuntimeConfig()
 
 const showModal = ref(false);
-const vaults = [
-  {
-    id: 0,
-    name: "Router Protocol",
-    ticker: "$ROUTE",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    price: "$100",
-    floorPrice: "$90",
-    mcap: "$1M",
-    fmcap: "$900K",
-    backedPercent: "90%",
-    address: "0x1234",
-  },
-  {
-    id: 1,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    floorPrice: "$90",
-    mcap: "$1M",
-    fmcap: "$900K",
-    backedPercent: "90%",
-    address: "0x12345",
-  },
-  // Add more vault items as needed
-];
+const vaults = ref([])
 const { data, error, pending } = useFetch(config.public.baseURL + '/factory/vaults?skip=0&limit=1')
 
 // Function to handle modal showing logic
@@ -66,6 +40,32 @@ function handleShowModal() {
     alert('Please connect your wallet to create a new vault.');
   }
 }
+
+function formatVaultData(vault: Object) {
+
+}
+
+async function fetchVaults() {
+  const { data, error, pending } = await useFetch(config.public.baseURL + '/factory/vaults?skip=0&limit=100')
+
+  for(var i = 0; i < data.value.length; i++) {
+    vaults.value.push({
+      id: data.value[i].id,
+      name: data.value[i].primaryToken.name,
+      ticker: data.value[i].primaryToken.ticker,
+      price: data.value[i].primaryToken.price.toFixed(2),
+      floorPrice: data.value[i].floorPrice < 0.001 ? '0' : data.value[i].floorPrice,
+      mcap: data.value[i].primaryToken.marketCap < 0.001 ? '0' : data.value[i].primaryToken.marketCap.toFixed(2),
+      fmcap: data.value[i].floorMarketCap < 0.001 ? '0' : data.value[i].floorMarketCap.toFixed(2),
+      backedPercent: data.value[i].backedPercent < 0.001 ? '0' : data.value[i].backedPercent,
+      address: data.value[i].vaultAddress
+    })
+  }
+}
+
+onMounted(() =>{
+  fetchVaults()
+})
 </script>
 
 <style scoped>

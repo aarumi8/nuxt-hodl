@@ -236,7 +236,7 @@ async function createVault() {
       abi: factoryABI,
       address: config.public.factoryAddress,
       functionName: "createNewVault",
-      args: [selectedToken.value.address],
+      args: [selectedToken.value.address, true],
     });
 
     console.log("hash", data.hash);

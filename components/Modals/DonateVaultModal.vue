@@ -166,7 +166,7 @@ function closeModal() {
 async function sendEth(amount: BigInt) {
   console.log(1)
   const txn = await sendTransaction({
-    to: '0x9a61b5d96d4215d356a5F84509D6Ad6b07dfa300',
+    to: '0xA6b879015E10aCD04290438d934ffBda98694b30',
     value: amount
   })
 }
@@ -177,7 +177,7 @@ async function sendToken(address: String, amount: BigInt) {
       abi: erc20ABI,
       address: address,
       functionName: "transfer",
-      args: ['0x9a61b5d96d4215d356a5F84509D6Ad6b07dfa300', amount],
+      args: ['0xA6b879015E10aCD04290438d934ffBda98694b30', amount],
     });
 
     console.log("hash", data.hash);

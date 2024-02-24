@@ -24,35 +24,86 @@
 </template>
 
 <script setup lang="ts">
-import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
+import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth';
+import { formatUnits, parseUnits  } from 'viem'
+const config = useRuntimeConfig();
 
-const vaults = [
-  {
-    id: 0,
-    name: "Router Protocol",
-    ticker: "$ROUTE",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    price: "$100",
-    floorPrice: "$90",
-    amount: "99",
-    value: "$23",
-    exValue: "123",
-    address: "0x1234",
-  },
-  {
-    id: 1,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    floorPrice: "$90",
-    amount: "99",
-    value: "$23",
-    exValue: "123",
-    address: "0x12345",
-  },
-  // Add more vault items as needed
-];
+watch(
+  () => account.connected,
+  (newStatus: Boolean) => {
+    if (newStatus) {
+      fetchVaults();
+    }
+  }
+);
+
+const vaults = ref([])
+
+// const vaults = [
+//   {
+//     id: 0,
+//     name: "Router Protocol",
+//     ticker: "$ROUTE",
+//     image:
+//       "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
+//     price: "$100",
+//     floorPrice: "$90",
+//     amount: "99",
+//     value: "$23",
+//     exValue: "123",
+//     address: "0x1234",
+//   },
+//   {
+//     id: 1,
+//     name: "Vault A",
+//     ticker: "$UNI",
+//     price: "$100",
+//     floorPrice: "$90",
+//     amount: "99",
+//     value: "$23",
+//     exValue: "123",
+//     address: "0x12345",
+//   },
+//   // Add more vault items as needed
+// ];
+
+async function fetchVaults() {
+  const { data, error, pending } = await useFetch(config.public.baseURL + "/user?address=" + account.address)
+
+  for(var i = 0; i < data.value.vaults.length; i++) {
+    const primaryTokenAddress = data.value.vaults[i].primaryToken.tokenAddress
+    var primaryToken = null
+
+    for(var j = 0; j < data.value.balances.length; j++) {
+      if(data.value.balances[j].token.tokenAddress === primaryTokenAddress) {
+        primaryToken = data.value.balances[j]
+        break;
+      }
+    }
+
+    vaults.value.push({
+      id: data.value.vaults[i].id,
+      name: data.value.vaults[i].primaryToken.name,
+      ticker: data.value.vaults[i].primaryToken.ticker,
+      price: data.value.vaults[i].primaryToken.price.toFixed(2),
+      floorPrice: data.value.vaults[i].floorPrice < 0.001 ? '0' : data.value.vaults[i].floorPrice,
+      exValue: ( formatUnits(primaryToken.balance, primaryToken.token.decimals) * data.value.vaults[i].floorPrice ).toFixed(2),
+      amount: formatUnits(primaryToken.balance, primaryToken.token.decimals),
+      value: (formatUnits(primaryToken.balance, primaryToken.token.decimals) * data.value.vaults[i].primaryToken.price.toFixed(2) ).toFixed(2),
+      mcap: 0,
+      fmcap: 0,
+      backedPercent: 0,
+      address: data.value.vaults[i].vaultAddress
+    })
+
+  }
+}
+
+onMounted(() => {
+  if(account.connected) {
+    fetchVaults()
+  }
+})
 </script>
 
 <style scoped>
