@@ -39,34 +39,6 @@ watch(
 
 const vaults = ref([])
 
-// const vaults = [
-//   {
-//     id: 0,
-//     name: "Router Protocol",
-//     ticker: "$ROUTE",
-//     image:
-//       "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-//     price: "$100",
-//     floorPrice: "$90",
-//     amount: "99",
-//     value: "$23",
-//     exValue: "123",
-//     address: "0x1234",
-//   },
-//   {
-//     id: 1,
-//     name: "Vault A",
-//     ticker: "$UNI",
-//     price: "$100",
-//     floorPrice: "$90",
-//     amount: "99",
-//     value: "$23",
-//     exValue: "123",
-//     address: "0x12345",
-//   },
-//   // Add more vault items as needed
-// ];
-
 async function fetchVaults() {
   const { data, error, pending } = await useFetch(config.public.baseURL + "/user?address=" + account.address)
 

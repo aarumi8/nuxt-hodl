@@ -20,7 +20,13 @@
         <div class="grey-text">Contract</div>
       </div>
       <div class="wrapper-item">
-        <div class="white-text">{{ vault.address }}</div>
+        <nuxt-link
+          style="text-decoration: none"
+          target="_blank"
+          :to="`https://etherscan.com/address/${vault.tokenAddress}`"
+          class="white-text"
+          >{{ formatString(vault.tokenAddress) }}</nuxt-link
+        >
       </div>
     </div>
   </div>
@@ -30,6 +36,17 @@
 const props = defineProps({
   vault: Object,
 });
+
+function formatString(str: String) {
+  // Check if the string length is greater than 6
+  if (str.length > 11) {
+    // Return the first 3 chars, '...', and the last 3 chars
+    return str.substring(0, 5) + "..." + str.substring(str.length - 6);
+  } else {
+    // Return the original string if it's 6 characters or less
+    return str;
+  }
+}
 </script>
 
 <style scoped>

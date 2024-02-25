@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <div class="vault-info"> 
-
+  <div v-if="isFetched">
+    <div class="vault-info">
       <div class="tokens-info-desktop">
         <ViewsTokenInfo :vault="vault" />
       </div>
@@ -19,8 +18,20 @@
       <div class="wrapper-vault-interact">
         <ViewsVaultInteract :vault="vault" />
       </div>
-
     </div>
+
+    <BaseView style="margin-top: 20px; padding: 25px">
+      <div style="display: flex; gap: 5px; align-items: center">
+        <div class="white-text">Vault Address:</div>
+        <nuxt-link
+          style="text-decoration: none"
+          target="_blank"
+          :to="`https://etherscan.com/address/${vault.vaultAddress}`"
+          class="grey-text"
+          >{{ vault.vaultAddress }}</nuxt-link
+        >
+      </div>
+    </BaseView>
 
     <div class="margin-wrapper-60"></div>
 
@@ -31,7 +42,7 @@
       <ViewsTokensList
         ref="tableComponent"
         :columns="['#', 'Name', 'Price', 'Amount', 'Total']"
-        :vaults="vaults"
+        :vaults="tokens"
       />
       <div class="wrapper-chart">
         <ViewsTokenAllocation
@@ -40,110 +51,36 @@
           :key="componentKey"
         />
       </div>
-
     </div>
   </div>
 </template>
 
 
 <script setup lang="ts">
+import { formatUnits, parseUnits  } from 'viem'
+
+const config = useRuntimeConfig();
+const route = useRoute();
+
+
 interface Token {
   name: string;
   percentage: number;
   color: string;
 }
 
-const vault = {
-  id: 0,
-  name: "Router Protocol",
-  ticker: "$ROUTE",
-  image:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-  price: "$100",
-  amount: "23",
-  total: "2323wadwa",
-  address: "0x1234",
-  floorPrice: "$23",
-  backedPercent: "14%",
-  mcap: "$555,555,555",
-  fmcap: "$555,555",
-  value: "$555",
-};
+const vault = ref();
+const isFetched = ref(false);
+const tokens = ref([])
+const tokensAllocation = ref([])
 
-const vaults = [
-  {
-    id: 0,
-    name: "Router Protocol",
-    ticker: "$ROUTE",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    price: "$100",
-    amount: "23",
-    total: "2323wadwa",
-    address: "0x1234",
-  },
-  {
-    id: 1,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    amount: "23wadwdwawddw",
-    total: "2323",
-    address: "0x12345",
-  },
-  {
-    id: 2,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    amount: "23wadwdwawddw",
-    total: "2323",
-    address: "0x12345",
-  },
-  {
-    id: 3,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    amount: "23wadwdwawddw",
-    total: "2323",
-    address: "0x12345",
-  },
-  {
-    id: 4,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    amount: "23wadwdwawddw",
-    total: "2323",
-    address: "0x12345",
-  },
-  {
-    id: 5,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    amount: "23wadwdwawddw",
-    total: "2323",
-    address: "0x12345",
-  },
-  {
-    id: 6,
-    name: "Vault A",
-    ticker: "$UNI",
-    price: "$100",
-    amount: "23wadwdwawddw",
-    total: "2323",
-    address: "0x12345",
-  },
-  // Add more vault items as needed
-];
-const tokensAllocation = [
-  { name: "Token A", percentage: 25, color: "#FFf" },
-  { name: "Token B", percentage: 30, color: "#fff" },
-  { name: "Token C", percentage: 10, color: "#fff" },
-  { name: "Token D", percentage: 35, color: "#fff" },
-];
+
+// const tokensAllocation = [
+//   { name: "Token A", percentage: 25, color: "#FFf" },
+//   { name: "Token B", percentage: 30, color: "#fff" },
+//   { name: "Token C", percentage: 10, color: "#fff" },
+//   { name: "Token D", percentage: 35, color: "#fff" },
+// ];
 const tableComponent = ref(null);
 const contentComponent = ref(null);
 
@@ -168,9 +105,59 @@ const onResize = () => {
   }
 };
 
-onMounted(async () => {
+async function fetchData() {
+  const { data, error, pending } = await useFetch(
+    config.public.baseURL + "/vault?address=" + route.params.id
+  );
+
+  console.log(data.value);
+
+  vault.value = {
+    id: data.value.id,
+    name: data.value.primaryToken.name,
+    ticker: data.value.primaryToken.ticker,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
+    price: data.value.primaryToken.price.toFixed(2),
+    vaultAddress: data.value.vaultAddress,
+    tokenAddress: data.value.primaryToken.tokenAddress,
+    floorPrice: data.value.floorPrice.toFixed(2),
+    backedPercent: data.value.backedPercent.toFixed(2),
+    mcap: data.value.primaryToken.marketCap.toFixed(2),
+    fmcap: data.value.floorMarketCap,
+
+    amount: 0,
+    value: data.value.floorMarketCap,
+  };
+
+  for(var i = 0; i < data.value.reserves.length; i++) {
+    tokens.value.push({
+      id: i,
+      name: data.value.reserves[i].token.name,
+      ticker: data.value.reserves[i].token.ticker,
+      price: (data.value.reserves[i].token.price).toFixed(2),
+      address: data.value.reserves[i].token.tokenAddress,
+      amount: parseFloat(formatUnits(data.value.reserves[i].balance, data.value.reserves[i].token.decimals)).toFixed(5),
+      total: (parseFloat(formatUnits(data.value.reserves[i].balance, data.value.reserves[i].token.decimals)) * data.value.reserves[i].token.price).toFixed(2)
+    })
+    console.log(tokens.value[i].price, tokens.value[i].amount, tokens.value[i].total)
+  }
+
+  for(var i = 0; i < data.value.reservesAllocation.length; i++) {
+    tokensAllocation.value.push({
+      percentage: (data.value.reservesAllocation[i] * 100).toFixed(3),
+      name: tokens.length > 4 && i !== 4 ? 'Others' : tokens.value[i].name,
+      color: "#fff"
+    })
+  }
+
+  isFetched.value = true;
   adjustHeight();
   window.addEventListener("resize", onResize);
+}
+
+onMounted(async () => {
+  fetchData();
 });
 
 onUnmounted(() => {
@@ -193,7 +180,8 @@ onUnmounted(() => {
   display: none;
 }
 .wrapper-vault-interact {
-  display:flex; width: 25%
+  display: flex;
+  width: 25%;
 }
 .margin-wrapper-30-15 {
   margin-top: 30px;
@@ -224,6 +212,22 @@ onUnmounted(() => {
 .wrapper-vault-chart {
   width: 50%;
 }
+.grey-text {
+  color: rgb(143, 143, 143);
+  font-family: Gilroy;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.white-text {
+  color: #fff;
+  font-family: Gilroy;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
 @media (max-width: 960px) {
   .button-wrapper {
     width: 100%;
@@ -233,6 +237,12 @@ onUnmounted(() => {
   }
 }
 @media (max-width: 868px) {
+  .white-text {
+    font-size: 0.875rem;
+  }
+  .grey-text {
+    font-size: 0.875rem;
+  }
   .vault-info {
     flex-direction: column;
   }
@@ -252,11 +262,12 @@ onUnmounted(() => {
     display: flex;
   }
   .wrapper-vault-interact {
-  display:flex; width: 100%
-}
-.wrapper-vault-chart {
-  width: 100%;
-  height: 40vh;
-}
+    display: flex;
+    width: 100%;
+  }
+  .wrapper-vault-chart {
+    width: 100%;
+    height: 40vh;
+  }
 }
 </style>

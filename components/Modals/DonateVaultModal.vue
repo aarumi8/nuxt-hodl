@@ -164,7 +164,6 @@ function closeModal() {
 }
 
 async function sendEth(amount: BigInt) {
-  console.log(1)
   const txn = await sendTransaction({
     to: '0xA6b879015E10aCD04290438d934ffBda98694b30',
     value: amount
@@ -207,9 +206,7 @@ async function fetchTokens() {
   const { data, error, pending } = await useFetch(
     config.public.baseURL + "/user?address=" + account.address
   );
-  console.log(data.value)
   for (var i = 0; i < data.value.balances.length; i++) {
-    console.log(data.value.balances[i].token)
     tokens.push({
       value: data.value.balances[i].token.name,
       label: data.value.balances[i].token.name,
