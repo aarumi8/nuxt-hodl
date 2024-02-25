@@ -4,12 +4,12 @@
       <div class="wrapper-vault-texts">
         <div class="wrapper-vault-item">
           <div class="vault-grey-text">Your Wallet Balance</div>
-          <div class="vault-white-text">$123</div>
+          <div class="vault-white-text">API</div>
         </div>
 
         <div class="wrapper-vault-item">
           <div class="vault-grey-text" style="text-align: right">Your {{vault.ticker}} Balance</div>
-          <div class="vault-white-text" style="text-align: right">542</div>
+          <div class="vault-white-text" style="text-align: right">{{ tokenBalance }}</div>
         </div>
       </div>
 
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
+import { account, accountDetails, connect, disconnect, fetchBalance } from '@kolirt/vue-web3-auth'
 
 const props = defineProps({
   vault: Object,
@@ -49,6 +49,16 @@ const props = defineProps({
 
 const showDonateModal = ref(false);
 const showWithdrawModal = ref(false)
+const tokenBalance = ref('0')
+
+watch(
+  () => account.connected,
+  (newStatus: Boolean) => {
+    if (newStatus) {
+      fetchData();
+    }
+  }
+);
 
 // Function to handle modal showing logic
 function handleShowDonateModal() {
@@ -67,6 +77,25 @@ function handleShowWithdrawModal() {
     alert('Please connect your wallet');
   }
 }
+
+async function fetchData() {
+  try {
+  let _tokenBalance = await fetchBalance({
+    address: account.address,
+    token: props.vault.tokenAddress
+  })
+
+  tokenBalance.value = _tokenBalance.formatted
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+onMounted(() => {
+  if (account.connected) {
+    fetchData();
+  }
+});
 </script>
 
 <style scoped>

@@ -41,7 +41,7 @@ const vaults = ref([])
 
 async function fetchVaults() {
   const { data, error, pending } = await useFetch(config.public.baseURL + "/user?address=" + account.address)
-
+  console.log(data.value)
   for(var i = 0; i < data.value.vaults.length; i++) {
     const primaryTokenAddress = data.value.vaults[i].primaryToken.tokenAddress
     var primaryToken = null

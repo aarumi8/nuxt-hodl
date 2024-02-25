@@ -124,10 +124,10 @@ async function fetchData() {
     floorPrice: data.value.floorPrice.toFixed(2),
     backedPercent: data.value.backedPercent.toFixed(2),
     mcap: data.value.primaryToken.marketCap.toFixed(2),
-    fmcap: data.value.floorMarketCap,
+    fmcap: data.value.floorMarketCap.toFixed(2),
 
     amount: 0,
-    value: data.value.floorMarketCap,
+    value: data.value.floorMarketCap.toFixed(2),
   };
 
   for(var i = 0; i < data.value.reserves.length; i++) {
