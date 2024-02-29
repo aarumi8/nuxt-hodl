@@ -4,7 +4,7 @@
       <ViewsPageIntroTextView
         :heading-text="'Web3 Tokens by the amount of the reserves in their vault'"
         :sub-text="'The total value of all vaults on Hodl Industries is'"
-        :sub-text-active="'$200M'"
+        :sub-text-active="totalValue"
       />
 
       <div class="button-wrapper">
@@ -30,7 +30,7 @@ const config = useRuntimeConfig()
 
 const showModal = ref(false);
 const vaults = ref([])
-const { data, error, pending } = useFetch(config.public.baseURL + '/factory/vaults?skip=0&limit=1')
+const totalValue = ref('$0')
 
 // Function to handle modal showing logic
 function handleShowModal() {
@@ -47,10 +47,10 @@ function formatVaultData(vault: Object) {
 
 async function fetchVaults() {
   const { data, error, pending } = await useFetch(config.public.baseURL + '/factory/vaults?skip=0&limit=100')
-
+  
   for(var i = 0; i < data.value.length; i++) {
     vaults.value.push({
-      id: data.value[i].id,
+      id: data.value[i]._id,
       name: data.value[i].primaryToken.name,
       ticker: data.value[i].primaryToken.ticker,
       price: data.value[i].primaryToken.price.toFixed(2),
@@ -63,7 +63,14 @@ async function fetchVaults() {
   }
 }
 
+async function fetchData() {
+  const { data, error, pending } = await useFetch(config.public.baseURL + '/factory/allVaultsTotalValue')
+
+  totalValue.value = '$' + data.value.toFixed(2)
+}
+
 onMounted(() =>{
+  fetchData()
   fetchVaults()
 })
 </script>

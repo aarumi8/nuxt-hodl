@@ -3,66 +3,28 @@
         <div class="withdraw-tokens-item" v-for="(token, index) in tokens" :key="index">
             <div class="withdraw-small-row">
                 <div @click="toggleSelection(token)" class="withdraw-select" :style="{ background: token.selected ? 'rgba(39,245,112,0.7)' : 'rgba(255, 255, 255, 0.10)' }"></div>
-                <img :src="token.imgSrc" class="vault-image" style="transform: scale(1.8); margin-left: 20px">
+                <img :src="token.image" class="vault-image" style="transform: scale(1.8); margin-left: 20px">
                 <div class="withdraw-small-col" style="margin-left: 10px">
-                    <div class="withdraw-header-text">{{ token.header }}</div>
-                    <div class="withdraw-sub-text">{{ token.subText }}</div>
+                    <div class="withdraw-header-text">{{ token.name }}</div>
+                    <div class="withdraw-sub-text">{{ token.ticker }}</div>
                 </div>
             </div>
 
             <div class="withdraw-small-col">
                 <div class="withdraw-header-text">{{ token.amount }}</div>
-                <div class="withdraw-sub-text" style="text-align: right;">{{ token.value }}</div>
+                <div class="withdraw-sub-text" style="text-align: right;">{{ token.total }}</div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-const tokens = ref([
-  {
-    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    header: "Bitcoin",
-    subText: "BTC",
-    amount: "1",
-    value: "$50,000",
-    selected: false
-  },
-  // Add more tokens as needed
-  {
-    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    header: "Ethereum",
-    subText: "ETH",
-    amount: "2",
-    value: "$4,000",
-    selected: false
-  },
-    {
-    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    header: "Ethereum",
-    subText: "ETH",
-    amount: "2",
-    value: "$4,000",
-    selected: false
-  },
-    {
-    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    header: "Ethereum",
-    subText: "ETH",
-    amount: "2",
-    value: "$4,000",
-    selected: false
-  },
-    {
-    imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
-    header: "Ethereum",
-    subText: "ETH",
-    amount: "2",
-    value: "$4,000",
-    selected: false
-  }
-])
+const props = defineProps<{
+  tokens: [],
+  modelValue?: Object
+}>();
 
+const emit = defineEmits(["update:modelValue"]);
 const selectedTokens = ref([])
 
 const toggleSelection = (token: any) => {
@@ -75,6 +37,7 @@ const toggleSelection = (token: any) => {
       selectedTokens.value.splice(index, 1)
     }
   }
+  emit('update:modelValue', [...selectedTokens.value])
 }
 </script>
 
@@ -102,7 +65,7 @@ const toggleSelection = (token: any) => {
 }
 .withdraw-header-text {
 color: #FFF;
-text-align: right;
+
 font-family: Gilroy;
 font-size: 20px;
 font-style: normal;

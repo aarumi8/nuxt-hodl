@@ -4,7 +4,7 @@
       <ViewsPageIntroTextView
         :heading-text="'Your wallet portfolio'"
         :sub-text="'The total extractable value of your portfolio is'"
-        :sub-text-active="'$20,045'"
+        :sub-text-active="totalBalance"
       />
     </div>
 
@@ -38,10 +38,13 @@ watch(
 );
 
 const vaults = ref([])
+const totalBalance = ref('0')
 
 async function fetchVaults() {
   const { data, error, pending } = await useFetch(config.public.baseURL + "/user?address=" + account.address)
-  console.log(data.value)
+  
+  totalBalance.value = '$' + data.value.totalBalance.toFixed(2)
+
   for(var i = 0; i < data.value.vaults.length; i++) {
     const primaryTokenAddress = data.value.vaults[i].primaryToken.tokenAddress
     var primaryToken = null
@@ -54,7 +57,7 @@ async function fetchVaults() {
     }
 
     vaults.value.push({
-      id: data.value.vaults[i].id,
+      id: data.value.vaults[i]._id,
       name: data.value.vaults[i].primaryToken.name,
       ticker: data.value.vaults[i].primaryToken.ticker,
       price: data.value.vaults[i].primaryToken.price.toFixed(2),

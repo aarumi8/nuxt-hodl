@@ -5,70 +5,84 @@
         <div v-if="modalStep === 1">
           <div class="modal-items-cols">
             <div class="modal-item-col">
-                <div class="modal-header-text">Donate to $TOKEN Vault</div>
-                <div class="modal-sub-text">By donating into Vault, you increase the Floor Price and Floor Market Cap of the token, by that helping the token holders</div>
+              <div class="modal-header-text">Donate to {{vault.ticker}} Vault</div>
+              <div class="modal-sub-text">
+                By donating into Vault, you increase the Floor Price and Floor
+                Market Cap of the token, by that helping the token holders
+              </div>
             </div>
 
             <div class="modal-item-col">
-            <div class="modal-item-col">
+              <div class="modal-item-col">
                 <BaseSelectView v-model="selectedToken" :options="tokens" />
-            </div>
+              </div>
 
-            <BaseView>
+              <BaseView>
                 <div class="modal-item-row">
-                    <div class="modal-item-row" style="gap:10px; align-items:center">
-                        <div class="modal-sub-header-text">+0.05%</div>
-                        <div class="modal-sub-text">To $TOKEN floor price</div>
-                    </div>
-                    <div class="modal-sub-header-text">{{ gasPrice }}</div>
+                  <div
+                    class="modal-item-row"
+                    style="gap: 10px; align-items: center"
+                  >
+                    <div class="modal-sub-header-text">+0.05%</div>
+                    <div class="modal-sub-text">To {{ vault.ticker }} floor price</div>
+                  </div>
+                  <div class="modal-sub-header-text">{{ gasPrice }}</div>
                 </div>
-            </BaseView>
+              </BaseView>
             </div>
-
 
             <BaseButton @click="nextStep">Approve Transaction</BaseButton>
           </div>
         </div>
 
         <div v-if="modalStep === 2">
-            <div class="modal-items-cols">   
-                <div class="modal-item-col">
-                    <div class="modal-header-text">Review</div>
-                </div>
-
-
+          <div class="modal-items-cols">
             <div class="modal-item-col">
-            <BaseView>
-                <div class="modal-items-col">  
-                    <div class="modal-sub-text" style="margin-bottom: 10px">You Deposit</div>
-                    <div class="modal-item-row" style="align-items:center">
-                        <div class="modal-item-col" style="gap: 5px">
-                            <div class="modal-header-text">{{ selectedToken.amountInput }}</div>
-                            <div class="modal-sub-text">159</div>
-                        </div>
-                        <div class="modal-item-col">
-                            <img v-if="imgSrc" :src="imgSrc" class="vault-image" style="transform: scale(2)">
-                        </div>
-                    </div>
-                </div>
-            </BaseView>
-
-            <BaseView>
-                <div class="modal-item-row">
-                    <div class="modal-item-row" style="gap:10px; align-items:center">
-                        <div class="modal-sub-header-text">+0.05%</div>
-                        <div class="modal-sub-text">To $TOKEN floor price</div>
-                    </div>
-                    <div class="modal-sub-header-text">{{ gasPrice }}</div>
-                </div>
-            </BaseView>
+              <div class="modal-header-text">Review</div>
             </div>
 
+            <div class="modal-item-col">
+              <BaseView>
+                <div class="modal-items-col">
+                  <div class="modal-sub-text" style="margin-bottom: 10px">
+                    You Deposit
+                  </div>
+                  <div class="modal-item-row" style="align-items: center">
+                    <div class="modal-item-col" style="gap: 5px">
+                      <div class="modal-header-text">
+                        {{ selectedToken.amountInput }}
+                      </div>
+                      <div class="modal-sub-text">${{parseFloat(selectedToken.amountInput * selectedToken.price).toFixed(2)}}</div>
+                    </div>
+                    <div class="modal-item-col">
+                      <img
+                        v-if="imgSrc"
+                        :src="imgSrc"
+                        class="vault-image"
+                        style="transform: scale(2)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </BaseView>
 
-                <BaseButton @click="donateVault">Proceed</BaseButton>
-            </div>   
+              <BaseView>
+                <div class="modal-item-row">
+                  <div
+                    class="modal-item-row"
+                    style="gap: 10px; align-items: center"
+                  >
+                    <div class="modal-sub-header-text">+0.05%</div>
+                    <div class="modal-sub-text">To {{vault.ticker}} floor price</div>
+                  </div>
+                  <div class="modal-sub-header-text">{{ gasPrice }}</div>
+                </div>
+              </BaseView>
+            </div>
+
+            <BaseButton @click="donateVault">Proceed</BaseButton>
+          </div>
         </div>
-
       </div>
     </div>
   </transition>
@@ -85,49 +99,61 @@ import {
   parseEvents,
   writeContract,
   sendTransaction,
-  erc20ABI
+  erc20ABI,
 } from "@kolirt/vue-web3-auth";
-import { formatUnits, parseUnits  } from 'viem'
+import { formatUnits, parseUnits } from "viem";
 const { gasPrice, fetchTransferGas } = useGasPrice();
 
 const props = defineProps({
   modelValue: Boolean,
+  vault: Object,
 });
 
 const emit = defineEmits(["update:modelValue"]);
 
 const isVisible = ref(props.modelValue);
 const modalStep = ref(1);
-const tokenVaultAddress = ref('$TOKEN Vault Address');
-const imgSrc = ref("https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png")
+const tokenVaultAddress = ref("$TOKEN Vault Address");
+const imgSrc = ref(
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
+);
 
 const config = useRuntimeConfig();
 var tokens = [];
-const selectedToken = ref({ value: "", label: "", address: "", amountInput: "", decimals: 18 });
+const selectedToken = ref({
+  value: "",
+  label: "",
+  address: "",
+  amountInput: "",
+  decimals: 18,
+});
 const loadingTransaction = ref(false);
 
 function nextStep() {
-    if (!account.connected) {
+  if (!account.connected) {
     alert("Connect a wallet to continue");
     closeModal();
     return;
   }
-    if (modalStep.value === 1 && !selectedToken.value.address) {
+  if (modalStep.value === 1 && !selectedToken.value.address) {
     alert("Please, choose a token");
     return;
   }
 
-  if(selectedToken.value.amountInput === '') {
-    alert('Please, type an amount of token to send')
-    return
+  if (selectedToken.value.amountInput === "") {
+    alert("Please, type an amount of token to send");
+    return;
   }
 
-  selectedToken.value.amount = parseUnits(selectedToken.value.amountInput, selectedToken.value.decimals)
-  if(selectedToken.value.amount > selectedToken.value.balance) {
-    alert('you dont have that amount of token')
-    return
+  selectedToken.value.amount = parseUnits(
+    selectedToken.value.amountInput,
+    selectedToken.value.decimals
+  );
+  if (selectedToken.value.amount > selectedToken.value.balance) {
+    alert("you dont have that amount of token");
+    return;
   }
-  
+
   modalStep.value++;
 }
 
@@ -150,10 +176,10 @@ watch(
 const copyToClipboard = async (text: string) => {
   try {
     await navigator.clipboard.writeText(text);
-    console.log('Text copied to clipboard');
+    console.log("Text copied to clipboard");
     // Optionally, display a message to the user indicating success.
   } catch (err) {
-    console.error('Failed to copy text: ', err);
+    console.error("Failed to copy text: ", err);
     // Optionally, display an error message to the user.
   }
 };
@@ -165,18 +191,18 @@ function closeModal() {
 
 async function sendEth(amount: BigInt) {
   const txn = await sendTransaction({
-    to: '0xA6b879015E10aCD04290438d934ffBda98694b30',
-    value: amount
-  })
+    to: props.vault.vaultAddress,
+    value: amount,
+  });
 }
 
 async function sendToken(address: String, amount: BigInt) {
-    try {
+  try {
     const data = await writeContract({
       abi: erc20ABI,
       address: address,
       functionName: "transfer",
-      args: ['0xA6b879015E10aCD04290438d934ffBda98694b30', amount],
+      args: [props.vault.vaultAddress, amount],
     });
 
     console.log("hash", data.hash);
@@ -195,10 +221,13 @@ async function sendToken(address: String, amount: BigInt) {
 }
 
 async function donateVault() {
-  if(selectedToken.value.address === "0x0000000000000000000000000000000000000000000000000000000000000000") {
-    await sendEth(selectedToken.value.amount)
+  if (
+    selectedToken.value.address ===
+    "0x0000000000000000000000000000000000000000000000000000000000000000"
+  ) {
+    await sendEth(selectedToken.value.amount);
   } else {
-    await sendToken(selectedToken.value.address, selectedToken.value.amount)
+    await sendToken(selectedToken.value.address, selectedToken.value.amount);
   }
 }
 
@@ -212,9 +241,11 @@ async function fetchTokens() {
       label: data.value.balances[i].token.name,
       address: data.value.balances[i].token.tokenAddress,
       balance: data.value.balances[i].balance,
+      balanceFormatted: formatUnits(data.value.balances[i].balance, data.value.balances[i].token.decimals),
       amountInput: "",
       amount: 0,
-      decimals: data.value.balances[i].token.decimals
+      decimals: data.value.balances[i].token.decimals,
+      price: data.value.balances[i].token.price
     });
   }
 }
@@ -229,7 +260,6 @@ function fetchData() {
 }
 
 onMounted(() => {
-  
   if (account.connected) {
     fetchData();
   }
@@ -237,7 +267,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.kek {
 
-}
 </style>

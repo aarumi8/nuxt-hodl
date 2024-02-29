@@ -16,7 +16,7 @@
       </div>
 
       <div class="wrapper-vault-interact">
-        <ViewsVaultInteract :vault="vault" />
+        <ViewsVaultInteract :vault="vault" :reserves="tokens" />
       </div>
     </div>
 
@@ -74,13 +74,6 @@ const isFetched = ref(false);
 const tokens = ref([])
 const tokensAllocation = ref([])
 
-
-// const tokensAllocation = [
-//   { name: "Token A", percentage: 25, color: "#FFf" },
-//   { name: "Token B", percentage: 30, color: "#fff" },
-//   { name: "Token C", percentage: 10, color: "#fff" },
-//   { name: "Token D", percentage: 35, color: "#fff" },
-// ];
 const tableComponent = ref(null);
 const contentComponent = ref(null);
 
@@ -105,12 +98,14 @@ const onResize = () => {
   }
 };
 
+async function fetchUser() {
+  
+}
+
 async function fetchData() {
   const { data, error, pending } = await useFetch(
     config.public.baseURL + "/vault?address=" + route.params.id
   );
-
-  console.log(data.value);
 
   vault.value = {
     id: data.value.id,
@@ -138,9 +133,9 @@ async function fetchData() {
       price: (data.value.reserves[i].token.price).toFixed(2),
       address: data.value.reserves[i].token.tokenAddress,
       amount: parseFloat(formatUnits(data.value.reserves[i].balance, data.value.reserves[i].token.decimals)).toFixed(5),
-      total: (parseFloat(formatUnits(data.value.reserves[i].balance, data.value.reserves[i].token.decimals)) * data.value.reserves[i].token.price).toFixed(2)
+      total: (parseFloat(formatUnits(data.value.reserves[i].balance, data.value.reserves[i].token.decimals)) * data.value.reserves[i].token.price).toFixed(2),
+      selected: false
     })
-    console.log(tokens.value[i].price, tokens.value[i].amount, tokens.value[i].total)
   }
 
   for(var i = 0; i < data.value.reservesAllocation.length; i++) {

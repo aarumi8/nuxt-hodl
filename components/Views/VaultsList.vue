@@ -143,7 +143,7 @@
 <script setup lang="ts">
 // Define an interface for vault objects
 interface Vault {
-  id: number;
+  id: string;
   address: string;
   image: string;
   name: string;
@@ -165,7 +165,7 @@ const props = defineProps({
 const expandedVaultId = ref(null);
 // Sample data structure for vaults, replace or fetch from your backend/api
 
-async function toggleDetail(id: Number) {
+async function toggleDetail(id: String) {
   const vault = props.vaults.find((v: Vault) => v.id === id);
   if (!vault) return; // Exit if no vault found
 
@@ -175,6 +175,8 @@ async function toggleDetail(id: Number) {
     expandedVaultId.value = expandedVaultId.value === id ? null : id;
   }
 }
+
+console.log(props.vaults)
 </script>
 
 <style scoped>

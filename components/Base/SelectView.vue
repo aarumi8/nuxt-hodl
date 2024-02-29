@@ -14,13 +14,13 @@
             {{ selectedOption.value ? selectedOption.label : placeholder }}
             <span style="margin-left:10px" class="expand-select-item" />
         </div>
-        <div class="modal-sub-text">Balance: $159</div>
+        <div class="modal-sub-text">Balance: {{parseFloat(selectedOption.balanceFormatted).toFixed(2)}}</div>
     </div>
 
     <div class="select-selected-view" v-if="selectedOption.value">
         <div class="display: flex; flex-direction: column:">
             <input type="text" v-model="selectedOption.amountInput" @focus="handleFocus" placeholder="Enter a value" class="modal-input" />
-            <div class="modal-sub-text">$159</div>
+            <div class="modal-sub-text">${{(selectedOption.amountInput * selectedOption.price).toFixed(2)}}</div>
         </div>
     </div>
     
@@ -32,13 +32,15 @@
         class="select-item"
       >
         <div>{{ option.label }}</div>
-        <div style="opacity: 0.5">{{ option.fakeBalance }}</div>
+        <div style="opacity: 0.5">{{ option.balanceFormatted }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, reactive, toRefs, watch } from 'vue';
+
 interface Option {
   value: string;
   label: string;
@@ -46,7 +48,7 @@ interface Option {
   balance: string;
   imgSrc?: string;
   amountInput: string;
-  decimals: Number;
+  decimals: number;
 }
 
 const props = defineProps<{
@@ -56,30 +58,31 @@ const props = defineProps<{
 
 const emit = defineEmits(["update:modelValue"]);
 
-const options = props.options
-
 const placeholder = "Select a Token";
-var selectedOption = props.modelValue;
 const isOpen = ref(false);
-// const editableText = ref('');
+
+// Make selectedOption reactive. Initialize with a fallback to ensure it's always an object.
+const selectedOption = reactive<Option | {}>(props.modelValue || {});
+
+// Watch for changes to props.modelValue and update selectedOption accordingly
+watch(() => props.modelValue, (newValue) => {
+  Object.assign(selectedOption, newValue);
+}, { deep: true });
 
 function toggleDropdown() {
   isOpen.value = !isOpen.value;
 }
 
 function selectOption(option: Option) {
-  selectedOption = option;
+  Object.assign(selectedOption, option);
   emit('update:modelValue', selectedOption)
   isOpen.value = false;
 }
 
 const handleFocus = (event: FocusEvent) => {
     const input = event.target as HTMLInputElement;
-    // This sets the cursor position to the end of the text
     const valLength = input.value.length;
     input.setSelectionRange(valLength, valLength);
-    // Alternatively, to set the cursor at the beginning, use:
-    // input.setSelectionRange(0, 0);
 };
 </script>
 
