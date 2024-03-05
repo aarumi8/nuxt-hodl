@@ -12,6 +12,7 @@
   "dependencies": {
     "@kolirt/vue-web3-auth": "^2.3.0",
     "chart.js": "^4.4.1",
+    "lottie-web": "^5.12.2",
     "nuxt": "^3.10.1",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"

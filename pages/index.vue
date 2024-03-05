@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <BaseLoadingScreen v-if="!dataFetched" />
+  <div v-else>
     <div class="page-intro">
       <ViewsPageIntroTextView
         :heading-text="'Web3 Tokens by the amount of the reserves in their vault'"
@@ -18,6 +19,7 @@
       <ViewsVaultsList
         :columns="['#', 'Name', 'Price', 'Floor Price', 'Market Cap', 'Floor Market Cap', 'Backed %']"
         :vaults="vaults"
+        :tips="['', '', 'The market price of a token', 'The floor price represents how much money you can get for 1 token via the vault', 'The market cap of a token', 'The floor market cap of a token represents how much money in a vault', 'Backed % represents a ratio between the market cap and the floor market cap']"
        />
     </div>
     
@@ -31,6 +33,7 @@ const config = useRuntimeConfig()
 const showModal = ref(false);
 const vaults = ref([])
 const totalValue = ref('$0')
+const dataFetched = ref(false)
 
 // Function to handle modal showing logic
 function handleShowModal() {
@@ -69,10 +72,12 @@ async function fetchData() {
   totalValue.value = '$' + data.value.toFixed(2)
 }
 
-onMounted(() =>{
-  fetchData()
-  fetchVaults()
-})
+onMounted(async () => {
+  // Use Promise.all to wait for both fetch operations to complete
+  await Promise.all([fetchData(), fetchVaults()]);
+  // Only set dataFetched to true after both promises resolve
+  dataFetched.value = true;
+});
 </script>
 
 <style scoped>

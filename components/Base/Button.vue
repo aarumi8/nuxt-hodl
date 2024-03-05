@@ -19,7 +19,7 @@ const buttonStyles = computed(() => ({
   justifyContent: 'center',
   alignItems: 'center',
   gap: '10px',
-  borderRadius: '15px',
+  borderRadius: '2px',
   padding: '20px 30px',
   background: props.color || '#FFF', // Default to white if no color is provided
   fontFamily: "Gilroy",
@@ -34,8 +34,10 @@ const buttonStyles = computed(() => ({
 button {
   border: none;
   cursor: pointer;
+  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.40) inset, 0px 5px 4px 0px rgba(0, 0, 0, 0.80);
+  transition: transform 300ms;
 }
 button:hover, button:active {
-  opacity: 0.75;
+  transform: scale(1.05);
 }
 </style>

@@ -38,16 +38,6 @@ onMounted(() => {
   });
 });
 
-// Watch for changes in searchResults to adjust the search bar border radius
-watch(searchResults, () => {
-  const searchBar = document.querySelector(".search-bar") as HTMLElement;
-  if (searchResults.value) {
-    searchBar?.style.setProperty("border-radius", "15px 15px 0 0");
-  } else {
-    searchBar?.style.setProperty("border-radius", "15px");
-  }
-});
-
 // Handle search logic, potentially adding lodash debounce in the future
 const handleSearch = () => {
   if (!searchQuery.value) {
@@ -68,11 +58,12 @@ const handleSearch = () => {
   display: flex;
   position: relative;
   width: 100%;
-  padding: 15px 30px;
+  padding: 20px 24px;
   align-items: center;
   gap: 10px;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.20) inset, 5px 5px 4px 0px rgba(0, 0, 0, 0.30);
   background: rgba(255, 255, 255, 0.1);
 }
 
@@ -103,18 +94,17 @@ input:focus {
   left: -1px;
   top: 103%;
   background: rgb(48, 48, 48);
-  border-radius: 0 0 15px 15px;
   overflow: hidden;
   z-index: 10;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  border-right: 1px solid rgba(255, 255, 255, 0.25);
-  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .loading,
 .result,
 .not-found {
-  padding: 15px 30px;
+  padding: 20px 24px;
   color: #fff;
   font-family: "Gilroy", sans-serif;
   font-size: 1rem;

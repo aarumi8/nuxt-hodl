@@ -8,14 +8,16 @@
             <th
               v-else-if="index === columns.length - 1"
               class="desktop"
-              style="text-align: right"
+              style="text-align: right; padding: 30px 0px 30px 30px"
             >
               {{ column }}
+              <span class="info" :data-title="tips[index]" style="margin-left: -7px"></span>
             </th>
             <th v-else-if="index === columns.length - 2" class="fmcap">
               {{ column }}
+              <span :data-title="tips[index]" class="info" style="margin-left: -7px"></span>
             </th>
-            <th v-else class="desktop">{{ column }}</th>
+            <th v-else class="desktop">{{ column }}<span :data-title="tips[index]" class="info"></span></th>
           </template>
         </tr>
       </thead>
@@ -35,16 +37,17 @@
               </div>
             </td>
 
-            <td class="desktop">{{ vault.price }}</td>
-            <td class="desktop">{{ vault.floorPrice }}</td>
+            <td class="desktop">${{ vault.price }}
+            </td>
+            <td class="desktop">${{ vault.floorPrice }}</td>
 
-            <td v-if="vault.mcap" class="desktop">{{ vault.mcap }}</td>
-            <td v-if="vault.amount" class="desktop">{{ vault.amount }}</td>
+            <td v-if="vault.mcap" class="desktop">${{ vault.mcap }}</td>
+            <td v-if="vault.amount" class="desktop">${{ vault.amount }}</td>
 
             <td class="fmcap">
               <div class="fmcap-wrapper">
-                <span v-if="vault.fmcap">{{ vault.fmcap }}</span>
-                <span v-if="vault.value">{{ vault.value }}</span>
+                <span v-if="vault.fmcap">${{ vault.fmcap }}</span>
+                <span v-if="vault.value">${{ vault.value }}</span>
                 <span
                   v-if="expandedVaultId === vault.id"
                   class="expandVaultMobile"
@@ -58,8 +61,8 @@
             </td>
 
             <td class="desktop" style="text-align: right">
-              <span v-if="vault.backedPercent">{{ vault.backedPercent }}</span>
-              <span v-if="vault.exValue">{{ vault.exValue }}</span>
+              <span v-if="vault.backedPercent">{{ vault.backedPercent }}%</span>
+              <span v-if="vault.exValue">${{ vault.exValue }}</span>
             </td>
           </tr>
 
@@ -102,18 +105,18 @@
               "
             >
               <div class="mobile-detail">
-                <div class="cell">{{ vault.price }}</div>
-                <div class="cell">{{ vault.floorPrice }}</div>
+                <div class="cell">${{ vault.price }}</div>
+                <div class="cell">${{ vault.floorPrice }}</div>
 
-                <div v-if="vault.mcap" class="cell">{{ vault.mcap }}</div>
-                <div v-if="vault.fmcap" class="cell">{{ vault.fmcap }}</div>
+                <div v-if="vault.mcap" class="cell">${{ vault.mcap }}</div>
+                <div v-if="vault.fmcap" class="cell">${{ vault.fmcap }}</div>
                 <div v-if="vault.backedPercent" class="cell">
-                  {{ vault.backedPercent }}
+                  {{ vault.backedPercent }}%
                 </div>
 
                 <div v-if="vault.amount" class="cell">{{ vault.amount }}</div>
-                <div v-if="vault.value" class="cell">{{ vault.value }}</div>
-                <div v-if="vault.exValue" class="cell">{{ vault.exValue }}</div>
+                <div v-if="vault.value" class="cell">${{ vault.value }}</div>
+                <div v-if="vault.exValue" class="cell">${{ vault.exValue }}</div>
               </div>
             </td>
           </tr>
@@ -161,6 +164,7 @@ interface Vault {
 const props = defineProps({
   columns: Array,
   vaults: [Object],
+  tips: Array
 });
 const expandedVaultId = ref(null);
 // Sample data structure for vaults, replace or fetch from your backend/api
@@ -170,7 +174,9 @@ async function toggleDetail(id: String) {
   if (!vault) return; // Exit if no vault found
 
   if (window.innerWidth > 868) {
-    await navigateTo(`/vault/${vault.address}`);
+    await navigateTo(`/vault/${vault.address}`, {
+      open: { target: "_blank" },
+    });
   } else {
     expandedVaultId.value = expandedVaultId.value === id ? null : id;
   }
@@ -180,4 +186,33 @@ console.log(props.vaults)
 </script>
 
 <style scoped>
+.info {
+  z-index: 100;
+  width: 14px;
+  height: 14px;
+  background-image: url("~/assets/info.svg");
+  display: inline-block;
+  margin-left: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.info:hover::after 
+{
+    content: attr(data-title);
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #7a7a7a;
+    width: 10vw;
+    position: absolute;
+    top: 25px;
+    right: 5px;
+    background: rgb(140, 140, 140);
+    color: white;
+    font-size: 0.875rem;
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 300;
+    text-align: left;
+}
 </style>

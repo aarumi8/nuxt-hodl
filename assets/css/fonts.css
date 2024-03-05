@@ -1,56 +1,28 @@
-@font-face {
+    @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-Black.ttf') format('truetype');
-    font-weight: 900;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-BlackItalic.ttf') format('truetype');
-    font-weight: 900;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-Bold.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
   }
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-BoldItalic.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-BoldItalic.ttf') format('truetype');
     font-weight: 700;
     font-style: italic;
   }
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-ExtraBold.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-ExtraBold.ttf') format('truetype');
     font-weight: 800;
     font-style: normal;
   }
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-ExtraBoldItalic.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-ExtraBoldItalic.ttf') format('truetype');
     font-weight: 800;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-Heavy.ttf') format('truetype');
-    font-weight: 900; /* Adjusted for visual consistency, consider custom value */
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-HeavyItalic.ttf') format('truetype');
-    font-weight: 900; /* Adjusted for visual consistency, consider custom value */
     font-style: italic;
   }
   
@@ -70,42 +42,42 @@
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-Medium.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
   }
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-MediumItalic.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-MediumItalic.ttf') format('truetype');
     font-weight: 500;
     font-style: italic;
   }
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-Regular.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
   }
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-RegularItalic.ttf') format('truetype');
+    src: url('/fonts/Gilroy/JetBrainsMono/JetBrainsMono-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: italic;
   }
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-SemiBold.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-SemiBold.ttf') format('truetype');
     font-weight: 600;
     font-style: normal;
   }
   
   @font-face {
     font-family: 'Gilroy';
-    src: url('/fonts/Gilroy/Gilroy-SemiBoldItalic.ttf') format('truetype');
+    src: url('/fonts/JetBrainsMono/JetBrainsMono-SemiBoldItalic.ttf') format('truetype');
     font-weight: 600;
     font-style: italic;
   }

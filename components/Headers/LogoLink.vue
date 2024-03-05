@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link to="/" class="logo">HODL</nuxt-link>
+  <nuxt-link to="https://hodl.industries" class="logo"></nuxt-link>
 </template>
 
 <script setup lang="ts">
@@ -8,11 +8,15 @@
 
 <style scoped>
 .logo {
-  color: #fff;
-  font-family: "Gilroy", sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
+  display: flex;
+  background-image: url("~/assets/logo.svg");
   text-decoration: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  min-width: 78px;
+  min-height: 78px;
 }
 @media (max-width: 767px) {
   .logo {

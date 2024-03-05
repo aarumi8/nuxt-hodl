@@ -1,18 +1,22 @@
 <template>
   <div v-if="account.connected">
-    <div class="page-intro">
-      <ViewsPageIntroTextView
-        :heading-text="'Your wallet portfolio'"
-        :sub-text="'The total extractable value of your portfolio is'"
-        :sub-text-active="totalBalance"
-      />
-    </div>
+    <BaseLoadingScreen v-if="!dataFetched" />
+    <div v-else>
+      <div class="page-intro">
+        <ViewsPageIntroTextView
+          :heading-text="'Your wallet portfolio'"
+          :sub-text="'The total extractable value of your portfolio is'"
+          :sub-text-active="totalBalance"
+        />
+      </div>
 
-    <div class="margin-wrapper-40-24">
-      <ViewsVaultsList
-        :columns="['#', 'Name', 'Price', 'Floor Price', 'Amount', 'Value', 'Extractable Vaule']"
-        :vaults="vaults"
-       />
+      <div class="margin-wrapper-40-24">
+        <ViewsVaultsList
+          :columns="['#', 'Name', 'Price', 'Floor Price', 'Amount', 'Value', 'Extractable Vaule']"
+          :vaults="vaults"
+          :tips="['', '', 'The market price of a token', 'The floor price represents how much money you can get for 1 token via the vault', 'Amount of tokens you have', 'Market value of your tokens', 'Amount of money you can get if you withdraw from a vault']"
+        />
+      </div>
     </div>
   </div>
 
@@ -28,6 +32,8 @@ import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-a
 import { formatUnits, parseUnits  } from 'viem'
 const config = useRuntimeConfig();
 
+const dataFetched = ref(false)
+
 watch(
   () => account.connected,
   (newStatus: Boolean) => {
@@ -41,6 +47,7 @@ const vaults = ref([])
 const totalBalance = ref('0')
 
 async function fetchVaults() {
+  dataFetched.value = false;
   const { data, error, pending } = await useFetch(config.public.baseURL + "/user?address=" + account.address)
   
   totalBalance.value = '$' + data.value.totalBalance.toFixed(2)
@@ -72,12 +79,14 @@ async function fetchVaults() {
     })
 
   }
+  dataFetched.value = true;
 }
 
-onMounted(() => {
+onMounted(async () => {
   if(account.connected) {
-    fetchVaults()
+    await fetchVaults()
   }
+  dataFetched.value = true;
 })
 </script>
 
