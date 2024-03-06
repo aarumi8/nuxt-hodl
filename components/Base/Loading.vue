@@ -29,4 +29,9 @@ onUnmounted(() => {
     display: flex;
     width: 50%;
 }
+@media(max-width: 767px) {
+  .animationContainer {
+    width: 100%;
+  }
+}
 </style>

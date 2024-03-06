@@ -1,5 +1,6 @@
 <template>
-  <div v-if="isFetched">
+<BaseLoadingScreen v-if="!dataFetched" />
+  <div v-else>
     <div class="vault-info">
       <div class="tokens-info-desktop">
         <ViewsTokenInfo :vault="vault" />
@@ -70,7 +71,7 @@ interface Token {
 }
 
 const vault = ref();
-const isFetched = ref(false);
+const dataFetched = ref(false);
 const tokens = ref([])
 const tokensAllocation = ref([])
 
@@ -146,7 +147,7 @@ async function fetchData() {
     })
   }
 
-  isFetched.value = true;
+  dataFetched.value = true;
   adjustHeight();
   window.addEventListener("resize", onResize);
 }
