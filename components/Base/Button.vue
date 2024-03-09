@@ -23,7 +23,7 @@ const buttonStyles = computed(() => ({
   padding: '20px 30px',
   background: props.color || '#FFF', // Default to white if no color is provided
   fontFamily: "Gilroy",
-  fontSize: '1.25rem',
+  fontSize: '1rem',
   fontWeight: '500',
   color: props.textColor || '#000', // Default to black if no color is provided
   border: props.border || 'border: 0px'

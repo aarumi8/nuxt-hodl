@@ -2,9 +2,10 @@
 export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
-  nitro: {
-    serveStatic: true,
-  },
+  // only in production:
+  // nitro: {
+  //   serveStatic: true,
+  // },
   css: [
     '~/assets/css/global.css' // Path to your global stylesheet
   ],

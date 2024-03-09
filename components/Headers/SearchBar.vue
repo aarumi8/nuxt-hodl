@@ -77,9 +77,9 @@ const handleSearch = () => {
   background: transparent;
   border: none;
   color: #fff;
-  font-family: "Gilroy", sans-serif;
+  font-family: "Gilroy";
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   width: 100%;
 }
 
@@ -106,9 +106,9 @@ input:focus {
 .not-found {
   padding: 20px 24px;
   color: #fff;
-  font-family: "Gilroy", sans-serif;
+  font-family: "Gilroy";
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   z-index: 10;
 }
 

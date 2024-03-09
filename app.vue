@@ -4,6 +4,7 @@
     <div class="layout">
       <NuxtPage />
     </div>
+    <div class="bg" />
   </div>
 </template>
 

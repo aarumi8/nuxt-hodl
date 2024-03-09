@@ -11,7 +11,7 @@ defineProps<{ text: string }>();
   color: #fff;
   font-size: 2rem;
   font-family: Gilroy;
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
   line-height: normal;
 }

@@ -41,8 +41,8 @@ import {
     5px 5px 4px 0px rgba(0, 0, 0, 0.8);
   color: #000000;
   font-family: "Gilroy";
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 400;
   cursor: pointer;
   transition: transform 300ms;
 }
@@ -58,8 +58,8 @@ import {
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
   font-family: "Gilroy";
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 400;
   cursor: pointer;
   transition: transform 300ms;
 }
@@ -83,8 +83,8 @@ import {
   border-radius: 10px;
   color: #000000;
   font-family: "Gilroy";
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 400;
   border-radius: 2px;
   background: rgb(255, 255, 255);
   box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.4) inset,
@@ -101,8 +101,8 @@ import {
   border-radius: 10px;
   color: #fff;
   font-family: "Gilroy";
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 400;
   border-radius: 3px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.2);

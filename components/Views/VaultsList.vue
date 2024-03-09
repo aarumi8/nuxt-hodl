@@ -198,7 +198,7 @@ console.log(props.vaults)
   cursor: pointer;
 }
 
-.info:hover::after 
+.info:hover::after, .info:active::after 
 {
     content: attr(data-title);
     padding: 5px;
@@ -219,13 +219,13 @@ console.log(props.vaults)
 }
 
 @media(max-width: 767px) {
-   .fmcap .info:hover::after {
+   .fmcap .info:hover::after, .info:active::after {
     width: 30vw;
     right: 5px;
     left: unset;
     top: 25px;
   }
-  .info:hover::after {
+  .info:hover::after, .info:active::after {
     width: 30vw;
     right: 0px;
     left: 20px;

@@ -36,9 +36,9 @@ function isRouteActive(path: string): boolean {
 <style scoped>
 .header-text-desktop {
   color: #fff;
-  font-family: "Gilroy", sans-serif;
-  font-weight: 600;
-  font-size: 1.25rem;
+  font-family: "Gilroy";
+  font-weight: 400;
+  font-size: 1rem;
   text-decoration: none;
   opacity: 0.5;
 }
@@ -54,7 +54,7 @@ function isRouteActive(path: string): boolean {
 
 .mobile-links-menu {
   z-index: 22;
-  bottom: 5%;
+  bottom: 2%;
   display: none;
   flex-direction: row;
   position: fixed;
