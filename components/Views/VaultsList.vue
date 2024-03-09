@@ -15,13 +15,14 @@
             </th>
             <th v-else-if="index === columns.length - 2" class="fmcap">
               {{ column }}
-              <span :data-title="tips[index]" class="info" style="margin-left: -7px"></span>
+              <span :data-title="tips[index]" class="info" style="margin-left: -7px;"></span>
             </th>
             <th v-else class="desktop">{{ column }}<span :data-title="tips[index]" class="info"></span></th>
           </template>
         </tr>
       </thead>
       <tbody>
+        
         <template v-for="(vault, index) in vaults" :key="vault.id">
           <tr class="item" @click="toggleDetail(vault.id)">
             <td>
@@ -80,24 +81,24 @@
             <td style="border-top: 0px; padding-top: 0px !important">
               <div class="mobile-detail">
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{ columns[2] }}
+                  {{ columns[2] }} <span :data-title="tips[2]" class="info"></span>
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{ columns[3] }}
+                  {{ columns[3] }} <span :data-title="tips[3]" class="info"></span>
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{ columns[4] }}
+                  {{ columns[4] }} <span :data-title="tips[4]" class="info"></span>
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{ columns[5] }}
+                  {{ columns[5] }} <span :data-title="tips[5]" class="info"></span>
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
-                  {{ columns[6] }}
+                  {{ columns[6] }} <span :data-title="tips[6]" class="info"></span>
                 </div>
               </div>
             </td>
 
-            <td
+            <td 
               style="
                 border-top: 0px;
                 text-align: right;
@@ -187,7 +188,7 @@ console.log(props.vaults)
 
 <style scoped>
 .info {
-  z-index: 100;
+  z-index: 10;
   width: 14px;
   height: 14px;
   background-image: url("~/assets/info.svg");
@@ -214,5 +215,24 @@ console.log(props.vaults)
     font-style: normal;
     font-weight: 300;
     text-align: left;
+    z-index: 101;
+}
+
+@media(max-width: 767px) {
+   .fmcap .info:hover::after {
+    width: 30vw;
+    right: 5px;
+    left: unset;
+    top: 25px;
+  }
+  .info:hover::after {
+    width: 30vw;
+    right: 0px;
+    left: 20px;
+    top: -15px
+  }
+  .info {
+    margin-left: 0px;
+  }
 }
 </style>
