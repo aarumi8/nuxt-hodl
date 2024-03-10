@@ -29,7 +29,7 @@
           target="_blank"
           :to="`https://etherscan.com/address/${vault.vaultAddress}`"
           class="grey-text"
-          >{{ vault.vaultAddress }}</nuxt-link
+          >{{ formatString(vault.vaultAddress) }}</nuxt-link
         >
       </div>
     </BaseView>
@@ -39,6 +39,7 @@
     <BaseHeadingText text="Vault Reserves Structure" />
 
     <div class="margin-wrapper-30-15"></div>
+
     <div class="wrapper">
       <ViewsTokensList
         ref="tableComponent"
@@ -103,6 +104,17 @@ async function fetchUser() {
   
 }
 
+function formatString(str: String) {
+  // Check if the string length is greater than 6
+  if (str.length > 11) {
+    // Return the first 3 chars, '...', and the last 3 chars
+    return str.substring(0, 5) + "..." + str.substring(str.length - 6);
+  } else {
+    // Return the original string if it's 6 characters or less
+    return str;
+  }
+}
+
 async function fetchData() {
   const { data, error, pending } = await useFetch(
     config.public.baseURL + "/vault?address=" + route.params.id
@@ -153,7 +165,11 @@ async function fetchData() {
 }
 
 onMounted(async () => {
-  fetchData();
+  await fetchData();
+  setTimeout(function(){
+    componentKey.value++
+}, 100);
+
 });
 
 onUnmounted(() => {
@@ -232,7 +248,7 @@ onUnmounted(() => {
     margin: 24px 0;
   }
 }
-@media (max-width: 868px) {
+@media (max-width: 940px) {
   .white-text {
     font-size: 0.875rem;
   }

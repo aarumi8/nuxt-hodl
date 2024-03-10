@@ -13,7 +13,7 @@
               {{ column }}
               <span class="info" :data-title="tips[index]" style="margin-left: -7px"></span>
             </th>
-            <th v-else-if="index === columns.length - 2" class="fmcap">
+            <th v-else-if="index === columns.length - 2" class="fmcap" style="border-right: 0px">
               {{ column }}
               <span :data-title="tips[index]" class="info" style="margin-left: -7px;"></span>
             </th>

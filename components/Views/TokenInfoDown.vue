@@ -3,15 +3,15 @@
     <div class="wrapper-token-info-caps">
       <div class="wrapper-item">
         <div class="grey-text">Market Cap</div>
-        <div class="white-text">{{ vault.mcap }}</div>
+        <div class="white-text">{{ formatBalance(vault.mcap) }}</div>
       </div>
       <div class="wrapper-item">
         <div class="grey-text">Floor Market Cap</div>
-        <div class="white-text">{{ vault.fmcap }}</div>
+        <div class="white-text">${{ vault.fmcap }}</div>
       </div>
       <div class="wrapper-item">
         <div class="grey-text">Vault Value</div>
-        <div class="white-text">{{ vault.value }}</div>
+        <div class="white-text">${{ vault.value }}</div>
       </div>
     </div>
 
@@ -45,6 +45,16 @@ function formatString(str: String) {
   } else {
     // Return the original string if it's 6 characters or less
     return str;
+  }
+}
+
+function formatBalance(totalBalance: any) {
+  if (totalBalance >= 1_000_000) { // Checks if the totalBalance is equal to or greater than 1 million
+    return '$' + (totalBalance / 1_000_000).toFixed(2) + 'M';
+  } else if (totalBalance >= 100_000) { // Checks if the totalBalance is equal to or greater than 100 thousand
+    return '$' + (totalBalance / 1_000).toFixed(2) + 'k';
+  } else {
+    return '$' + totalBalance.toFixed(2);
   }
 }
 </script>

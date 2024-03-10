@@ -1,5 +1,5 @@
 <template>
-  <div class="vaults-list tokens-list">
+  <div class="vaults-list tokens-list" id="tokensList">
     <table>
       <thead>
         <tr>
@@ -28,12 +28,12 @@
               </div>
             </td>
 
-            <td class="desktop">{{ vault.price }}</td>
+            <td class="desktop">${{ vault.price }}</td>
             <td class="desktop">{{ vault.amount }}</td>
 
             <td class="fmcap">
               <div class="fmcap-wrapper">
-                <span>{{ vault.total }}</span>
+                <span>${{ vault.total }}</span>
                 <span
                   v-if="expandedVaultId === vault.id"
                   class="expandVaultMobile"
@@ -78,9 +78,9 @@
               "
             >
               <div class="mobile-detail">
-                <div class="cell">{{ vault.price }}</div>
+                <div class="cell">${{ vault.price }}</div>
                 <div class="cell">{{ vault.amount }}</div>
-                <div class="cell">{{ vault.total }}</div>
+                <div class="cell">${{ vault.total }}</div>
               </div>
             </td>
           </tr>
@@ -145,22 +145,32 @@ async function toggleDetail(id: Number) {
     expandedVaultId.value = expandedVaultId.value === id ? null : id;
   }
 }
+
+onMounted(() => {
+  try {
+    setTimeout(function () {
+      document.getElementById("tokensList").style.height = "unset";
+    }, 100);
+  } catch (err) {
+    console.log(err);
+  }
+});
 </script>
 
 <style scoped>
 .tokens-list {
-  background-color: rgb(37, 37, 37);
+  background: rgba(255, 255, 255, 0.05);
   width: 100%;
   overflow: auto;
-  max-height: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: 15px;
-  border: 1px solid rgb(71, 71, 71);
-}
-
-tr:first-of-type th {
-  border-top: 0px solid rgb(71, 71, 71); /* Adds bottom border to the last row */
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: 0px 9px 19px 0px rgba(0, 0, 0, 0.2),
+    0px 35px 35px 0px rgba(0, 0, 0, 0.17), 0px 79px 47px 0px rgba(0, 0, 0, 0.1),
+    0px 141px 56px 0px rgba(0, 0, 0, 0.03), 0px 220px 62px 0px rgba(0, 0, 0, 0);
 }
 
 @media (max-width: 868px) {
@@ -168,9 +178,8 @@ tr:first-of-type th {
     border: 0px;
     overflow: visible;
     background-color: rgba(0, 0, 0, 0);
-  }
-  tr:first-of-type th {
-    border-top: 1px solid rgb(71, 71, 71); /* Adds bottom border to the last row */
+    padding: 0px;
+    box-shadow: unset;
   }
 }
 </style>

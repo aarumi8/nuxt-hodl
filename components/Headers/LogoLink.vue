@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link to="https://hodl.industries" class="logo"></nuxt-link>
+  <nuxt-link to="/" class="logo"></nuxt-link>
 </template>
 
 <script setup lang="ts">

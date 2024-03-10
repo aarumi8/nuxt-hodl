@@ -11,17 +11,17 @@
     <div class="wrapper-pricing">
       <div class="wrapper-price">
         <div class="heading-price">Current Price</div>
-        <div class="sub-price">{{ vault.price }}</div>
+        <div class="sub-price">${{ vault.price }}</div>
       </div>
 
       <div class="wrapper-price">
         <div class="heading-price">Floor Price</div>
-        <div class="sub-price">{{ vault.floorPrice }}</div>
+        <div class="sub-price">${{ vault.floorPrice }}</div>
       </div>
 
       <div class="wrapper-price" style="text-align: right">
         <div class="heading-price">Backed %</div>
-        <div class="sub-price">{{ vault.backedPercent }}</div>
+        <div class="sub-price">{{ vault.backedPercent }}%</div>
       </div>
     </div>
   </div>
@@ -61,12 +61,12 @@ const props = defineProps({
 .sub-price {
   color: #fff;
   font-family: Gilroy;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
-@media (max-width: 868px) {
+@media (max-width: 940px) {
   .wrapper-token-info-up {
     width: 100%;
     margin-bottom: 0px;

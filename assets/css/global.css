@@ -51,7 +51,6 @@ table {
   border-spacing: 0 12px;
 }
 
-
 thead th {
   font-family: "Gilroy";
   font-weight: 400;
@@ -74,14 +73,26 @@ td {
 }
 
 .item {
-  border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.05);
   transition: 300ms;
 }
 
+.item td {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item td:first-child {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item td:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .item:hover,
 .item:active {
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.15);
   box-shadow: 0px 9px 19px 0px rgba(0, 0, 0, 0.33), 0px 35px 35px 0px rgba(0, 0, 0, 0.29), 0px 79px 48px 0px rgba(0, 0, 0, 0.17), 0px 141px 56px 0px rgba(0, 0, 0, 0.05), 0px 220px 62px 0px rgba(0, 0, 0, 0.01);
   backdrop-filter: blur(25px);
@@ -159,6 +170,9 @@ td {
   }
   .fmcap {
     text-align: right;
+  }
+  .fmcap {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
   }
   .fmcap-wrapper {
     justify-content: flex-end;

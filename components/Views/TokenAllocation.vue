@@ -14,7 +14,7 @@
               height: '17px',
               backgroundColor: token.color,
               marginRight: '5px',
-              borderRadius: '5px',
+              borderRadius: '1px',
             }"
           ></div>
           <div class="token-chart-text" style="font-size: 0.925rem !important">
@@ -56,12 +56,7 @@ function sortTokens() {
   const sortedTokens = [...tokens.value].sort(
     (a, b) => b.percentage - a.percentage
   );
-  const colors = [
-    "#fff",
-    "rgb(212,212,212)",
-    "rgb(168,168,168)",
-    "rgb(123,123,123)",
-  ];
+  const colors = ["#438737", "#CA9823", "#2352CA", "#723787"];
 
   // Update each token with a new color based on the new order
   const updatedTokens = sortedTokens.map((token, index) => ({
@@ -82,12 +77,7 @@ function createCanvas() {
     datasets: [
       {
         data: tokens.value.map((token: Token) => token.percentage),
-        backgroundColor: [
-          "#fff",
-          "rgb(212,212,212)",
-          "rgb(168,168,168)",
-          "rgb(123,123,123)",
-        ],
+        backgroundColor: ["#438737", "#CA9823", "#2352CA", "#723787"],
         hoverOffset: 4,
         borderWidth: [0],
       },
@@ -101,8 +91,8 @@ function createCanvas() {
     options: {
       responsive: true,
       maintainAspectRatio: true,
-            animation : {
-        duration: 0
+      animation: {
+        duration: 0,
       },
       plugins: {
         legend: {
@@ -114,21 +104,19 @@ function createCanvas() {
 }
 </script>
 
-
-
-
 <style scoped>
 .token-chart {
   display: flex;
   align-self: flex-start;
   flex-direction: column;
   width: 100%;
-  max-height: 100vh;
+
   background: rgb(37, 37, 37);
-  border-radius: 15px;
-  border: 1px solid rgb(71, 71, 71);
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 30px;
   gap: 20px;
+  box-shadow: 0px 9px 19px 0px rgba(0, 0, 0, 0.20), 0px 35px 35px 0px rgba(0, 0, 0, 0.17), 0px 79px 47px 0px rgba(0, 0, 0, 0.10), 0px 141px 56px 0px rgba(0, 0, 0, 0.03), 0px 220px 62px 0px rgba(0, 0, 0, 0.00);
 }
 .token-chart-text {
   color: #fff;
