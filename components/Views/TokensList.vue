@@ -5,7 +5,7 @@
         <tr>
           <template v-for="(column, index) in columns" :key="index">
             <th v-if="index < 2">{{ column }}</th>
-            <th v-else-if="index === columns.length - 1" class="fmcap">
+            <th v-else-if="index === columns.length - 1" class="fmcap" style="border-right: 0px">
               {{ column }}
             </th>
             <th v-else class="desktop">{{ column }}</th>

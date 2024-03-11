@@ -2,7 +2,7 @@
   <div class="custom-select">
     <div class="select-selected" @click="toggleDropdown">
         <div style="display: flex; align-items: center">
-            <img v-if="selectedOption.imgSrc" :src="selectedOption.imgSrc" class="vault-image">
+            <img v-if="selectedOption.image" :src="selectedOption.image" class="vault-image">
             {{ selectedOption.value ? selectedOption.label : placeholder }}
         </div>
       <span class="expand-select-item" />
@@ -14,6 +14,7 @@
         @click="selectOption(option)"
         class="select-item"
       >
+      <img v-if="option.image" :src="option.image" class="vault-image">
         {{ option.label }}
       </div>
     </div>
@@ -25,7 +26,7 @@ interface Option {
   value: string;
   label: string;
   address: string;
-  imgSrc?: string;
+  image?: string;
 }
 
 const props = defineProps<{
@@ -34,12 +35,6 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["update:modelValue"]);
-
-// const options = ref<Option[]>([
-//   { value: "option1", label: "Option 1", imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png" },
-//   { value: "option2", label: "Option 2" },
-//   // Add more options here
-// ]);
 
 const options = props.options
 
@@ -106,6 +101,9 @@ function selectOption(option: Option) {
   padding: 20px;
   cursor: pointer;
   transition: background-color 0.2s;
+  display: flex;
+  align-content: center;
+  align-items: center;
 }
 
 .select-item:hover {

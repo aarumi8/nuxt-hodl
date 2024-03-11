@@ -67,6 +67,7 @@ async function fetchVaults() {
       id: data.value.vaults[i]._id,
       name: data.value.vaults[i].primaryToken.name,
       ticker: data.value.vaults[i].primaryToken.ticker,
+      image: data.value.vaults[i].primaryToken.logo,
       price: data.value.vaults[i].primaryToken.price.toFixed(2),
       floorPrice: data.value.vaults[i].floorPrice < 0.001 ? '0' : data.value.vaults[i].floorPrice,
       exValue: ( formatUnits(primaryToken.balance, primaryToken.token.decimals) * data.value.vaults[i].floorPrice ).toFixed(2),

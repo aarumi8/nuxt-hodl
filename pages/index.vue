@@ -54,6 +54,7 @@ async function fetchVaults() {
   for(var i = 0; i < data.value.length; i++) {
     vaults.value.push({
       id: data.value[i]._id,
+      image: data.value[i].primaryToken.logo,
       name: data.value[i].primaryToken.name,
       ticker: data.value[i].primaryToken.ticker,
       price: data.value[i].primaryToken.price.toFixed(2),

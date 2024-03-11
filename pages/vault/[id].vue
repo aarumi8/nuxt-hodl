@@ -124,8 +124,7 @@ async function fetchData() {
     id: data.value.id,
     name: data.value.primaryToken.name,
     ticker: data.value.primaryToken.ticker,
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
+    image: data.value.primaryToken.logo,
     price: data.value.primaryToken.price.toFixed(2),
     vaultAddress: data.value.vaultAddress,
     tokenAddress: data.value.primaryToken.tokenAddress,
@@ -143,6 +142,7 @@ async function fetchData() {
       id: i,
       name: data.value.reserves[i].token.name,
       ticker: data.value.reserves[i].token.ticker,
+      image: data.value.reserves[i].token.logo,
       price: (data.value.reserves[i].token.price).toFixed(2),
       address: data.value.reserves[i].token.tokenAddress,
       amount: parseFloat(formatUnits(data.value.reserves[i].balance, data.value.reserves[i].token.decimals)).toFixed(5),

@@ -75,11 +75,11 @@
                 <div class="modal-item-row">
                   <div class="modal-item-col">
                     <div class="modal-sub-text">Market Cap</div>
-                    <div class="modal-sub-header-text">Select a Token</div>
+                    <div class="modal-sub-header-text">{{ formatBalance(selectedToken.mc) }}</div>
                   </div>
                   <div class="modal-item-col" style="text-align: right">
                     <div class="modal-sub-text">Price</div>
-                    <div class="modal-sub-header-text">Select a Token</div>
+                    <div class="modal-sub-header-text">${{ selectedToken.price.toFixed(2) }}</div>
                   </div>
                 </div>
               </div>
@@ -166,7 +166,7 @@ const { gasPrice, fetchContractGas } = useGasPrice();
 
 const config = useRuntimeConfig();
 var tokens = [];
-const selectedToken = ref({ value: "", label: "", address: "" });
+const selectedToken = ref({ value: "", label: "", address: "", image: "", price: 0.00, mc: 0.00 });
 const loadingTransaction = ref(false);
 
 const props = defineProps({
@@ -281,7 +281,10 @@ async function fetchTokens() {
     tokens.push({
       value: data.value.balances[i].token.name,
       label: data.value.balances[i].token.name,
+      image: data.value.balances[i].token.logo,
       address: data.value.balances[i].token.tokenAddress,
+      price: data.value.balances[i].token.price,
+      mc: data.value.balances[i].token.marketCap
     });
   }
 }
@@ -309,6 +312,16 @@ function fetchData() {
     fetchContractGas();
   } catch (err) {
     console.log(err);
+  }
+}
+
+function formatBalance(totalBalance: any) {
+  if (totalBalance >= 1_000_000) { // Checks if the totalBalance is equal to or greater than 1 million
+    return '$' + (totalBalance / 1_000_000).toFixed(2) + 'M';
+  } else if (totalBalance >= 100_000) { // Checks if the totalBalance is equal to or greater than 100 thousand
+    return '$' + (totalBalance / 1_000).toFixed(2) + 'k';
+  } else {
+    return '$' + totalBalance.toFixed(2);
   }
 }
 
