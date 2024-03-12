@@ -1,5 +1,5 @@
 <template>
-  <BaseView style="width: 100%">
+  <BaseView class="noise-vi-2" style="width: 100%">
     <div class="wrapper-vault-i">
       <div class="wrapper-vault-texts">
         <div class="wrapper-vault-item">

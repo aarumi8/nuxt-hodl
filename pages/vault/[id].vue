@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <BaseView style="margin-top: 20px; padding: 25px">
+    <BaseView class="noise-va" style="margin-top: 20px; padding: 25px">
       <div style="display: flex; gap: 5px; align-items: center">
         <div class="white-text">Vault Address:</div>
         <nuxt-link

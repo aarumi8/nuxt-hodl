@@ -45,7 +45,7 @@ function closeModal() {
 }
 
 .modal-content {
-  border-radius: 13.396px;
+  border-radius: 3px;
   border: 0.893px solid rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.05);
   width: 50%;

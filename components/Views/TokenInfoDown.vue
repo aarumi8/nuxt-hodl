@@ -54,7 +54,7 @@ function formatBalance(totalBalance: any) {
   } else if (totalBalance >= 100_000) { // Checks if the totalBalance is equal to or greater than 100 thousand
     return '$' + (totalBalance / 1_000).toFixed(2) + 'k';
   } else {
-    return '$' + totalBalance.toFixed(2);
+    return '$' + totalBalance;
   }
 }
 </script>

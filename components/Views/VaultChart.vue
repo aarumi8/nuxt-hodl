@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div class="vault-chart">
+    <div class="vault-chart noise-chart">
       <div style="position: relative; display: flex; width: 100%; justify-content: center; align-content: center; align-items: end;">
         <canvas style="width: 100%; height: 100%; margin-bottom: -1%; transform: scale(1.001)" ref="canvas"></canvas>
       </div>

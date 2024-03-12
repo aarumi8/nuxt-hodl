@@ -88,7 +88,7 @@ const handleFocus = (event: FocusEvent) => {
   position: relative;
   user-select: none;
   background-color: rgb(32, 32, 32);
-  border-radius: 15px;
+  border-radius: 3px;
 }
 
 .select-selected {
@@ -97,7 +97,7 @@ const handleFocus = (event: FocusEvent) => {
   justify-content: space-between;
   background-color: rgb(32, 32, 32);
   border: 1px solid rgb(71, 71, 71);
-  border-radius: 15px;
+  border-radius: 3px;
   padding: 20px;
   cursor: pointer;
   color: #fff;
@@ -115,7 +115,7 @@ const handleFocus = (event: FocusEvent) => {
   background-color: rgb(32, 32, 32);
   border: 1px solid rgb(71, 71, 71);
   border-bottom: 0px;
-  border-radius: 15px 15px 0px 0px;
+  border-radius: 3px 3px 0px 0px;
   padding: 20px;
   cursor: pointer;
   color: #fff;
@@ -130,7 +130,7 @@ const handleFocus = (event: FocusEvent) => {
 .select-items {
   position: absolute;
   background-color: rgb(32, 32, 32);
-  border-radius: 15px;
+  border-radius: 3px;
   border: 1px solid rgb(71, 71, 71);
   width: 100%;
   z-index: 99;
@@ -169,7 +169,7 @@ const handleFocus = (event: FocusEvent) => {
   border-right: 1px solid rgb(71, 71, 71);
   border-left: 1px solid rgb(71, 71, 71);
   border-bottom: 1px solid rgb(71, 71, 71);
-  border-radius: 0px 0px 15px 15px;
+  border-radius: 0px 0px 3px 3px;
   padding-top: 0px;
 }
 .modal-input {

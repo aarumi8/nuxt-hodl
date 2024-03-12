@@ -36,6 +36,9 @@ button {
   cursor: pointer;
   box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.40) inset, 0px 5px 4px 0px rgba(0, 0, 0, 0.80);
   transition: transform 300ms;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 button:hover, button:active {
   transform: scale(1.05);

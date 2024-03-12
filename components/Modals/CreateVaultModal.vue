@@ -67,8 +67,13 @@
               </div>
 
               <div class="modal-item-col">
-                <div class="modal-sub-text">Select a token to back</div>
+                <div class="modal-sub-text">Select a token from your portfolio to back</div>
                 <BaseSelect v-model="selectedToken" :options="tokens" />
+              </div>
+
+              <div class="modal-item-col">
+                <div class="modal-sub-text">Or search a token by address to back</div>
+                <ViewsCreateVaultSearchBar style="width: unset" />
               </div>
 
               <div class="modal-item-col">

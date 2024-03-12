@@ -35,7 +35,6 @@ import {
   justify-content: center;
   align-items: center;
   border-radius: 2px;
-  background: rgb(255, 255, 255);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.2) inset,
     5px 5px 4px 0px rgba(0, 0, 0, 0.8);
@@ -45,6 +44,10 @@ import {
   font-weight: 400;
   cursor: pointer;
   transition: transform 300ms;
+  background: url("~/assets/noise-connect-btn.png"), lightgray 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .connected-wallet {
@@ -80,7 +83,6 @@ import {
   padding: 15px 25px;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
   color: #000000;
   font-family: "Gilroy";
   font-size: 1rem;
@@ -90,6 +92,10 @@ import {
   box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.4) inset,
     0px 5px 4px 0px rgba(0, 0, 0, 0.8);
   transition: transform 300ms;
+  background: url("~/assets/noise-connect-btn-m.png"), lightgray 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .connected-wallet-mobile {
@@ -98,7 +104,6 @@ import {
   padding: 15px 25px;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
   color: #fff;
   font-family: "Gilroy";
   font-size: 1rem;

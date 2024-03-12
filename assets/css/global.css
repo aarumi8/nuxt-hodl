@@ -2,7 +2,7 @@
 @import url('./fonts.css');
 
 html {
-    background-color: #191919;;
+    background-color: #191919;
 }
 body {
     margin: 3.9vh 4vw 3.9vh 4vw;
@@ -98,6 +98,7 @@ td {
   backdrop-filter: blur(25px);
   cursor: pointer;
 }
+
 .mobile-detail {
   display: none;
 }
@@ -142,6 +143,94 @@ td {
   font-weight: 600;
   line-height: normal;
 }
+
+.noise-btn {
+  background: url("~/assets/noise-white-btn.png"), lightgray 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.noise-va {
+  position: relative;
+  display: flex;
+}
+
+.noise-va::before {
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%; /* Cover the full size of the parent */
+  height: 100%; /* Cover the full size of the parent */
+  position: absolute;
+  background-image: url("~/assets/noise-vault-address.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.noise-vi-1 {
+  position: relative;
+  display: flex;
+}
+
+.noise-vi-1::before {
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%; /* Cover the full size of the parent */
+  height: 100%; /* Cover the full size of the parent */
+  position: absolute;
+  background-image: url("~/assets/noise-vi-1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.noise-vi-2 {
+  position: relative;
+  display: flex;
+}
+
+.noise-vi-2::before {
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%; /* Cover the full size of the parent */
+  height: 100%; /* Cover the full size of the parent */
+  position: absolute;
+  background-image: url("~/assets/noise-vi-2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.noise-chart {
+  position: relative;
+  display: flex;
+}
+
+.noise-chart::before {
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%; /* Cover the full size of the parent */
+  height: 100%; /* Cover the full size of the parent */
+  position: absolute;
+  background-image: url("~/assets/noise-chart.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
 @media (max-width: 1300px) {
   td,
   th {

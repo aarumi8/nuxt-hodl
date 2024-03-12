@@ -58,7 +58,7 @@ function selectOption(option: Option) {
   position: relative;
   user-select: none;
   background-color: rgb(32, 32, 32);
-  border-radius: 15px;
+  border-radius: 3px;
 }
 
 .select-selected {
@@ -67,7 +67,7 @@ function selectOption(option: Option) {
   justify-content: space-between;
   background-color: rgb(32, 32, 32);
   border: 1px solid rgb(71, 71, 71);
-  border-radius: 15px;
+  border-radius: 3px;
   padding: 20px;
   cursor: pointer;
   color: #fff;
@@ -82,7 +82,7 @@ function selectOption(option: Option) {
 .select-items {
   position: absolute;
   background-color: rgb(32, 32, 32);
-  border-radius: 15px;
+  border-radius: 3px;
   border: 1px solid rgb(71, 71, 71);
   width: 100%;
   z-index: 99;
