@@ -5,7 +5,9 @@
         <div v-if="modalStep === 1">
           <div class="modal-items-cols">
             <div class="modal-item-col">
-              <div class="modal-header-text">Donate to {{vault.ticker}} Vault</div>
+              <div class="modal-header-text">
+                Donate to {{ vault.ticker }} Vault
+              </div>
               <div class="modal-sub-text">
                 By donating into Vault, you increase the Floor Price and Floor
                 Market Cap of the token, by that helping the token holders
@@ -23,8 +25,12 @@
                     class="modal-item-row"
                     style="gap: 10px; align-items: center"
                   >
-                    <div class="modal-sub-header-text">+0.05%</div>
-                    <div class="modal-sub-text">To {{ vault.ticker }} floor price</div>
+                    <div class="modal-sub-header-text">
+                      {{ vault.floorPrice }}
+                    </div>
+                    <div class="modal-sub-text">
+                      {{ vault.ticker }} floor price
+                    </div>
                   </div>
                   <div class="modal-sub-header-text">{{ gasPrice }}</div>
                 </div>
@@ -52,12 +58,18 @@
                       <div class="modal-header-text">
                         {{ selectedToken.amountInput }}
                       </div>
-                      <div class="modal-sub-text">${{parseFloat(selectedToken.amountInput * selectedToken.price).toFixed(2)}}</div>
+                      <div class="modal-sub-text">
+                        ${{
+                          parseFloat(
+                            selectedToken.amountInput * selectedToken.price
+                          ).toFixed(2)
+                        }}
+                      </div>
                     </div>
                     <div class="modal-item-col">
                       <img
-                        v-if="imgSrc"
-                        :src="imgSrc"
+                        v-if="selectedToken.image"
+                        :src="selectedToken.image"
                         class="vault-image"
                         style="transform: scale(2)"
                       />
@@ -72,8 +84,12 @@
                     class="modal-item-row"
                     style="gap: 10px; align-items: center"
                   >
-                    <div class="modal-sub-header-text">+0.05%</div>
-                    <div class="modal-sub-text">To {{vault.ticker}} floor price</div>
+                    <div class="modal-sub-header-text">
+                      {{ vault.floorPrice }}
+                    </div>
+                    <div class="modal-sub-text">
+                      {{ vault.ticker }} floor price
+                    </div>
                   </div>
                   <div class="modal-sub-header-text">{{ gasPrice }}</div>
                 </div>
@@ -89,6 +105,8 @@
 </template>
 
 <script setup lang="ts">
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import {
   account,
   accountDetails,
@@ -131,17 +149,32 @@ const loadingTransaction = ref(false);
 
 function nextStep() {
   if (!account.connected) {
-    alert("Connect a wallet to continue");
+    toast("Please, connect your wallet", {
+      theme: "light",
+      type: "warning",
+      position: "top-center",
+      autoClose: 3000,
+    });
     closeModal();
     return;
   }
   if (modalStep.value === 1 && !selectedToken.value.address) {
-    alert("Please, choose a token");
+    toast("Please, choose a token", {
+      theme: "light",
+      type: "warning",
+      position: "top-center",
+      autoClose: 3000,
+    });
     return;
   }
 
   if (selectedToken.value.amountInput === "") {
-    alert("Please, type an amount of token to send");
+    toast("Please, type an amount of token to send", {
+      theme: "light",
+      type: "warning",
+      position: "top-center",
+      autoClose: 3000,
+    });
     return;
   }
 
@@ -150,7 +183,12 @@ function nextStep() {
     selectedToken.value.decimals
   );
   if (selectedToken.value.amount > selectedToken.value.balance) {
-    alert("you dont have that amount of token");
+    toast("You dont have that amount of token", {
+      theme: "light",
+      type: "error",
+      position: "top-center",
+      autoClose: 3000,
+    });
     return;
   }
 
@@ -214,7 +252,16 @@ async function sendToken(address: String, amount: BigInt) {
     return data.hash;
   } catch (err) {
     console.log(err);
-    alert("An error happened. Details: " + err);
+    toast(
+      "Error! Please, contact us on discord and provide the screenshot of this error: " +
+        err,
+      {
+        theme: "light",
+        type: "error",
+        position: "top-center",
+        autoClose: 15000,
+      }
+    );
     closeModal();
     return false;
   }
@@ -229,6 +276,7 @@ async function donateVault() {
   } else {
     await sendToken(selectedToken.value.address, selectedToken.value.amount);
   }
+  closeModal();
 }
 
 async function fetchTokens() {
@@ -241,11 +289,15 @@ async function fetchTokens() {
       label: data.value.balances[i].token.name,
       address: data.value.balances[i].token.tokenAddress,
       balance: data.value.balances[i].balance,
-      balanceFormatted: formatUnits(data.value.balances[i].balance, data.value.balances[i].token.decimals),
+      balanceFormatted: formatUnits(
+        data.value.balances[i].balance,
+        data.value.balances[i].token.decimals
+      ),
       amountInput: "",
       amount: 0,
       decimals: data.value.balances[i].token.decimals,
-      price: data.value.balances[i].token.price
+      price: data.value.balances[i].token.price,
+      image: data.value.balances[i].token.logo,
     });
   }
 }
@@ -267,5 +319,4 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 </style>

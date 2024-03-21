@@ -46,7 +46,7 @@ function closeModal() {
 
 .modal-content {
   border-radius: 3px;
-  border: 0.893px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.05);
   width: 50%;
   backdrop-filter: blur(26.79166603088379px);

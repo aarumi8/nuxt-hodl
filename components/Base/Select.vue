@@ -65,8 +65,8 @@ function selectOption(option: Option) {
   display: flex; 
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(32, 32, 32);
-  border: 1px solid rgb(71, 71, 71);
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 3px;
   padding: 20px;
   cursor: pointer;
@@ -83,7 +83,7 @@ function selectOption(option: Option) {
   position: absolute;
   background-color: rgb(32, 32, 32);
   border-radius: 3px;
-  border: 1px solid rgb(71, 71, 71);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   width: 100%;
   z-index: 99;
   color: #fff;

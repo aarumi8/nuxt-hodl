@@ -96,7 +96,7 @@ const handleFocus = (event: FocusEvent) => {
   align-items: center;
   justify-content: space-between;
   background-color: rgb(32, 32, 32);
-  border: 1px solid rgb(71, 71, 71);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 3px;
   padding: 20px;
   cursor: pointer;
@@ -113,7 +113,7 @@ const handleFocus = (event: FocusEvent) => {
   display: flex;
   justify-content: space-between;
   background-color: rgb(32, 32, 32);
-  border: 1px solid rgb(71, 71, 71);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-bottom: 0px;
   border-radius: 3px 3px 0px 0px;
   padding: 20px;
@@ -131,7 +131,7 @@ const handleFocus = (event: FocusEvent) => {
   position: absolute;
   background-color: rgb(32, 32, 32);
   border-radius: 3px;
-  border: 1px solid rgb(71, 71, 71);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   width: 100%;
   z-index: 99;
   color: #fff;
@@ -181,7 +181,7 @@ const handleFocus = (event: FocusEvent) => {
   line-height: normal;
   color: #fff;
   background-color: rgb(32, 32, 32); /* Match the modal's background */
-  border: 0px solid rgb(71, 71, 71); /* Example border */
+  border: 0px solid rgba(255, 255, 255, 0.25); /* Example border */
   text-decoration: none;
   outline: none;
   margin-bottom: 5px;

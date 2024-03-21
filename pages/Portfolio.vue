@@ -12,7 +12,7 @@
 
       <div class="margin-wrapper-40-24">
         <ViewsVaultsList
-          :columns="['#', 'Name', 'Price', 'Floor Price', 'Amount', 'Value', 'Extractable Vaule']"
+          :columns="['#', 'Name', 'Price', 'Floor Price', 'Amount', 'Value', 'Extractable Value']"
           :vaults="vaults"
           :tips="['', '', 'The market price of a token', 'The floor price represents how much money you can get for 1 token via the vault', 'Amount of tokens you have', 'Market value of your tokens', 'Amount of money you can get if you withdraw from a vault']"
         />

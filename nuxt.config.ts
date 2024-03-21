@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     ]
   },
   plugins: [
-    '~/plugins/web3-auth.ts'
+    '~/plugins/web3-auth.ts',
   ],
   runtimeConfig: {
     wcProjectId: process.env.WC_PROJECT_ID,

@@ -1,5 +1,6 @@
 <template>
   <div>
+        <div class="bkg" />
     <HeadersHeader />
     <div class="layout">
       <NuxtPage />

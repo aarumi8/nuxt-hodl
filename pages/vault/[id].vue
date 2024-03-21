@@ -31,6 +31,7 @@
           class="grey-text"
           >{{ formatString(vault.vaultAddress) }}</nuxt-link
         >
+        <span class="clipboard" @click="copyToClipboard(vault.tokenAddress)" />
       </div>
     </BaseView>
 
@@ -45,6 +46,7 @@
         ref="tableComponent"
         :columns="['#', 'Name', 'Price', 'Amount', 'Total']"
         :vaults="tokens"
+
       />
       <div class="wrapper-chart">
         <ViewsTokenAllocation
@@ -175,6 +177,16 @@ onMounted(async () => {
 onUnmounted(() => {
   window.removeEventListener("resize", onResize);
 });
+
+const copyToClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    // Optionally, display a message to the user indicating success.
+  } catch (err) {
+    console.error("Failed to copy text: ", err);
+    // Optionally, display an error message to the user.
+  }
+};
 </script>
 
 <style scoped>

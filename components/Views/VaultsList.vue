@@ -42,13 +42,13 @@
             </td>
             <td class="desktop">${{ vault.floorPrice }}</td>
 
-            <td v-if="vault.mcap" class="desktop">${{ vault.mcap }}</td>
-            <td v-if="vault.amount" class="desktop">${{ vault.amount }}</td>
+            <td v-if="vault.mcap" class="desktop">{{ formatBalance(vault.mcap) }}</td>
+            <td v-if="vault.amount" class="desktop">{{ vault.amount }}</td>
 
             <td class="fmcap">
               <div class="fmcap-wrapper">
                 <span v-if="vault.fmcap">${{ vault.fmcap }}</span>
-                <span v-if="vault.value">${{ vault.value }}</span>
+                <span v-if="vault.value">{{ formatBalance(parseFloat(vault.value)) }}</span>
                 <span
                   v-if="expandedVaultId === vault.id"
                   class="expandVaultMobile"
@@ -109,14 +109,14 @@
                 <div class="cell">${{ vault.price }}</div>
                 <div class="cell">${{ vault.floorPrice }}</div>
 
-                <div v-if="vault.mcap" class="cell">${{ vault.mcap }}</div>
+                <div v-if="vault.mcap" class="cell">{{ formatBalance(vault.mcap) }}</div>
                 <div v-if="vault.fmcap" class="cell">${{ vault.fmcap }}</div>
                 <div v-if="vault.backedPercent" class="cell">
                   {{ vault.backedPercent }}%
                 </div>
 
                 <div v-if="vault.amount" class="cell">{{ vault.amount }}</div>
-                <div v-if="vault.value" class="cell">${{ vault.value }}</div>
+                <div v-if="vault.value" class="cell">{{ formatBalance(parseFloat(vault.value)) }}</div>
                 <div v-if="vault.exValue" class="cell">${{ vault.exValue }}</div>
               </div>
             </td>
@@ -183,7 +183,15 @@ async function toggleDetail(id: String) {
   }
 }
 
-console.log(props.vaults)
+function formatBalance(totalBalance: any) {
+  if (totalBalance >= 1_000_000) { // Checks if the totalBalance is equal to or greater than 1 million
+    return '$' + (totalBalance / 1_000_000).toFixed(2) + 'M';
+  } else if (totalBalance >= 100_000) { // Checks if the totalBalance is equal to or greater than 100 thousand
+    return '$' + (totalBalance / 1_000).toFixed(2) + 'k';
+  } else {
+    return '$' + totalBalance.toFixed(2);
+  }
+}
 </script>
 
 <style scoped>
@@ -203,7 +211,7 @@ console.log(props.vaults)
     content: attr(data-title);
     padding: 5px;
     border-radius: 3px;
-    border: 1px solid #7a7a7a;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     width: 10vw;
     position: absolute;
     top: 25px;

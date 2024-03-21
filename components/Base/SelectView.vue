@@ -10,7 +10,7 @@
 
     <div v-if="selectedOption.value" class="select-selected-with-view" @click="toggleDropdown">
         <div style="display: flex; align-items: center">
-            <img v-if="selectedOption.imgSrc" :src="selectedOption.imgSrc" class="vault-image">
+            <img v-if="selectedOption.image" :src="selectedOption.image" class="vault-image">
             {{ selectedOption.value ? selectedOption.label : placeholder }}
             <span style="margin-left:10px" class="expand-select-item" />
         </div>
@@ -31,8 +31,9 @@
         @click="selectOption(option)"
         class="select-item"
       >
-        <div>{{ option.label }}</div>
-        <div style="opacity: 0.5">{{ option.balanceFormatted }}</div>
+      
+        <div style="display: flex; align-items: center"><img v-if="option.image" :src="option.image" class="vault-image">{{ option.label }}</div>
+        <div style="opacity: 0.5">{{ parseFloat(option.balanceFormatted).toFixed(2) }}</div>
       </div>
     </div>
   </div>
@@ -46,7 +47,7 @@ interface Option {
   label: string;
   address: string;
   balance: string;
-  imgSrc?: string;
+  image?: string;
   amountInput: string;
   decimals: number;
 }
@@ -99,7 +100,7 @@ const handleFocus = (event: FocusEvent) => {
   align-items: center;
   justify-content: space-between;
   background-color: rgb(32, 32, 32);
-  border: 1px solid rgb(71, 71, 71);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 3px;
   padding: 20px;
   cursor: pointer;
@@ -117,7 +118,7 @@ const handleFocus = (event: FocusEvent) => {
     align-items: center;
     justify-content: space-between;
     background-color: rgb(32, 32, 32);
-    border: 1px solid rgb(71, 71, 71);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-bottom: 0px;
     border-radius: 3px 3px 0px 0px;
     padding: 20px;
@@ -135,7 +136,7 @@ const handleFocus = (event: FocusEvent) => {
   position: absolute;
   background-color: rgb(32, 32, 32);
   border-radius: 3px;
-  border: 1px solid rgb(71, 71, 71);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   width: 100%;
   z-index: 99;
   color: #fff;
@@ -185,7 +186,7 @@ const handleFocus = (event: FocusEvent) => {
     line-height: normal;
     color: #fff;
     background-color: rgb(32, 32, 32); /* Match the modal's background */
-    border: 0px solid rgb(71, 71, 71); /* Example border */
+    border: 0px solid rgba(255, 255, 255, 0.25); /* Example border */
     text-decoration: none;
     outline: none;
     margin-bottom: 5px;

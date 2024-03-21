@@ -75,6 +75,12 @@ onUnmounted(() => {
   gap: 20px;
 }
 
+@media (max-width: 1000px) {
+  .header {
+    gap: 15px;
+  }
+}
+
 @media (max-width: 767px) {
   .header {
     background-color: rgba(255, 255, 255, 0.05);

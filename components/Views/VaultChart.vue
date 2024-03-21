@@ -68,6 +68,7 @@
 
 <script setup lang="ts">
 import gradient from "chartjs-plugin-gradient";
+import 'chartjs-plugin-style';
 Chart.register(gradient);
 const canvas = ref<HTMLCanvasElement | null>(null);
 var isPriceTab = ref(true);

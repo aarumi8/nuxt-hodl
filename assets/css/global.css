@@ -2,10 +2,39 @@
 @import url('./fonts.css');
 
 html {
-    background-color: #191919;
+    /* background-color: #191919; */
+    background-color: black;
 }
+
+.bkg {
+  background-image: url("~/assets/bkg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  z-index: -500;
+  filter: grayscale();
+  opacity: 0.4;
+  background-blend-mode: luminosity;
+  transform: scale(1.2);
+}
+
 body {
     margin: 3.9vh 4vw 3.9vh 4vw;
+}
+.Toastify__toast {
+  font-size: 0.875rem;
+  font-family: "Gilroy" !important;
+  font-style: normal;
+}
+
+.Toastify__toast-container {
+  z-index: 500 !important;
+  width: unset !important;
 }
 
 .bg {

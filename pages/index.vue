@@ -17,16 +17,19 @@
     </div>
     <div class="margin-wrapper-40-24">
       <ViewsVaultsList
-        :columns="['#', 'Name', 'Price', 'Floor Price', 'Market Cap', 'Floor Market Cap', 'Backed %']"
+        :columns="['#', 'Name', 'Price', 'Floor Price', 'Market Cap', 'Floor MC', 'Backed %']"
         :vaults="vaults"
         :tips="['', '', 'The market price of a token', 'The floor price represents how much money you can get for 1 token via the vault', 'The market cap of a token', 'The floor market cap of a token represents how much money in a vault', 'Backed % represents a ratio between the market cap and the floor market cap']"
        />
     </div>
     
   </div>
+
 </template>
 
 <script setup lang="ts">
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import { account, accountDetails, connect, disconnect } from '@kolirt/vue-web3-auth'
 const config = useRuntimeConfig()
 
@@ -40,12 +43,13 @@ function handleShowModal() {
   if (account.connected) {
     showModal.value = true;
   } else {
-    alert('Please connect your wallet to create a new vault.');
+    toast("Please, connect your wallet", {
+      "theme": "light",
+      "type": "warning",
+      "position": "top-center",
+      "autoClose": 3000
+    })
   }
-}
-
-function formatVaultData(vault: Object) {
-
 }
 
 async function fetchVaults() {

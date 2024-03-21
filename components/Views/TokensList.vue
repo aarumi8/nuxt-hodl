@@ -5,7 +5,11 @@
         <tr>
           <template v-for="(column, index) in columns" :key="index">
             <th v-if="index < 2">{{ column }}</th>
-            <th v-else-if="index === columns.length - 1" class="fmcap" style="border-right: 0px">
+            <th
+              v-else-if="index === columns.length - 1"
+              class="fmcap"
+              style="border-right: 0px"
+            >
               {{ column }}
             </th>
             <th v-else class="desktop">{{ column }}</th>
@@ -149,7 +153,22 @@ async function toggleDetail(id: Number) {
 onMounted(() => {
   try {
     setTimeout(function () {
-      document.getElementById("tokensList").style.height = "unset";
+      // Assuming the element's height is set and is in a format that can be parsed as an integer (e.g., "100px")
+      var element = document.getElementById("tokensList");
+      if (element.style.height) {
+        // Get the current height as an integer (e.g., "100px" becomes 100)
+        var currentHeight = parseInt(element.style.height, 10);
+        // Calculate 5% of the current height
+        var increase = currentHeight * 0.015;
+        // Set the new height
+        element.style.height = `${currentHeight + increase}px`;
+      } else {
+        // If the element's height is not explicitly set via the style attribute, use getComputedStyle
+        let computedStyle = window.getComputedStyle(element);
+        let currentHeight = parseInt(computedStyle.height, 10); // Extract height as an integer
+        let increase = currentHeight * 0.015; // Calculate 5%
+        element.style.height = `${currentHeight + increase}px`; // Apply new height
+      }
     }, 100);
   } catch (err) {
     console.log(err);

@@ -67,12 +67,16 @@
               </div>
 
               <div class="modal-item-col">
-                <div class="modal-sub-text">Select a token from your portfolio to back</div>
+                <div class="modal-sub-text">
+                  Select a token from your portfolio to back
+                </div>
                 <BaseSelect v-model="selectedToken" :options="tokens" />
               </div>
 
               <div class="modal-item-col">
-                <div class="modal-sub-text">Or search a token by address to back</div>
+                <div class="modal-sub-text">
+                  Or search a token by address to back
+                </div>
                 <ViewsCreateVaultSearchBar style="width: unset" />
               </div>
 
@@ -80,11 +84,15 @@
                 <div class="modal-item-row">
                   <div class="modal-item-col">
                     <div class="modal-sub-text">Market Cap</div>
-                    <div class="modal-sub-header-text">{{ formatBalance(selectedToken.mc) }}</div>
+                    <div class="modal-sub-header-text">
+                      {{ formatBalance(selectedToken.mc) }}
+                    </div>
                   </div>
                   <div class="modal-item-col" style="text-align: right">
                     <div class="modal-sub-text">Price</div>
-                    <div class="modal-sub-header-text">${{ selectedToken.price.toFixed(2) }}</div>
+                    <div class="modal-sub-header-text">
+                      ${{ selectedToken.price.toFixed(2) }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -155,6 +163,8 @@
 </template>
 
 <script setup lang="ts">
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import {
   account,
   accountDetails,
@@ -171,7 +181,14 @@ const { gasPrice, fetchContractGas } = useGasPrice();
 
 const config = useRuntimeConfig();
 var tokens = [];
-const selectedToken = ref({ value: "", label: "", address: "", image: "", price: 0.00, mc: 0.00 });
+const selectedToken = ref({
+  value: "",
+  label: "",
+  address: "",
+  image: "",
+  price: 0.0,
+  mc: 0.0,
+});
 const loadingTransaction = ref(false);
 
 const props = defineProps({
@@ -186,13 +203,17 @@ const tokenVaultAddress = ref("Loading data");
 
 async function nextStep() {
   if (!account.connected) {
-    alert("Connect a wallet to continue");
     closeModal();
     return;
   }
 
   if (modalStep.value === 2 && !selectedToken.value.address) {
-    alert("Please, choose a token");
+    toast("Please, choose a token", {
+      theme: "light",
+      type: "warning",
+      position: "top-center",
+      autoClose: 3000,
+    });
     return;
   }
 
@@ -253,7 +274,16 @@ async function createVault() {
     return data.hash;
   } catch (err) {
     console.log(err);
-    alert("An error happened. Details: " + err);
+    toast(
+      "Error! Please, contact us on discord and provide the screenshot of this error: " +
+        err,
+      {
+        theme: "light",
+        type: "error",
+        position: "top-center",
+        autoClose: 15000,
+      }
+    );
     closeModal();
     loadingTransaction.value = false;
     // Return false to indicate failure
@@ -266,8 +296,14 @@ async function goToVault() {
   if (tokenVaultAddress.value.length === 42) {
     await navigateTo(`/vault/${tokenVaultAddress.value}`);
   } else {
-    alert(
-      "The vault not found. Please, update the page to see the vault on the main page"
+    toast(
+      "The vault not found. Please, update the page to see the vault on the main page",
+      {
+        theme: "light",
+        type: "warning",
+        position: "top-center",
+        autoClose: 5000,
+      }
     );
     closeModal();
   }
@@ -289,7 +325,7 @@ async function fetchTokens() {
       image: data.value.balances[i].token.logo,
       address: data.value.balances[i].token.tokenAddress,
       price: data.value.balances[i].token.price,
-      mc: data.value.balances[i].token.marketCap
+      mc: data.value.balances[i].token.marketCap,
     });
   }
 }
@@ -321,12 +357,14 @@ function fetchData() {
 }
 
 function formatBalance(totalBalance: any) {
-  if (totalBalance >= 1_000_000) { // Checks if the totalBalance is equal to or greater than 1 million
-    return '$' + (totalBalance / 1_000_000).toFixed(2) + 'M';
-  } else if (totalBalance >= 100_000) { // Checks if the totalBalance is equal to or greater than 100 thousand
-    return '$' + (totalBalance / 1_000).toFixed(2) + 'k';
+  if (totalBalance >= 1_000_000) {
+    // Checks if the totalBalance is equal to or greater than 1 million
+    return "$" + (totalBalance / 1_000_000).toFixed(2) + "M";
+  } else if (totalBalance >= 100_000) {
+    // Checks if the totalBalance is equal to or greater than 100 thousand
+    return "$" + (totalBalance / 1_000).toFixed(2) + "k";
   } else {
-    return '$' + totalBalance.toFixed(2);
+    return "$" + totalBalance.toFixed(2);
   }
 }
 

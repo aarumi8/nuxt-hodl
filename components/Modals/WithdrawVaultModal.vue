@@ -17,7 +17,11 @@
 
             <div class="modal-item-col">
               <div class="modal-item-col">
-                <BaseWithdrawView v-model="amountInput" :vault="vault" :primaryToken="primaryToken" />
+                <BaseWithdrawView
+                  v-model="amountInput"
+                  :vault="vault"
+                  :primaryToken="primaryToken"
+                />
               </div>
 
               <BaseView>
@@ -27,8 +31,12 @@
                   </div>
                   <div class="modal-item-row" style="align-items: center">
                     <div class="modal-item-col" style="gap: 5px">
-                      <div class="modal-header-text">{{ vault.floorPrice * amountInput }}</div>
-                      <div class="modal-sub-text">{{tokens.length}} different tokens</div>
+                      <div class="modal-header-text">
+                        {{ vault.floorPrice * amountInput }}
+                      </div>
+                      <div class="modal-sub-text">
+                        {{ tokens.length }} different tokens
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -40,7 +48,9 @@
                     class="modal-item-row"
                     style="gap: 10px; align-items: center"
                   >
-                    <div class="modal-sub-header-text">{{vault.floorPrice}}</div>
+                    <div class="modal-sub-header-text">
+                      {{ vault.floorPrice }}
+                    </div>
                     <div class="modal-sub-text">
                       {{ vault.ticker }} floor price
                     </div>
@@ -67,7 +77,10 @@
 
             <div class="modal-item-col">
               <ViewsWithdrawSearchBar style="width: unset" />
-              <ViewsWithdrawTokensList :tokens="tokens" v-model="selectedTokens" />
+              <ViewsWithdrawTokensList
+                :tokens="tokens"
+                v-model="selectedTokens"
+              />
             </div>
 
             <BaseButton @click="nextStep">Approve Transaction</BaseButton>
@@ -99,7 +112,9 @@
                   <div class="modal-item-row" style="align-items: center">
                     <div class="modal-item-col" style="gap: 5px">
                       <div class="modal-header-text">$15</div>
-                      <div class="modal-sub-text">32 different tokens</div>
+                      <div class="modal-sub-text">
+                        {{ tokens.length }} different tokens
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -130,6 +145,8 @@
 </template>
 
 <script setup lang="ts">
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import {
   account,
   accountDetails,
@@ -149,7 +166,7 @@ const props = defineProps({
   modelValue: Boolean,
   vault: Object,
   tokens: Object,
-    primaryToken: Object
+  primaryToken: Object,
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -161,22 +178,32 @@ const imgSrc = ref(
   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
 );
 const amountInput = ref("");
-const selectedTokens = ref([])
+const selectedTokens = ref([]);
 
 function nextStep() {
   if (!account.connected) {
-    alert("Connect a wallet to continue");
+    toast("Please, connect your wallet", {
+      theme: "light",
+      type: "warning",
+      position: "top-center",
+      autoClose: 3000,
+    });
     closeModal();
     return;
   }
   if (modalStep.value === 1 && !amountInput.value) {
-    alert("Please, type an amount of token to send");
+    toast("Please, type an amount of token to send", {
+      theme: "light",
+      type: "warning",
+      position: "top-center",
+      autoClose: 3000,
+    });
     return;
   }
 
   if (modalStep.value === 2) {
-    console.log(selectedTokens.value)
-    return
+    console.log(selectedTokens.value);
+    return;
   }
 
   modalStep.value++;

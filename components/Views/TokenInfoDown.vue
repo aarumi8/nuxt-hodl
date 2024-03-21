@@ -19,7 +19,10 @@
       <div class="wrapper-item">
         <div class="grey-text">Contract</div>
       </div>
-      <div class="wrapper-item">
+      <div
+        class="wrapper-item"
+        style="justify-content: unset; gap: 5px; align-items: center"
+      >
         <nuxt-link
           style="text-decoration: none"
           target="_blank"
@@ -27,6 +30,7 @@
           class="white-text"
           >{{ formatString(vault.tokenAddress) }}</nuxt-link
         >
+        <span class="clipboard" @click="copyToClipboard(vault.tokenAddress)" />
       </div>
     </div>
   </div>
@@ -48,13 +52,25 @@ function formatString(str: String) {
   }
 }
 
+const copyToClipboard = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    // Optionally, display a message to the user indicating success.
+  } catch (err) {
+    console.error("Failed to copy text: ", err);
+    // Optionally, display an error message to the user.
+  }
+};
+
 function formatBalance(totalBalance: any) {
-  if (totalBalance >= 1_000_000) { // Checks if the totalBalance is equal to or greater than 1 million
-    return '$' + (totalBalance / 1_000_000).toFixed(2) + 'M';
-  } else if (totalBalance >= 100_000) { // Checks if the totalBalance is equal to or greater than 100 thousand
-    return '$' + (totalBalance / 1_000).toFixed(2) + 'k';
+  if (totalBalance >= 1_000_000) {
+    // Checks if the totalBalance is equal to or greater than 1 million
+    return "$" + (totalBalance / 1_000_000).toFixed(2) + "M";
+  } else if (totalBalance >= 100_000) {
+    // Checks if the totalBalance is equal to or greater than 100 thousand
+    return "$" + (totalBalance / 1_000).toFixed(2) + "k";
   } else {
-    return '$' + totalBalance;
+    return "$" + totalBalance;
   }
 }
 </script>

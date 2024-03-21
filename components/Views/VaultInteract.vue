@@ -62,6 +62,8 @@
 </template>
 
 <script setup lang="ts">
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import {
   account,
   accountDetails,
@@ -98,7 +100,12 @@ function handleShowDonateModal() {
   if (account.connected) {
     showDonateModal.value = true;
   } else {
-    alert("Please connect your wallet");
+        toast("Please, connect your wallet", {
+      "theme": "light",
+      "type": "warning",
+      "position": "top-center",
+      "autoClose": 3000
+    })
   }
 }
 
@@ -107,7 +114,12 @@ function handleShowWithdrawModal() {
   if (account.connected) {
     showWithdrawModal.value = true;
   } else {
-    alert("Please connect your wallet");
+        toast("Please, connect your wallet", {
+      "theme": "light",
+      "type": "warning",
+      "position": "top-center",
+      "autoClose": 3000
+    })
   }
 }
 

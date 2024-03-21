@@ -111,7 +111,7 @@ function createCanvas() {
   flex-direction: column;
   width: 100%;
 
-  background: rgb(37, 37, 37);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 3px;
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 30px;
