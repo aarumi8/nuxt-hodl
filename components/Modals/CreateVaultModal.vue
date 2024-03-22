@@ -141,6 +141,7 @@
                   class="clipboard"
                   @click="copyToClipboard(tokenVaultAddress)"
                 />
+                <span v-if="showCopied" class="copied-message">✅</span>
               </BaseView>
               <div class="modal-sub-text">
                 Anyone can donate funds to support $TOKEN token hodlers:
@@ -178,6 +179,7 @@ import {
 import factoryABI from "../../assets/abis/factoryABI.json";
 import vaultABI from "../../assets/abis/vaultABI.json";
 const { gasPrice, fetchContractGas } = useGasPrice();
+const showCopied = ref(false);
 
 const config = useRuntimeConfig();
 var tokens = [];
@@ -246,6 +248,7 @@ watch(
 );
 
 const copyToClipboard = async (text: string) => {
+  showCopied.value = true;
   try {
     await navigator.clipboard.writeText(text);
     // Optionally, display a message to the user indicating success.
@@ -253,6 +256,9 @@ const copyToClipboard = async (text: string) => {
     console.error("Failed to copy text: ", err);
     // Optionally, display an error message to the user.
   }
+  setTimeout(() => {
+    showCopied.value = false;
+  }, 1000);
 };
 
 async function createVault() {

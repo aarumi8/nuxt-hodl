@@ -31,6 +31,7 @@
           >{{ formatString(vault.tokenAddress) }}</nuxt-link
         >
         <span class="clipboard" @click="copyToClipboard(vault.tokenAddress)" />
+        <span v-if="showCopied" class="copied-message">✅</span>
       </div>
     </div>
   </div>
@@ -40,6 +41,8 @@
 const props = defineProps({
   vault: Object,
 });
+
+const showCopied = ref(false);
 
 function formatString(str: String) {
   // Check if the string length is greater than 6
@@ -53,6 +56,7 @@ function formatString(str: String) {
 }
 
 const copyToClipboard = async (text: string) => {
+  showCopied.value = true;
   try {
     await navigator.clipboard.writeText(text);
     // Optionally, display a message to the user indicating success.
@@ -60,6 +64,9 @@ const copyToClipboard = async (text: string) => {
     console.error("Failed to copy text: ", err);
     // Optionally, display an error message to the user.
   }
+  setTimeout(() => {
+    showCopied.value = false;
+  }, 1000);
 };
 
 function formatBalance(totalBalance: any) {

@@ -161,6 +161,7 @@ import {
 } from "@kolirt/vue-web3-auth";
 import { formatUnits, parseUnits } from "viem";
 const { gasPrice, fetchTransferGas } = useGasPrice();
+const showCopied = ref(false);
 
 const props = defineProps({
   modelValue: Boolean,

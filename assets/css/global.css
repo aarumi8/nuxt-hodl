@@ -43,6 +43,12 @@ body {
   }
 }
 
+.copied-message {
+  color: white;
+  font-family: 'Gilroy';
+  font-size: 1rem;
+}
+
 .bg {
   position: fixed;
   top: -50%;
