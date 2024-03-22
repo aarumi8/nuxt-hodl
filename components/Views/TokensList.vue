@@ -94,7 +94,12 @@
               <nuxt-link
                 style="text-decoration: none"
                 target="_blank"
-                :to="`https://etherscan.com/address/${vault.address}`"
+                :to="
+                  vault.address ===
+                  '0x0000000000000000000000000000000000000000000000000000000000000000'
+                    ? 'https://coinmarketcap.com/currencies/ethereum/'
+                    : `https://etherscan.io/address/${vault.address}`
+                "
               >
                 <CustomButtonsLearnMoreButton
                   buttonColor="rgb(48, 48, 48)"
@@ -141,10 +146,20 @@ async function toggleDetail(id: Number) {
   if (!vault) return; // Exit if no vault found
 
   if (window.innerWidth > 868) {
-    await navigateTo(`https://etherscan.com/address/${vault.address}`, {
-      external: true,
-      open: { target: "_blank" },
-    });
+    if (
+      vault.address ===
+      "0x0000000000000000000000000000000000000000000000000000000000000000"
+    ) {
+      await navigateTo('https://coinmarketcap.com/currencies/ethereum/', {
+        external: true,
+        open: { target: "_blank" },
+      });
+    } else {
+      await navigateTo(`https://etherscan.com/address/${vault.address}`, {
+        external: true,
+        open: { target: "_blank" },
+      });
+    }
   } else {
     expandedVaultId.value = expandedVaultId.value === id ? null : id;
   }

@@ -29,6 +29,7 @@
           target="_blank"
           :to="`https://etherscan.com/address/${vault.vaultAddress}`"
           class="grey-text"
+          id="temp-id1"
           >{{ formatString(vault.vaultAddress) }}</nuxt-link
         >
         <span class="clipboard" @click="copyToClipboard(vault.tokenAddress)" />

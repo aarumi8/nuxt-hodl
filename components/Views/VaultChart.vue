@@ -223,7 +223,7 @@ function createCanvas() {
 }
 @media(hover:hover) {
   .menu-btn-item:hover {
-  background: rgba(255, 255, 255);
+  background: rgba(255, 255, 255, 0.5);
   color: black;
   border-radius: 1px;
 }
