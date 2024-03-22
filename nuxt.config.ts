@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   // nitro: {
   //   serveStatic: true,
   // },
+//   nitro: {
+//     preset: 'firebase'
+// },
   css: [
     '~/assets/css/global.css' // Path to your global stylesheet
   ],

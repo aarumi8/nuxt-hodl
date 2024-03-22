@@ -43,7 +43,7 @@ button {
 button:active {
   transform: scale(1.05);
 }
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
 button:hover {
   transform: scale(1.05);
 }

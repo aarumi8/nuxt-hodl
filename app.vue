@@ -13,7 +13,7 @@
 useHead({
   title: 'HODL',
   meta : [
-    { name: 'HODL', content: 'APP of HODL'}
+    { name: 'HODL', content: 'APP of HODL Industries'}
   ]
 })
 </script>

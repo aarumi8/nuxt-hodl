@@ -12,6 +12,7 @@
             >
               {{ column }}
               <span
+                :id="'info' + index"
                 class="info"
                 :data-title="tips[index]"
                 style="margin-left: -7px"
@@ -24,13 +25,19 @@
             >
               {{ column }}
               <span
+                :id="'info' + index"
                 :data-title="tips[index]"
                 class="info"
                 style="margin-left: -7px"
               ></span>
             </th>
             <th v-else class="desktop">
-              {{ column }}<span :data-title="tips[index]" class="info"></span>
+              {{ column
+              }}<span
+                :id="'info' + index"
+                :data-title="tips[index]"
+                class="info"
+              ></span>
             </th>
           </template>
         </tr>
@@ -98,23 +105,23 @@
               <div class="mobile-detail">
                 <div class="cell" style="color: rgb(140, 140, 140)">
                   {{ columns[2] }}
-                  <span :data-title="tips[2]" class="info"></span>
+                  <span id="info2" class="info data-tippy-content"></span>
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
                   {{ columns[3] }}
-                  <span :data-title="tips[3]" class="info"></span>
+                  <span id="info3" class="info"></span>
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
                   {{ columns[4] }}
-                  <span :data-title="tips[4]" class="info"></span>
+                  <span id="info4" class="info"></span>
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
                   {{ columns[5] }}
-                  <span :data-title="tips[5]" class="info"></span>
+                  <span id="info5" class="info"></span>
                 </div>
                 <div class="cell" style="color: rgb(140, 140, 140)">
                   {{ columns[6] }}
-                  <span :data-title="tips[6]" class="info"></span>
+                  <span id="info6" class="info"></span>
                 </div>
               </div>
             </td>
@@ -172,6 +179,27 @@
 
 
 <script setup lang="ts">
+import tippy from "tippy.js";
+import "tippy.js/dist/tippy.css";
+import { delegate } from "tippy.js";
+
+onMounted(() => {
+  for (var i = 0; i < props.tips.length; i++) {
+    tippy("#info" + i, {
+      theme: "custom",
+      arrow: false,
+      content: props.tips[i],
+    });
+
+  delegate(".vaults-list", {
+    target: "#info" + i,
+          theme: "custom",
+      arrow: false,
+    content: props.tips[i],
+  });
+  }
+
+});
 // Define an interface for vault objects
 interface Vault {
   id: string;
@@ -235,72 +263,12 @@ function formatBalance(totalBalance: any) {
   cursor: pointer;
 }
 
-@media (hover: hover) {
-  .info:hover::after {
-    content: attr(data-title);
-    padding: 5px;
-    border-radius: 3px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    width: 10vw;
-    position: absolute;
-    top: 25px;
-    right: 5px;
-    background: rgb(140, 140, 140);
-    color: white;
-    font-size: 0.875rem;
-    font-family: "Gilroy";
-    font-style: normal;
-    font-weight: 300;
-    text-align: left;
-    z-index: 101;
-  }
-}
-
-.info:active::after {
-  content: attr(data-title);
-  padding: 5px;
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  width: 10vw;
-  position: absolute;
-  top: 25px;
-  right: 5px;
-  background: rgb(140, 140, 140);
-  color: white;
-  font-size: 0.875rem;
-  font-family: "Gilroy";
-  font-style: normal;
-  font-weight: 300;
-  text-align: left;
-  z-index: 101;
-}
-
 @media (max-width: 767px) {
-  @media (hover: hover) {
-    .info:hover::after {
-      width: 30vw;
-      right: 5px;
-      left: unset;
-      top: 25px;
-    }
-    .info:hover::after {
-      width: 30vw;
-      right: 0px;
-      left: 20px;
-      top: -15px;
-    }
-  }
-  .fmcap .info:active::after {
+  .fmcap {
     width: 30vw;
     right: 5px;
     left: unset;
     top: 25px;
-  }
-  .info:active::after {
-    width: 30vw;
-    right: 0px;
-    left: 20px;
-    top: -15px;
   }
   .info {
     margin-left: 0px;
