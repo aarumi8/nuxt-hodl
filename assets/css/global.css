@@ -37,6 +37,12 @@ body {
   width: unset !important;
 }
 
+@media (max-width: 600px) {
+  .Toastify__toast-container {
+    width: 100vw !important;
+  }
+}
+
 .bg {
   position: fixed;
   top: -50%;
