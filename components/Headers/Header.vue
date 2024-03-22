@@ -81,6 +81,12 @@ onUnmounted(() => {
   }
 }
 
+@media(hover:hover) {
+    .mobile-search-icon:hover {
+    opacity: 0.75;
+  }
+}
+
 @media (max-width: 767px) {
   .header {
     background-color: rgba(255, 255, 255, 0.05);
@@ -91,7 +97,6 @@ onUnmounted(() => {
     display: flex; /* Show search icon on mobile */
   }
 
-  .mobile-search-icon:hover,
   .mobile-search-icon:active {
     opacity: 0.75;
   }

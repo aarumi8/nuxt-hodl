@@ -40,7 +40,12 @@ button {
   background-position: center;
   background-repeat: no-repeat;
 }
-button:hover, button:active {
+button:active {
   transform: scale(1.05);
+}
+@media (hover: hover) {
+button:hover {
+  transform: scale(1.05);
+}
 }
 </style>

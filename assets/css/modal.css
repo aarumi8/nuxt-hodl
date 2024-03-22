@@ -89,8 +89,14 @@
     cursor: pointer;
 }
 
-.clipboard:hover {
+.clipboard:active {
     opacity: 0.5;
+}
+
+@media (hover: hover) {
+    .clipboard:hover {
+        opacity: 0.5;
+    }
 }
 
 .success {

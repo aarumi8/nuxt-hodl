@@ -160,7 +160,6 @@ function createCanvas() {
             display: false, // This will hide the grid lines for the x-axis
           },
         },
-
         y: {
           display: true,
           beginAtZero: true,
@@ -169,6 +168,10 @@ function createCanvas() {
             mirror: true,
             padding: -4,
             labelOffset: 10,
+            color: "white",
+            font: {
+              family: 'Gilroy'
+            }
           },
           grid: {
             display: false, // This will hide the grid lines for the y-axis
@@ -206,7 +209,7 @@ function createCanvas() {
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 5px;
   align-items: center;
-  gap: 2px
+  gap: 2px;
 }
 .vault-chart-menu-mobile {
   display: none;
@@ -218,7 +221,14 @@ function createCanvas() {
   color: black;
   border-radius: 1px;
 }
-.menu-btn-item:hover {
+@media(hover:hover) {
+  .menu-btn-item:hover {
+  background: rgba(255, 255, 255);
+  color: black;
+  border-radius: 1px;
+}
+}
+.menu-btn-item:active {
   background: rgba(255, 255, 255);
   color: black;
   border-radius: 1px;
@@ -252,6 +262,12 @@ function createCanvas() {
   .vault-chart-menu-mobile {
     display: flex;
     height: unset;
+  }
+}
+
+@media (max-width: 450px) {
+  .menu-btn-item {
+    font-size: 8px;
   }
 }
 </style>

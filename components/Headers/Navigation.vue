@@ -47,7 +47,13 @@ function isRouteActive(path: string): boolean {
   opacity: 1;
 }
 
-.header-text-desktop:hover,
+@media(hover:hover) {
+  .header-text-desktop:hover {
+  opacity: 1;
+}
+
+}
+
 .header-text-desktop:active {
   opacity: 1;
 }

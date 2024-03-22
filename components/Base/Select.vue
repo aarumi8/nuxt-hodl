@@ -106,8 +106,14 @@ function selectOption(option: Option) {
   align-items: center;
 }
 
-.select-item:hover {
+.select-item:active {
     opacity: 0.5;
+}
+
+@media(hover: hover) {
+  .select-item:hover {
+    opacity: 0.5;
+}
 }
 
 .expand-select-item {

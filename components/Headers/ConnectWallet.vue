@@ -67,12 +67,27 @@ import {
   transition: transform 300ms;
 }
 
-.connect-wallet:hover,
+@media(hover:hover) {
+  .connect-wallet:hover {
+  transform: scale(1.05);
+}
+
+.connected-wallet:hover {
+  transform: scale(1.05);
+}
+.connect-wallet-mobile:hover {
+  transform: scale(1.05);
+}
+
+.connected-wallet-mobile:hover {
+  transform: scale(1.05);
+}
+}
+
 .connect-wallet:active {
   transform: scale(1.05);
 }
 
-.connected-wallet:hover,
 .connected-wallet:active {
   transform: scale(1.05);
 }
@@ -114,12 +129,10 @@ import {
   transition: transform 300ms;
 }
 
-.connect-wallet-mobile:hover,
 .connect-wallet-mobile:active {
   transform: scale(1.05);
 }
 
-.connected-wallet-mobile:hover,
 .connected-wallet-mobile:active {
   transform: scale(1.05);
 }

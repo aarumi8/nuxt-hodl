@@ -157,8 +157,14 @@ const handleFocus = (event: FocusEvent) => {
   transition: background-color 0.2s;
 }
 
-.select-item:hover {
+.select-item:active {
     opacity: 0.5;
+}
+
+@media(hover: hover) {
+  .select-item:hover {
+    opacity: 0.5;
+}
 }
 
 .expand-select-item {
