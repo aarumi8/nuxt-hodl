@@ -39,24 +39,28 @@
 
     <div class="margin-wrapper-60"></div>
 
-    <BaseHeadingText text="Vault Reserves Structure" />
+    <section >
+      <BaseHeadingText text="Vault Reserves Structure" />
 
-    <div class="margin-wrapper-30-15"></div>
+      <div class="margin-wrapper-30-15"></div>
 
-    <div class="wrapper">
-      <ViewsTokensList
-        ref="tableComponent"
-        :columns="['#', 'Name', 'Price', 'Amount', 'Total']"
-        :vaults="tokens"
-      />
-      <div class="wrapper-chart">
-        <ViewsTokenAllocation
-          ref="contentComponent"
-          :tokens="tokensAllocation"
+      <div class="wrapper">
+        <ViewsTokensList
+          ref="tableComponent"
+          :columns="['#', 'Name', 'Price', 'Amount', 'Total']"
+          :vaults="tokens"
           :key="componentKey"
         />
+        <div class="wrapper-chart">
+          <ViewsTokenAllocation
+            ref="contentComponent"
+            :tokens="tokensAllocation"
+            :key="componentKey"
+          />
+        </div>
       </div>
-    </div>
+    </section>
+
   </div>
 </template>
 

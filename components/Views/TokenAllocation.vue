@@ -1,31 +1,40 @@
 <template>
   <div class="token-chart">
     <div class="token-chart-text">Token Allocation</div>
-    <div style="position: relative; display: flex; width: 100%">
-      <canvas style="width: 100%; height: 100%" ref="canvas"></canvas>
-    </div>
 
-    <div class="token-details">
-      <div v-for="token in tokens" :key="token.name" class="token-details-row">
-        <div style="display: flex">
-          <div
-            :style="{
-              width: '17px',
-              height: '17px',
-              backgroundColor: token.color,
-              marginRight: '5px',
-              borderRadius: '1px',
-            }"
-          ></div>
+    <section v-if="tokens.length">
+      <div style="position: relative; display: flex; width: 100%">
+        <canvas style="width: 100%; height: 100%" ref="canvas"></canvas>
+      </div>
+
+      <div class="token-details">
+        <div v-for="token in tokens" :key="token.name" class="token-details-row">
+          <div style="display: flex">
+            <div
+              :style="{
+                width: '17px',
+                height: '17px',
+                backgroundColor: token.color,
+                marginRight: '5px',
+                borderRadius: '1px',
+              }"
+            ></div>
+            <div class="token-chart-text" style="font-size: 0.925rem !important">
+              {{ token.name }}
+            </div>
+          </div>
           <div class="token-chart-text" style="font-size: 0.925rem !important">
-            {{ token.name }}
+            {{ token.percentage }}%
           </div>
         </div>
-        <div class="token-chart-text" style="font-size: 0.925rem !important">
-          {{ token.percentage }}%
-        </div>
       </div>
-    </div>
+    </section>
+
+    <section v-else>
+        <BaseSubText sub-text="There are no tokens in the vault" sub-text-active="" />
+    </section>
+
+
   </div>
 </template>
 
