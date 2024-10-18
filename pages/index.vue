@@ -53,6 +53,20 @@ function handleShowModal() {
 }
 
 async function fetchVaults() {
+  const vault = {
+  id: "507f1f77bcf86cd799439011",
+  image: "https://s2.coinmarketcap.com/static/img/coins/64x64/7083.png",
+  name: "Uniswap Vault",
+  ticker: "$UNI",
+  price: "7.35",
+  floorPrice: "10.03",
+  mcap: "1250000000.00",
+  fmcap: "1007500000.00",
+  backedPercent: "80.50",
+  address: "0xb5C0ae328F02fD8af50E1BCF958b82E4428EE9fD"
+};
+vaults.value.push(vault)
+return
   const { data, error, pending } = await useFetch(config.public.baseURL + '/factory/vaults?skip=0&limit=100')
   
   for(var i = 0; i < data.value.length; i++) {
@@ -72,6 +86,8 @@ async function fetchVaults() {
 }
 
 async function fetchData() {
+  totalValue.value = '$100';
+  return
   const { data, error, pending } = await useFetch(config.public.baseURL + '/factory/allVaultsTotalValue')
 
   totalValue.value = '$' + data.value.toFixed(2)

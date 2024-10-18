@@ -121,60 +121,92 @@ function formatString(str: String) {
 }
 
 async function fetchData() {
-  const { data, error, pending } = await useFetch(
-    config.public.baseURL + "/vault?address=" + route.params.id
-  );
+     vault.value = {
+  id: "507f1f77bcf86cd799439011",
+  image: "https://s2.coinmarketcap.com/static/img/coins/64x64/7083.png",
+  name: "Uniswap Vault",
+  ticker: "$UNI",
+  price: "7.35",
+  floorPrice: "10.03",
+  mcap: "1250000000.00",
+  fmcap: "1007500000.00",
+  backedPercent: "80.50",
+  address: "0xb5C0ae328F02fD8af50E1BCF958b82E4428EE9fD",
+  tokenAddress: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
+  vaultAddress: '0xb5C0ae328F02fD8af50E1BCF958b82E4428EE9fD' 
+};
+  // const { data, error, pending } = await useFetch(
+  //   config.public.baseURL + "/vault?address=" + route.params.id
+  // );
 
-  vault.value = {
-    id: data.value.id,
-    name: data.value.primaryToken.name,
-    ticker: data.value.primaryToken.ticker,
-    image: data.value.primaryToken.logo,
-    price: data.value.primaryToken.price.toFixed(2),
-    vaultAddress: data.value.vaultAddress,
-    tokenAddress: data.value.primaryToken.tokenAddress,
-    floorPrice: data.value.floorPrice.toFixed(2),
-    backedPercent: data.value.backedPercent.toFixed(2),
-    mcap: data.value.primaryToken.marketCap.toFixed(2),
-    fmcap: data.value.floorMarketCap.toFixed(2),
+  // vault.value = {
+  //   id: data.value.id,
+  //   name: data.value.primaryToken.name,
+  //   ticker: data.value.primaryToken.ticker,
+  //   image: data.value.primaryToken.logo,
+  //   price: data.value.primaryToken.price.toFixed(2),
+  //   vaultAddress: data.value.vaultAddress,
+  //   tokenAddress: data.value.primaryToken.tokenAddress,
+  //   floorPrice: data.value.floorPrice.toFixed(2),
+  //   backedPercent: data.value.backedPercent.toFixed(2),
+  //   mcap: data.value.primaryToken.marketCap.toFixed(2),
+  //   fmcap: data.value.floorMarketCap.toFixed(2),
 
+  //   amount: 0,
+  //   value: data.value.floorMarketCap.toFixed(2),
+  // };
+
+  tokens.value.push({
+    id: 1,
+    name: 'Uniswap',
+    ticker: '$UNI',
+    image: 'https://s2.coinmarketcap.com/static/img/coins/64x64/7083.png',
+    price: '7.35',
+    address: '0xb5C0ae328F02fD8af50E1BCF958b82E4428EE9fD',
     amount: 0,
-    value: data.value.floorMarketCap.toFixed(2),
-  };
+    total: 0,
+    selected: false
+  })
 
-  for (var i = 0; i < data.value.reserves.length; i++) {
-    tokens.value.push({
-      id: i,
-      name: data.value.reserves[i].token.name,
-      ticker: data.value.reserves[i].token.ticker,
-      image: data.value.reserves[i].token.logo,
-      price: data.value.reserves[i].token.price.toFixed(2),
-      address: data.value.reserves[i].token.tokenAddress,
-      amount: parseFloat(
-        formatUnits(
-          data.value.reserves[i].balance,
-          data.value.reserves[i].token.decimals
-        )
-      ).toFixed(5),
-      total: (
-        parseFloat(
-          formatUnits(
-            data.value.reserves[i].balance,
-            data.value.reserves[i].token.decimals
-          )
-        ) * data.value.reserves[i].token.price
-      ).toFixed(2),
-      selected: false,
-    });
-  }
+  // for (var i = 0; i < data.value.reserves.length; i++) {
+  //   tokens.value.push({
+  //     id: i,
+  //     name: data.value.reserves[i].token.name,
+  //     ticker: data.value.reserves[i].token.ticker,
+  //     image: data.value.reserves[i].token.logo,
+  //     price: data.value.reserves[i].token.price.toFixed(2),
+  //     address: data.value.reserves[i].token.tokenAddress,
+  //     amount: parseFloat(
+  //       formatUnits(
+  //         data.value.reserves[i].balance,
+  //         data.value.reserves[i].token.decimals
+  //       )
+  //     ).toFixed(5),
+  //     total: (
+  //       parseFloat(
+  //         formatUnits(
+  //           data.value.reserves[i].balance,
+  //           data.value.reserves[i].token.decimals
+  //         )
+  //       ) * data.value.reserves[i].token.price
+  //     ).toFixed(2),
+  //     selected: false,
+  //   });
+  // }
 
-  for (var i = 0; i < data.value.reservesAllocation.length; i++) {
-    tokensAllocation.value.push({
-      percentage: (data.value.reservesAllocation[i] * 100).toFixed(3),
-      name: tokens.length > 4 && i !== 4 ? "Others" : tokens.value[i].name,
-      color: "#fff",
-    });
-  }
+  tokensAllocation.value.push({
+    percentage: 100,
+    name: tokens.value[0].name,
+    color: "#fff",
+  })
+
+  // for (var i = 0; i < data.value.reservesAllocation.length; i++) {
+  //   tokensAllocation.value.push({
+  //     percentage: (data.value.reservesAllocation[i] * 100).toFixed(3),
+  //     name: tokens.length > 4 && i !== 4 ? "Others" : tokens.value[i].name,
+  //     color: "#fff",
+  //   });
+  // }
 
   dataFetched.value = true;
   adjustHeight();

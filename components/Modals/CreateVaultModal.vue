@@ -77,7 +77,7 @@
                 <div class="modal-sub-text">
                   Or search a token by address to back
                 </div>
-                <ViewsCreateVaultSearchBar style="width: unset" />
+                <ViewsCreateVaultSearchBar v-model="selectedToken" style="width: unset" />
               </div>
 
               <div class="modal-item-col">
@@ -208,7 +208,7 @@ async function nextStep() {
     closeModal();
     return;
   }
-
+  
   if (modalStep.value === 2 && !selectedToken.value.address) {
     toast("Please, choose a token", {
       theme: "light",
@@ -268,7 +268,7 @@ async function createVault() {
       abi: factoryABI,
       address: config.public.factoryAddress,
       functionName: "createNewVault",
-      args: [selectedToken.value.address, true],
+      args: [selectedToken.value.address, selectedToken.value.isBurnable],
     });
 
     console.log("hash", data.hash);
@@ -325,6 +325,11 @@ async function fetchTokens() {
     config.public.baseURL + "/user?address=" + account.address
   );
   for (var i = 0; i < data.value.balances.length; i++) {
+    // if token is already has a vault created or token doesnt have supply or token is ethereum, we cannot create a new vault for this token
+    if(data.value.balances[i].token.haveVault || !data.value.balances[i].token.haveTotalSupply || data.value.balances[i].token.type === 'eth') {
+      continue
+    }
+
     tokens.push({
       value: data.value.balances[i].token.name,
       label: data.value.balances[i].token.name,
@@ -332,6 +337,8 @@ async function fetchTokens() {
       address: data.value.balances[i].token.tokenAddress,
       price: data.value.balances[i].token.price,
       mc: data.value.balances[i].token.marketCap,
+      isBurnable: data.value.balances[i].token.isBurnable,
+      isLegit: data.value.balances[i].token.isLegit
     });
   }
 }
